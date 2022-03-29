@@ -1,0 +1,5 @@
+Quem estiver no grupo BlazeRoyale ou MilionBlaze  devem ser adicionados também ao StarCrashs grupo.
+Verificar se um usuario tem MilionBlaze R;
+
+mong_user:botTelegram
+mongo_pass:bottelegram2022
