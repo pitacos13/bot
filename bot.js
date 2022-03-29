@@ -10,6 +10,17 @@ let LocalSession = require("telegraf-session-local")
 const mongoose = require("mongoose")
 
 
+const app = express()
+
+app.get("/", (req,res)=>{
+    res.json({status:"Bot running!", version:"v1"})
+})
+
+
+app.listen(3000, ()=>{
+    console.log("Server running in port 3000")
+})
+
 process.env.TZ = 'America/Sao_Paulo';
 setInterval(()=>{
   if(new Date(Date.now()).toLocaleTimeString("pt-BR") == "03:00:33"){
