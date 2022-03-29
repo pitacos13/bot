@@ -136,7 +136,7 @@ bot.on("message", async(ctx)=>{
                     }
                     return
                 }else{
-                    bot.telegram.sendMessage(ctx.chat.id, "Você já terminou a verificação de seus dados.\r\nCaso precise de ajuda, contate-nos por favor.")
+                    bot.telegram.sendMessage(ctx.chat.id, "Você já terminou a verificação de seus dados.\r\nCaso precise de ajuda, contate-nos: @dennycassius.")
                     return
                 }
             }
@@ -166,7 +166,7 @@ bot.on("message", async(ctx)=>{
             }
         }
         else if(userStatus.finished == true){
-                bot.telegram.sendMessage(ctx.chat.id, "Você já terminou a verificação de seus dados.\r\nCaso precise de ajuda, contate-nos.")
+                bot.telegram.sendMessage(ctx.chat.id, "Você já terminou a verificação de seus dados.\r\nCaso precise de ajuda, contate-nos: @dennycassius.")
         }else if(userStatus.started == true){
             try{
                 ctx.message.entities[0].type == "email"?(async()=>{
