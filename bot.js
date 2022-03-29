@@ -12,7 +12,7 @@ const mongoose = require("mongoose")
 
 process.env.TZ = 'America/Sao_Paulo';
 setInterval(()=>{
-  if(new Date(Date.now()).toLocaleTimeString("pt-BR") == "13:24:33"){
+  if(new Date(Date.now()).toLocaleTimeString("pt-BR") == "03:00:33"){
     const updateDb = require("./update_db/CaptureStatus")
     updateDb()
 }
