@@ -57,6 +57,7 @@ let emailSaved;
 let groups = []
 let keyUsed = false;
 bot.on("message", async(ctx)=>{
+ if(ctx.chat.type == "private"){
         if(ctx.message.text == "massachusetts"){
             bot.telegram.sendMessage(ctx.chat.id, "Palavra chave utilizada.")
             keyUsed = true
@@ -234,6 +235,8 @@ bot.on("message", async(ctx)=>{
 
             }
         }
+             
+    }
 })
 
 
