@@ -336,7 +336,7 @@ module.exports = async function UpdateAndVerify(mail, user_id){
       (async()=>{
         await starCrashsLinkOne.findOneAndRemove({email_user:mail})
           if(links.length == 0){
-           bot.telegram.sendMessage(user_id, `Nenhum registro localizado para o email ${mail}.\r\nTente novamente digitando /start ou contate-nos @dennycassius.`)
+              bot.telegram.sendMessage(user_id, `Tente novamente digitando /start.\r\nCaso não funcione, sua compra ainda não deve ter sido aprovada, tente novamente em algumas horas.`)
            await StatusUser.findOneAndDelete({user_id:user_id})
           }else{
             (async()=>{
