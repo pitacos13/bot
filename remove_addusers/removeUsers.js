@@ -1,5 +1,6 @@
 const mongoose = require("mongoose")
-
+let { Telegraf } = require("telegraf")
+let bot = new Telegraf("5272128151:AAE5T62G6usrSk7iYyUwVcy-p5tX05Lewh8")
 module.exports = async function removeUsersPending(){
     // Vai pegar todos usuarios verificado// Ir no banco de dados que acabou de atualizar // Verificar
     // Se eles vão constar nas tabelas respectivas// Sim = True Não = False + Remove;
@@ -64,19 +65,14 @@ async function kikeUserOrAdd(user_mail, user_id, status, plan){
   }
   if(oneStatusTrue == true){
     const {Telegraf} = require("telegraf")
-    const bot = require("../bot")
     bot.telegram.banChatMember(plans[0][plan], user_id)
   }else{
-    const {Telegraf} = require("telegraf")
-    const bot = require("../bot")
     // Banir do grupo respectivo Verificaremos se o email do usuario ainda consta no Users, caso conste, mantenha ele no StarCrash 
     // Caso contrario, remova ele do StarCrashs [Localizar todos registro do usuario, e todos status, caso um esteja ativo, mantenha-o]
     bot.telegram.banChatMember(plans[0][plan], user_id) // Grupo
     bot.telegram.banChatMember(plans[0]["StarCrashs"], user_id) //StarCrashs
   }
   })():(()=>{
-    const {Telegraf} = require("telegraf")
-    const bot = require("../bot")
     try{
       bot.telegram.getChatMember(plans[0][plan], user_id)
       .then((e)=>{
