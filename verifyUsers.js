@@ -341,12 +341,14 @@ module.exports = async function UpdateAndVerify(mail, user_id){
           }else{
             (async()=>{
               await StatusUser.findOneAndUpdate({user_id:user_id}, {finished:true})
+              setTimeout(()=>{
               for(let link of links){
-                bot.telegram.sendMessage(user_id, link)
-              }
+                    bot.telegram.sendMessage(user_id, link)
+                }
+              }, 2000)
               setTimeout(() => {
                 bot.telegram.sendMessage(user_id, "Esses são seus respectivos grupos e links.\r\nQuaisquer dúdivas, contate-nos.")
-              }, 1500);
+              }, 2400);
             })();
           }
         })();
