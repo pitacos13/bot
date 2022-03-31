@@ -356,8 +356,10 @@ module.exports = async function UpdateAndVerify(mail, user_id){
                 const dateToDay = new Date(new Date(Date.now()).getTime() - 604800000).toLocaleDateString() // Diminuir data por 7
                 let userFinded;
                 if(dateToPurchase >= dateToDay){
+                    console.log("AQUI 1")
                   for(let link of links){
                     if(link.split(":")[0] == "StarCrashs"){
+                       console.log("STAR")
                       setTimeout(()=>{
                        let url = `https://ev.braip.com/api/vendas?product_key=${planUserKey}&date_min=${datePayment}&date_max=${now_date} 23:59:00`;
                        function verifyLastStatus(urlStoped){
@@ -398,6 +400,7 @@ module.exports = async function UpdateAndVerify(mail, user_id){
                     }                   
                   }
                 }else{
+                    console.log("AQUI 2")
                   for(let link of links){
                     bot.telegram.sendMessage(user_id, link)
                   }
