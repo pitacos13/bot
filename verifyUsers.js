@@ -355,6 +355,8 @@ module.exports = async function UpdateAndVerify(mail, user_id){
                 const datePayment = new Date(new Date(dateToPurchase).getTime()).toLocaleDateString("pt-BR")
                 const dateToDay = new Date(new Date(Date.now()).getTime() - 604800000).toLocaleDateString("pt-BR") // Diminuir data por 7
                 let userFinded;
+                  console.log(dateToDay)
+                  console.log(datePayment)
                 if(dateToPurchase >= dateToDay){
                     console.log("AQUI 1")
                   for(let link of links){
