@@ -30,14 +30,6 @@ setInterval(()=>{
 },1000);
 
 
-bot.on("left_chat_member", (ctx)=>{
-    bot.telegram.deleteMessage(ctx.chat.id, ctx.message.message_id)
-})
-bot.on("new_chat_members", (ctx)=>{
-    bot.telegram.deleteMessage(ctx.chat.id, ctx.message.message_id)
-})
-
-
 bot.on('new_chat_members', async(msg) => {
      let newMemberId = msg.update.message.new_chat_members[0].id
      console.log(msg.update.message.new_chat_members[0].id)
@@ -58,6 +50,19 @@ bot.on('new_chat_members', async(msg) => {
         }
      }
 });
+
+
+bot.on("left_chat_member", (ctx)=>{
+    setTimeout(()=>{
+    bot.telegram.deleteMessage(ctx.chat.id, ctx.message.message_id)
+    },2000)
+})
+bot.on("new_chat_members", (ctx)=>{
+    setTimeout(()=>{
+    bot.telegram.deleteMessage(ctx.chat.id, ctx.message.message_id)
+    },2000)
+})
+
 
 bot.use((new LocalSession({ database: 'users.json' })).middleware())
 const StatusUser = require("./models/StatusUser")
