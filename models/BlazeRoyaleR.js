@@ -6,7 +6,8 @@ let BlazeRoyaleR = new mongoose.model("BlazeRoyaleR", {
     plan_id:String,
     max_date:String,
     min_date:String,
-    page_find:String
+    page_find:String,
+    date_payment:String
 })
 
 module.exports = BlazeRoyaleR;
