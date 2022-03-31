@@ -357,6 +357,7 @@ module.exports = async function UpdateAndVerify(mail, user_id){
                 let userFinded;
                   console.log(dateToDay)
                   console.log(datePayment)
+                  console.log(dateToPurchase)
                 if(dateToPurchase >= dateToDay){
                     console.log("AQUI 1")
                   for(let link of links){
