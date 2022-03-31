@@ -357,7 +357,7 @@ module.exports = async function UpdateAndVerify(mail, user_id){
                 let userFinded;
                 if(dateToPurchase >= dateToDay){
                   for(let link of links){
-                    if(link.includes("StarCrashs")){
+                    if(link.split(":")[0] == "StarCrashs")){
                       setTimeout(()=>{
                        let url = `https://ev.braip.com/api/vendas?product_key=${planUserKey}&date_min=${dateToPurchase}&date_max=${now_date} 23:59:00`;
                        function verifyLastStatus(urlStoped){
@@ -402,7 +402,7 @@ module.exports = async function UpdateAndVerify(mail, user_id){
                     bot.telegram.sendMessage(user_id, link)
                   }
                 }
-              }, 1900)();
+              }, 1900);
               setTimeout(() => {
                 bot.telegram.sendMessage(user_id, "Esses são seus respectivos grupos e links.\r\nPara reiniciar a verificação, digite /reiniciar.\r\n\r\nQuaisquer dúdivas, contate-nos:@dennycassius")
               }, 2300);
