@@ -409,6 +409,9 @@ module.exports = async function UpdateAndVerify(mail, user_id){
                             if(values.client_email == mail && values.trans_status == "Pagamento Aprovado"){
                               console.log("AQUI")
                               bot.telegram.sendMessage(user_id, link)
+                              setTimeout(()=>{
+                              bot.telegram.sendMessage(user_id, "Aqui está seu grupo bônus StarCrashs.\r\nQuaisquer dúvidas, contate-nos.")
+                              },1500)
                               userFinded = true
                             }
                           }
@@ -425,6 +428,9 @@ module.exports = async function UpdateAndVerify(mail, user_id){
                       }, 604800000)
                     }else{
                       bot.telegram.sendMessage(user_id, link)
+                    setTimeout(() => {
+                     bot.telegram.sendMessage(user_id, "Esses são seus respectivos grupos e links e em 7 dias eu vou lhe enviar automaticamente o link do seu grupo BÔNUS, o STAR CRASH VIP.")
+                    }, 1200);
                     }                   
                   }
                 }else{
@@ -432,11 +438,11 @@ module.exports = async function UpdateAndVerify(mail, user_id){
                   for(let link of links){
                     bot.telegram.sendMessage(user_id, link)
                   }
+                  setTimeout(() => {
+                     bot.telegram.sendMessage(user_id, "Esses são seus respectivos grupos e links.\r\nQuaisquer dúdivas, contate-nos")
+                  }, 1200);
                 }
               }, 1900);
-              setTimeout(() => {
-                bot.telegram.sendMessage(user_id, "Esses são seus respectivos grupos e links.\r\nQuaisquer dúdivas, contate-nos")
-              }, 2300);
             })();
           }
         })();
