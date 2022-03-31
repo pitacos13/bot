@@ -38,7 +38,7 @@ bot.on('new_chat_members', async(msg) => {
      const Users = require("./models/Users")
      let memberFind = await Users.findOne({user_id:newMemberId})
      console.log(memberFind)
-     if(memberFind == null){
+     if(memberFind == null || `${memberFind}` == []){
         const UsersAllowed = require("./models/UsersAllowed")
         let userId = await UsersAllowed.findOne({user_id:newMemberId})
         let username = await UsersAllowed.findOne({user_name:newMemberUsername})
@@ -57,6 +57,8 @@ bot.on('new_chat_members', async(msg) => {
                     bot.telegram.deleteMessage(msg.chat.id, msg.message.message_id)
             })
         }
+     }else{
+        bot.telegram.deleteMessage(msg.chat.id, msg.message.message_id)
      }
 });
 
