@@ -48,6 +48,9 @@ bot.on('new_chat_members', async(msg) => {
             await msg.telegram.banChatMember(msg.chat.id, newMemberId).catch((r)=>{
                 "Owner"
             })
+            bot.on("left_chat_member", (ctx)=>{
+                    bot.telegram.deleteMessage(ctx.chat.id, ctx.message.message_id)
+            })
         }
      }
 });
