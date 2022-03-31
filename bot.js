@@ -67,13 +67,6 @@ bot.on("left_chat_member", (ctx)=>{
 })
 
 
-bot.on("left_chat_member", (ctx)=>{
-    setTimeout(()=>{
-    bot.telegram.deleteMessage(ctx.chat.id, ctx.message.message_id)
-    },2000)
-})
-
-
 bot.use((new LocalSession({ database: 'users.json' })).middleware())
 const StatusUser = require("./models/StatusUser")
 let emailSaved;
