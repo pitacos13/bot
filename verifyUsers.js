@@ -435,7 +435,7 @@ module.exports = async function UpdateAndVerify(mail, user_id){
                 }
               }, 1900);
               setTimeout(() => {
-                bot.telegram.sendMessage(user_id, "Esses são seus respectivos grupos e links.\r\nPara reiniciar a verificação, digite /reiniciar.\r\n\r\nQuaisquer dúdivas, contate-nos")
+                bot.telegram.sendMessage(user_id, "Esses são seus respectivos grupos e links.\r\nQuaisquer dúdivas, contate-nos")
               }, 2300);
             })();
           }
