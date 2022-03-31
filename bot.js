@@ -35,6 +35,7 @@ bot.on('new_chat_members', async(msg) => {
      console.log(msg.update.message.new_chat_members[0].id)
      const Users = require("./models/Users")
      let memberFind = await Users.findOne({user_id:newMemberId})
+     console.log(memberFind)
      if(memberFind == null){
         const UsersAllowed = require("./models/UsersAllowed")
         let username = await UsersAllowed.findOne({user_id:msg.from.id})
