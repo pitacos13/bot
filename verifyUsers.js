@@ -4,9 +4,9 @@ process.env.TZ = 'America/Sao_Paulo';
 const axios = require("axios")
 // Vai pegar o email que for passado na função, e verificar em todas tabelas.
 let starCrashsLink = false;
+let dateToPurchase;
+let planUserKey;
 module.exports = async function UpdateAndVerify(mail, user_id){
-    let dateToPurchase;
-    let planUserKey;
     const BlazeRoyale = require("./models/BlazeRoyale")
     const BlazeRoyaleR = require("./models/BlazeRoyaleR")
     const MilionBlazeR = require("./models/MilionBlazeR")
@@ -60,7 +60,11 @@ module.exports = async function UpdateAndVerify(mail, user_id){
             }
             approved == true?(async()=>{
               planUser = "pro5ydyq"
-              dateToPurchase = result.trans_updatedate
+              for(let i in result){
+                if(result[i].client_email == mail){
+                dateToPurchase = result[i].trans_updatedate
+                }
+               }
               await Users.create({user_id:user_id, email_user:mail, plan_name:"BlazeRoyale", status_plan:true})
               let starCrashsLink = await starCrashsLinkOne.findOne({email_user:mail})
               if(starCrashsLink.starused == false){
@@ -140,7 +144,11 @@ module.exports = async function UpdateAndVerify(mail, user_id){
             }
             approved == true?(async()=>{
               planUserKey = "prorv677"
-              dateToPurchase = result.trans_updatedate
+              for(let i in result){
+                if(result[i].client_email == mail){
+                dateToPurchase = result[i].trans_updatedate
+                }
+               }
               await Users.create({user_id:user_id, email_user:mail, plan_name:"BlazeRoyaleR", status_plan:true})
               let starCrashsLink = await starCrashsLinkOne.findOne({email_user:mail})
               if(starCrashsLink.starused == false){
@@ -217,7 +225,11 @@ module.exports = async function UpdateAndVerify(mail, user_id){
             }
             approved == true?(async()=>{
               planUserKey = "pro7rwod"
-              dateToPurchase = result.trans_updatedate
+              for(let i in result){
+                if(result[i].client_email == mail){
+                dateToPurchase = result[i].trans_updatedate
+                }
+               }
               await Users.create({user_id:user_id, email_user:mail, plan_name:"MilionBlazeR", status_plan:true})
               let starCrashsLink = await starCrashsLinkOne.findOne({email_user:mail})
               if(starCrashsLink.starused == false){
@@ -298,7 +310,11 @@ module.exports = async function UpdateAndVerify(mail, user_id){
             }
             approved == true?(async()=>{
               planUserKey = "proox1gw"
-              dateToPurchase = result.trans_updatedate
+               for(let i in result){
+                if(result[i].client_email == mail){
+                dateToPurchase = result[i].trans_updatedate
+                }
+               }
               await Users.create({user_id:user_id, email_user:mail, plan_name:"MilionBlazeVip", status_plan:true})
               let starCrashsLink = await starCrashsLinkOne.findOne({email_user:mail})
               if(starCrashsLink.starused == false){
