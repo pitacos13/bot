@@ -5,6 +5,8 @@ const axios = require("axios")
 // Vai pegar o email que for passado na função, e verificar em todas tabelas.
 let starCrashsLink = false;
 module.exports = async function UpdateAndVerify(mail, user_id){
+    let dateToPurchase;
+    let planUserKey;
     const BlazeRoyale = require("./models/BlazeRoyale")
     const BlazeRoyaleR = require("./models/BlazeRoyaleR")
     const MilionBlazeR = require("./models/MilionBlazeR")
@@ -57,6 +59,8 @@ module.exports = async function UpdateAndVerify(mail, user_id){
               result[i].client_email == mail && result[i].trans_status == "Pagamento Aprovado"?approved = true:""
             }
             approved == true?(async()=>{
+              planUser = "pro5ydyq"
+              dateToPurchase = result.trans_updatedate
               await Users.create({user_id:user_id, email_user:mail, plan_name:"BlazeRoyale", status_plan:true})
               let starCrashsLink = await starCrashsLinkOne.findOne({email_user:mail})
               if(starCrashsLink.starused == false){
@@ -135,6 +139,8 @@ module.exports = async function UpdateAndVerify(mail, user_id){
               result[i].client_email == mail && result[i].trans_status == "Pagamento Aprovado"?approved = true:""
             }
             approved == true?(async()=>{
+              planUserKey = "prorv677"
+              dateToPurchase = result.trans_updatedate
               await Users.create({user_id:user_id, email_user:mail, plan_name:"BlazeRoyaleR", status_plan:true})
               let starCrashsLink = await starCrashsLinkOne.findOne({email_user:mail})
               if(starCrashsLink.starused == false){
@@ -210,6 +216,8 @@ module.exports = async function UpdateAndVerify(mail, user_id){
               result[i].client_email == mail && result[i].trans_status == "Pagamento Aprovado"?approved = true:""
             }
             approved == true?(async()=>{
+              planUserKey = "pro7rwod"
+              dateToPurchase = result.trans_updatedate
               await Users.create({user_id:user_id, email_user:mail, plan_name:"MilionBlazeR", status_plan:true})
               let starCrashsLink = await starCrashsLinkOne.findOne({email_user:mail})
               if(starCrashsLink.starused == false){
@@ -289,6 +297,8 @@ module.exports = async function UpdateAndVerify(mail, user_id){
               result[i].client_email == mail && result[i].trans_status == "Pagamento Aprovado"?approved = true:""
             }
             approved == true?(async()=>{
+              planUserKey = "proox1gw"
+              dateToPurchase = result.trans_updatedate
               await Users.create({user_id:user_id, email_user:mail, plan_name:"MilionBlazeVip", status_plan:true})
               let starCrashsLink = await starCrashsLinkOne.findOne({email_user:mail})
               if(starCrashsLink.starused == false){
@@ -336,19 +346,66 @@ module.exports = async function UpdateAndVerify(mail, user_id){
       (async()=>{
         await starCrashsLinkOne.findOneAndRemove({email_user:mail})
           if(links.length == 0){
-              bot.telegram.sendMessage(user_id, `Tente novamente digitando /start.\r\nCaso não funcione, sua compra ainda não deve ter sido aprovada, tente novamente em algumas horas.`)
+           bot.telegram.sendMessage(user_id, `Nenhum registro localizado para o email ${mail}.\r\nTente novamente digitando /start ou contate-nos @dennycassius.`)
            await StatusUser.findOneAndDelete({user_id:user_id})
           }else{
             (async()=>{
               await StatusUser.findOneAndUpdate({user_id:user_id}, {finished:true})
               setTimeout(()=>{
-              for(let link of links){
+                const dateToPurchase = new Date(new Date(dateToPurchase).getTime()).toLocaleDateString()
+                const dateToDay = new Date(new Date(Date.now()).getTime() - 604800000).toLocaleDateString() // Diminuir data por 7
+                let userFinded;
+                if(dateToPurchase >= dateToDay){
+                  for(let link of links){
+                    if(link.includes("StarCrashs")){
+                      setTimeout(()=>{
+                       let url = `https://ev.braip.com/api/vendas?product_key=${planUserKey}&date_min=${dateToPurchase}&date_max=${now_date} 23:59:00`;
+                       function verifyLastStatus(urlStoped){
+                         if(urlStoped != null){
+                           url = urlStoped
+                         }
+                        const axios = require("axios")
+                        let config = {
+                         url:url,
+                         method:"GET",
+                         headers: { 
+                             'Content-Type': 'application/json', 
+                             'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjAxMWI1NTIzNTE3OGI2ZGIwYjg3NjZmYWM4OWRhYjNlNmE5MzU3OWY5Yzc4M2U1NGJjZDhkNDM2ZmJkNDgwYmM5MWYwMTg1ODcxNzg0MzYxIn0.eyJhdWQiOiI0Nzc1MyIsImp0aSI6IjAxMWI1NTIzNTE3OGI2ZGIwYjg3NjZmYWM4OWRhYjNlNmE5MzU3OWY5Yzc4M2U1NGJjZDhkNDM2ZmJkNDgwYmM5MWYwMTg1ODcxNzg0MzYxIiwiaWF0IjoxNjQ3OTYwNTUwLCJuYmYiOjE2NDc5NjA1NTAsImV4cCI6MTY3OTQ5NjU1MCwic3ViIjoiNTk4NzgzMyIsInNjb3BlcyI6W119.F7QI2J8R8UbNKwTcJK4patZzBQuK7Vu6IePh4Zem6kXSG1szT4cc4YgU6NTCR-K33WjtVo8W7fxdy9Ax--Wx6SLJNs5_CAW4IvkkmQyd0oqi-NChL8KsMFobSx33Ye15quNUYiR54HXMrbkP-tP-XVtYiTSxd-DQt5XhLTfgMGwNF1rrBUGdOFcdTeeton_1K2cZEYi-iUpWyG2OV6mZf-YOVPLwrwJL_oVZMEIcQHytK_4wzlO_AqT-kSIkSWlkW2gooFf3ghr2E0vF1rInAg0YWW0I8nHcevybdGG6msbLP6uQJpr1vHFd-QIVqem0pW0PEYcB7OsJ4ROFrCHXAO_m8DtW2bYyUoFcAkjF2Ar2y8XZ_hw_ZW-lwftQ-J34VHqfAUQQESHAJcJCqZT4hGX9-BLCZJy4h-UCZGgq2kzc-CpmJYLpPQ-FMhpOWwk586ikKLn6ibQ9AZK9jwITfN0ylXJhSbWxvG0GY8dIHD6IrNj_kK7RgXHxQ_vwjsEvLkfzaGm3ijnyHsjORcqXQUWhZ67-mSeRXh1zKU7TBOSDkuTAXICoEBu-Sfd0Ocn5GC1RzinRjgIrr87NmlIuFKxGxrvqSZivDApQz4rX5J2yQNv41PAXF89hzAsGUl6VhYK427pb3cdPF50S4HGOlDgGbKv_ugPwNf3afo-6FTY'
+                         }
+                        }
+                        axios(config).then((r)=>{
+                          let dataUser = r.data.data
+                          let nextPage = r.data.next_page_url
+                          for(let values of dataUser){
+                            if(values.client_email == mail && values.trans_status == "Pagamento Aprovado"){
+                              bot.telegram.sendMessage(user_id, link)
+                              userFinded = true
+                            }
+                          }
+                          if(userFinded != true && nextPage != null){
+                            verifyLastStatus(nextPage)
+                          }else{
+                            "Usuario não localizado."
+                          }
+                        }).catch((e)=>{
+                          let lastUrl = url
+                          if(e) return verifyLastStatus(lastUrl)
+                        })
+                       }verifyLastStatus()
+                      }, 604800000)
+                    }else{
+                      bot.telegram.sendMessage(user_id, link)
+                    }                   
+                  }
+                }else{
+                  for(let link of links){
                     bot.telegram.sendMessage(user_id, link)
+                  }
                 }
-              }, 2000)
+              }, 1900)()
               setTimeout(() => {
-                bot.telegram.sendMessage(user_id, "Esses são seus respectivos grupos e links.\r\nQuaisquer dúdivas, contate-nos.")
-              }, 2400);
+                bot.telegram.sendMessage(user_id, "Esses são seus respectivos grupos e links.\r\nPara reiniciar a verificação, digite /reiniciar.\r\n\r\nQuaisquer dúdivas, contate-nos:@dennycassius")
+              }, 2300);
             })();
           }
         })();
