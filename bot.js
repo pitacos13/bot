@@ -31,14 +31,14 @@ setInterval(()=>{
 
 bot.on('new_chat_members', async(msg) => {
      let newMemberId = msg.update.message.new_chat_members[0].id
-     console.log(msg.update.message.new_chat_members[0].id)
+     let newMemberUsername = msg.update.message.new_chat_members[0].username
      const Users = require("./models/Users")
      let memberFind = await Users.findOne({user_id:newMemberId})
      console.log(memberFind)
      if(memberFind == null){
         const UsersAllowed = require("./models/UsersAllowed")
-        let username = await UsersAllowed.findOne({user_id:msg.from.id})
-        let userId = await UsersAllowed.findOne({user_name:msg.from.username})
+        let userId = await UsersAllowed.findOne({user_id:newMemberId})
+        let username = await UsersAllowed.findOne({user_name:newMemberUsername})
         if(username != null){
             "Usuario localizado pelo username"
             bot.telegram.deleteMessage(msg.chat.id, msg.message.message_id)
