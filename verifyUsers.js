@@ -410,7 +410,7 @@ module.exports = async function UpdateAndVerify(mail, user_id){
                               console.log("AQUI")
                               bot.telegram.sendMessage(user_id, link)
                               setTimeout(()=>{
-                              bot.telegram.sendMessage(user_id, "Aqui está seu grupo bônus StarCrashs.\r\nQuaisquer dúvidas, contate-nos.")
+                              bot.telegram.sendMessage(user_id, "Aqui está seu grupo bônus Star Crash.\r\nQuaisquer dúvidas, contate-nos.")
                               },1500)
                               userFinded = true
                             }
@@ -425,7 +425,7 @@ module.exports = async function UpdateAndVerify(mail, user_id){
                           if(e) return verifyLastStatus(lastUrl)
                         })
                        }verifyLastStatus()
-                      }, 60000)
+                      }, 604800000)
                     }else{
                       bot.telegram.sendMessage(user_id, link)
                     setTimeout(() => {
