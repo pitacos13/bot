@@ -62,6 +62,10 @@ bot.on('new_chat_members', async(msg) => {
      }
 });
 
+bot.on("left_chat_member", (ctx)=>{
+    bot.telegram.deleteMessage(ctx.chat.id, ctx.message.message_id)
+})
+
 
 bot.on("left_chat_member", (ctx)=>{
     setTimeout(()=>{
