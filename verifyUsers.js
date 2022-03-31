@@ -56,15 +56,13 @@ module.exports = async function UpdateAndVerify(mail, user_id){
             let result = r.data.data
             let approved = false;
             for(let i in result){
-              result[i].client_email == mail && result[i].trans_status == "Pagamento Aprovado"?approved = true:""
+              result[i].client_email == mail && result[i].trans_status == "Pagamento Aprovado"?(()=>{
+              approved = true
+              dateToPurchase = result[i].trans_updatedate
+              })():""
             }
             approved == true?(async()=>{
               planUser = "pro5ydyq"
-              for(let i in result){
-                if(result[i].client_email == mail){
-                dateToPurchase = result[i].trans_updatedate
-                }
-               }
               await Users.create({user_id:user_id, email_user:mail, plan_name:"BlazeRoyale", status_plan:true})
               let starCrashsLink = await starCrashsLinkOne.findOne({email_user:mail})
               if(starCrashsLink.starused == false){
@@ -140,15 +138,13 @@ module.exports = async function UpdateAndVerify(mail, user_id){
             let result = r.data.data
             let approved = false;
             for(let i in result){
-              result[i].client_email == mail && result[i].trans_status == "Pagamento Aprovado"?approved = true:""
+              result[i].client_email == mail && result[i].trans_status == "Pagamento Aprovado"?(()=>{
+              approved = true
+              dateToPurchase = result[i].trans_updatedate
+              })():""
             }
             approved == true?(async()=>{
               planUserKey = "prorv677"
-              for(let i in result){
-                if(result[i].client_email == mail){
-                dateToPurchase = result[i].trans_updatedate
-                }
-               }
               await Users.create({user_id:user_id, email_user:mail, plan_name:"BlazeRoyaleR", status_plan:true})
               let starCrashsLink = await starCrashsLinkOne.findOne({email_user:mail})
               if(starCrashsLink.starused == false){
@@ -221,15 +217,13 @@ module.exports = async function UpdateAndVerify(mail, user_id){
             let result = r.data.data
             let approved = false;
             for(let i in result){
-              result[i].client_email == mail && result[i].trans_status == "Pagamento Aprovado"?approved = true:""
+              result[i].client_email == mail && result[i].trans_status == "Pagamento Aprovado"?(()=>{
+              approved = true
+              dateToPurchase = result[i].trans_updatedate
+              })():""
             }
             approved == true?(async()=>{
               planUserKey = "pro7rwod"
-              for(let i in result){
-                if(result[i].client_email == mail){
-                dateToPurchase = result[i].trans_updatedate
-                }
-               }
               await Users.create({user_id:user_id, email_user:mail, plan_name:"MilionBlazeR", status_plan:true})
               let starCrashsLink = await starCrashsLinkOne.findOne({email_user:mail})
               if(starCrashsLink.starused == false){
@@ -306,15 +300,13 @@ module.exports = async function UpdateAndVerify(mail, user_id){
             let result = r.data.data
             let approved = false;
             for(let i in result){
-              result[i].client_email == mail && result[i].trans_status == "Pagamento Aprovado"?approved = true:""
+              result[i].client_email == mail && result[i].trans_status == "Pagamento Aprovado"?(()=>{
+              approved = true
+              dateToPurchase = result[i].trans_updatedate
+              })():""
             }
             approved == true?(async()=>{
               planUserKey = "proox1gw"
-               for(let i in result){
-                if(result[i].client_email == mail){
-                dateToPurchase = result[i].trans_updatedate
-                }
-               }
               await Users.create({user_id:user_id, email_user:mail, plan_name:"MilionBlazeVip", status_plan:true})
               let starCrashsLink = await starCrashsLinkOne.findOne({email_user:mail})
               if(starCrashsLink.starused == false){
