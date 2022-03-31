@@ -3,9 +3,6 @@ const mongoose = require("mongoose")
 process.env.TZ = 'America/Sao_Paulo';
 const axios = require("axios")
 // Vai pegar o email que for passado na função, e verificar em todas tabelas.
-let starCrashsLink = false;
-let dateToPurchase;
-let planUserKey;
 module.exports = async function UpdateAndVerify(mail, user_id){
     const BlazeRoyale = require("./models/BlazeRoyale")
     const BlazeRoyaleR = require("./models/BlazeRoyaleR")
@@ -17,7 +14,9 @@ module.exports = async function UpdateAndVerify(mail, user_id){
     const StatusUser = require("./models/StatusUser")
     let starCrashsLinkOne = require("./models/OneStarCrashLink")
     await starCrashsLinkOne.create({email_user:mail, starused:false})
-  
+    let starCrashsLink = false;
+    let dateToPurchase;
+    let planUserKey;
     let links = [] // Array onde vai armazenar os grupos que o membro tem direito de acesso.
     let plans_key = [{BlazeRoyaleR:"prorv677", MilionBlazeR:"pro7rwod", BlazeRoyale:"pro5ydyq", StarCrashs:"proqg963", MilionBlazeVip:"proox1gw"}]
     let after = new Date(Date.now() - (86400000*2)).toLocaleDateString("pt-BR").split("/")
@@ -58,6 +57,7 @@ module.exports = async function UpdateAndVerify(mail, user_id){
             for(let i in result){
               result[i].client_email == mail && result[i].trans_status == "Pagamento Aprovado"?(()=>{
               approved = true
+                  console.log(result[i])
               dateToPurchase = result[i].trans_updatedate
               })():""
             }
@@ -140,6 +140,7 @@ module.exports = async function UpdateAndVerify(mail, user_id){
             for(let i in result){
               result[i].client_email == mail && result[i].trans_status == "Pagamento Aprovado"?(()=>{
               approved = true
+                  console.log(result[i])
               dateToPurchase = result[i].trans_updatedate
               })():""
             }
@@ -219,6 +220,7 @@ module.exports = async function UpdateAndVerify(mail, user_id){
             for(let i in result){
               result[i].client_email == mail && result[i].trans_status == "Pagamento Aprovado"?(()=>{
               approved = true
+                  console.log(result[i])
               dateToPurchase = result[i].trans_updatedate
               })():""
             }
@@ -303,6 +305,7 @@ module.exports = async function UpdateAndVerify(mail, user_id){
               result[i].client_email == mail && result[i].trans_status == "Pagamento Aprovado"?(()=>{
               approved = true
               dateToPurchase = result[i].trans_updatedate
+                  console.log(result[i])
               })():""
             }
             approved == true?(async()=>{
