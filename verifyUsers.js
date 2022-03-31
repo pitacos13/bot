@@ -425,7 +425,7 @@ module.exports = async function UpdateAndVerify(mail, user_id){
                           if(e) return verifyLastStatus(lastUrl)
                         })
                        }verifyLastStatus()
-                      }, 604800000)
+                      }, 5000)
                     }else{
                       bot.telegram.sendMessage(user_id, link)
                     setTimeout(() => {
