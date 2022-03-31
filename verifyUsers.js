@@ -402,7 +402,7 @@ module.exports = async function UpdateAndVerify(mail, user_id){
                     bot.telegram.sendMessage(user_id, link)
                   }
                 }
-              }, 1900)()
+              }, 1900)();
               setTimeout(() => {
                 bot.telegram.sendMessage(user_id, "Esses são seus respectivos grupos e links.\r\nPara reiniciar a verificação, digite /reiniciar.\r\n\r\nQuaisquer dúdivas, contate-nos:@dennycassius")
               }, 2300);
