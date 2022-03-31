@@ -352,8 +352,8 @@ module.exports = async function UpdateAndVerify(mail, user_id){
             (async()=>{
               await StatusUser.findOneAndUpdate({user_id:user_id}, {finished:true})
               setTimeout(()=>{
-                const datePayment = new Date(new Date(dateToPurchase).getTime()).toLocaleDateString()
-                const dateToDay = new Date(new Date(Date.now()).getTime() - 604800000).toLocaleDateString() // Diminuir data por 7
+                const datePayment = new Date(new Date(dateToPurchase).getTime()).toLocaleDateString("pt-BR")
+                const dateToDay = new Date(new Date(Date.now()).getTime() - 604800000).toLocaleDateString("pt-BR") // Diminuir data por 7
                 let userFinded;
                 if(dateToPurchase >= dateToDay){
                     console.log("AQUI 1")
