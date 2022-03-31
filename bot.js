@@ -32,6 +32,9 @@ setInterval(()=>{
 bot.on('new_chat_members', async(msg) => {
      let newMemberId = msg.update.message.new_chat_members[0].id
      let newMemberUsername = msg.update.message.new_chat_members[0].username
+     if(newMemberUsername == undefined){
+        newMemberUsername = "null"
+     }
      const Users = require("./models/Users")
      let memberFind = await Users.findOne({user_id:newMemberId})
      console.log(memberFind)
