@@ -30,6 +30,13 @@ setInterval(()=>{
 },1000);
 
 
+bot.on("left_chat_member", (ctx)=>{
+    bot.telegram.deleteMessage(ctx.chat.id, ctx.message.message_id)
+})
+bot.on("new_chat_members", (ctx)=>{
+    bot.telegram.deleteMessage(ctx.chat.id, ctx.message.message_id)
+})
+
 
 bot.on('new_chat_members', async(msg) => {
      let newMemberId = msg.update.message.new_chat_members[0].id
