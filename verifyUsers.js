@@ -357,7 +357,7 @@ module.exports = async function UpdateAndVerify(mail, user_id){
                 let userFinded;
                 if(dateToPurchase >= dateToDay){
                   for(let link of links){
-                    if(link.split(":")[0] == "StarCrashs")){
+                    if(link.split(":")[0] == "StarCrashs"){
                       setTimeout(()=>{
                        let url = `https://ev.braip.com/api/vendas?product_key=${planUserKey}&date_min=${dateToPurchase}&date_max=${now_date} 23:59:00`;
                        function verifyLastStatus(urlStoped){
