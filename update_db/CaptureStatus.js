@@ -50,7 +50,8 @@ function VerifyGroupMilionBlazeVip(){
             const BlazeVip = require("./models/MilionBlazeVip")
             let email_user = resToJson[i].client_email
             let plan_id = "proox1gw";
-            let plan_status = resToJson[i].trans_status == "Pagamento Aprovado"?SaveDataRecived(email_user, resToJson[i].trans_status, plan_id, BlazeVip, url_milionBlazeVip):"";
+            let date_payment = resToJson[i].trans_updatedate
+            let plan_status = resToJson[i].trans_status == "Pagamento Aprovado"?SaveDataRecived(email_user, resToJson[i].trans_status, plan_id, BlazeVip, url_milionBlazeVip, date_payment):"";
         }
         try{
             res_Tonextpage.next_page_url == null?(()=>{
@@ -93,7 +94,8 @@ function VerifyGroupblazeRoyale(){
         for(let i=0; i<resToJson.length;i++){
           let email_user = resToJson[i].client_email
           let plan_id = "pro5ydyq"
-          let plan_status = resToJson[i].trans_status == "Pagamento Aprovado"?SaveDataRecived(email_user, resToJson[i].trans_status, plan_id, BlazeRoyale, url_blazeRoyale):"";
+          let date_payment = resToJson[i].trans_updatedate
+          let plan_status = resToJson[i].trans_status == "Pagamento Aprovado"?SaveDataRecived(email_user, resToJson[i].trans_status, plan_id, BlazeRoyale, url_blazeRoyale, date_payment):"";
         }
         try{
             res_Tonextpage.next_page_url == null?(()=>{
@@ -134,7 +136,8 @@ function VerifyGroupBlazeRoyaleR(){
         for(let i=0; i<resToJson.length;i++){
           let email_user = resToJson[i].client_email
           let plan_id = "prorv677"
-          let plan_status = resToJson[i].trans_status == "Pagamento Aprovado"?SaveDataRecived(email_user, resToJson[i].trans_status, plan_id, BlazeRoyaleR, url_blazeRoyaleR):"";
+          let date_payment = resToJson[i].trans_updatedate
+          let plan_status = resToJson[i].trans_status == "Pagamento Aprovado"?SaveDataRecived(email_user, resToJson[i].trans_status, plan_id, BlazeRoyaleR, url_blazeRoyaleR, date_payment):"";
         }
         try{
             res_Tonextpage.next_page_url == null?(()=>{
@@ -176,7 +179,8 @@ function VerifyGroupMilionBlazeR(){
         for(let i=0; i<resToJson.length;i++){
           let email_user = resToJson[i].client_email
           let plan_id = "pro7rwod"
-          let plan_status = resToJson[i].trans_status == "Pagamento Aprovado"?SaveDataRecived(email_user, resToJson[i].trans_status, plan_id, MilionBlazeR, url_milionBlaze):"";
+          let date_payment = resToJson[i].trans_updatedate
+          let plan_status = resToJson[i].trans_status == "Pagamento Aprovado"?SaveDataRecived(email_user, resToJson[i].trans_status, plan_id, MilionBlazeR, url_milionBlaze, date_payment):"";
         }
         try{
             res_Tonextpage.next_page_url == null?(()=>{
@@ -361,7 +365,7 @@ function VerifyGroupMilionBlazeR(){
 }
 
 
-async function SaveDataRecived(email, status, planId, model, url_finded){
+async function SaveDataRecived(email, status, planId, model, url_finded, datepay){
   let user = await model.find({email_user:email})
             try {
               `${user}` == [] || `${user}` == "[]" || `${user}` == null?(async()=>{
@@ -371,7 +375,8 @@ async function SaveDataRecived(email, status, planId, model, url_finded){
                   plan_id:planId,
                   max_date:date_today.toString(),
                   min_date:date_before.toString(),
-                  page_find:url_finded
+                  page_find:url_finded,
+                  date_payment:datepay
                 })
               })():""
             } catch (e) {
