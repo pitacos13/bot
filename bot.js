@@ -98,7 +98,10 @@ bot.on("message", async(ctx)=>{
             return
         }
         let userStatus = await StatusUser.findOne({user_id:ctx.chat.id})
-            let groupsExis = [{MilionBlazeR:-1001503352913, BlazeRoyale:-1001688857780,BlazeRoyaleR:-1001688857780, MilionBlazeVip:-1001503352913, StarCrash:-1001592231367}]
+        const Users = require("./models/Users")
+        let userToJoin = Users.findOne({user_id:ctx.from.id})
+        let groupsExis = [{MilionBlazeR:-1001503352913, BlazeRoyale:-1001688857780,BlazeRoyaleR:-1001688857780, MilionBlazeVip:-1001503352913, StarCrash:-1001592231367}]
+           if(userToJoin == null){
             for(let group of groupsExis){
                 for(let i in group){
                     try {
@@ -110,6 +113,7 @@ bot.on("message", async(ctx)=>{
                     }
                   }
         }
+           }
         // Usuarios já existentes
         try {
             if(userStatus.existent == true){
