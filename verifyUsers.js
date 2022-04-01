@@ -442,7 +442,7 @@ module.exports = async function UpdateAndVerify(mail, user_id){
                      bot.telegram.sendMessage(user_id, "Esses são seus respectivos grupos e links.\r\nQuaisquer dúdivas, contate-nos")
                   }, 1200);
                 }
-              }, 4000);
+              }, 5700);
             })();
           }
         })();
