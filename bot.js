@@ -22,8 +22,10 @@ app.listen(3000, ()=>{
 })
 
 process.env.TZ = 'America/Sao_Paulo';
-setInterval(()=>{
+const verification = require("./models/Verification")
+setInterval(async()=>{
   if(new Date(Date.now()).toLocaleTimeString("pt-BR") == "03:00:33"){
+    await verification.create({running:true})
     const updateDb = require("./update_db/CaptureStatus")
     updateDb()
 }
@@ -170,6 +172,10 @@ bot.on("message", async(ctx)=>{
         if(userStatus == null){
             if(ctx.message.text == "/start"){
                 if(ctx.chat.type == "private"){
+                    if(await verification.findOne() != null){
+                        bot.telegram.sendMessage(ctx.from.id, `Olá ${ctx.from.first_name}. Bot atualmente em processo de verificação de assinaturas, volte novamente pelas 5:00 horas.`)
+                        return
+                    }
                     started = true;
                     await StatusUser.create({user_id:ctx.chat.id, started:true})
                     ctx.telegram.sendMessage(ctx.chat.id, `Olá ${ctx.chat.first_name}! Vamos iniciar sua verificação.`)
