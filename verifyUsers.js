@@ -322,10 +322,8 @@ module.exports = async function UpdateAndVerify(mail, user_id){
                     links.push("StarCrashs: "+"https://t.me/+sipUKfOsV-JlN2Vh")
                     return Five()
               }else{
-                bot.telegram.createChatInviteLink(-1001503352913).then((r)=>{
                   links.push("MilionBlazeVip: "+"https://t.me/+o5-YgmuIYuQwZjRh")
                   return Five()
-                })
               }
             })():Five()
         })
@@ -343,10 +341,8 @@ module.exports = async function UpdateAndVerify(mail, user_id){
             links.push("MilionBlazeVip: "+"https://t.me/+o5-YgmuIYuQwZjRh")
               links.push("StarCrashs: "+"https://t.me/+sipUKfOsV-JlN2Vh")
         }else{
-          bot.telegram.createChatInviteLink(-1001503352913).then((r)=>{
             links.push("MilionBlazeVip: "+"https://t.me/+o5-YgmuIYuQwZjRh")
             return Five()
-          })
         }
       })();
     }
