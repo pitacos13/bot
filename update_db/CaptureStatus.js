@@ -29,7 +29,7 @@ module.exports = function RemoveOrAdd(){
                 /////// ---------- Functions ---------//////
                 
 // Criar um metodo para aumentar 1 dia a cada lopp sem substituir o date.txt, de forma que ele adicione 
-let url_milionBlazeVip = `https://ev.braip.com/api/vendas?product_key=proox1gw&date_min=${date_before} 11:15:00&date_max=${date_today} 11:15:00`
+let url_milionBlazeVip = `https://ev.braip.com/api/vendas?product_key=proox1gw&date_min=${date_before} 00:00:00&date_max=${date_today} 23:59:00`
 function VerifyGroupMilionBlazeVip(){
   console.log(url_milionBlazeVip)
     var config = {
@@ -74,7 +74,7 @@ VerifyGroupMilionBlazeVip()
 
 
 
-let url_blazeRoyale = `https://ev.braip.com/api/vendas?product_key=pro5ydyq&date_min=${date_before} 11:15:00&date_max=${date_today} 11:15:00`
+let url_blazeRoyale = `https://ev.braip.com/api/vendas?product_key=pro5ydyq&date_min=${date_before} 00:00:00&date_max=${date_today} 23:59:00`
 function VerifyGroupblazeRoyale(){
     var config = {
         method: 'get',
@@ -116,7 +116,7 @@ function VerifyGroupblazeRoyale(){
 
 /////-----------
 
-let url_blazeRoyaleR = `https://ev.braip.com/api/vendas?product_key=prorv677&date_min=${date_before} 11:15:00&date_max=${date_today} 11:15:00`
+let url_blazeRoyaleR = `https://ev.braip.com/api/vendas?product_key=prorv677&date_min=${date_before} 00:00:00&date_max=${date_today} 23:59:00`
 function VerifyGroupBlazeRoyaleR(){
     var config = {
         method: 'get',
@@ -158,7 +158,7 @@ function VerifyGroupBlazeRoyaleR(){
 
 ////-----------
 
-let url_milionBlaze = `https://ev.braip.com/api/vendas?product_key=pro7rwod&date_min=${date_before} 11:15:00&date_max=${date_today} 11:15:00`
+let url_milionBlaze = `https://ev.braip.com/api/vendas?product_key=pro7rwod&date_min=${date_before} 00:00:00&date_max=${date_today} 23:59:00`
 function VerifyGroupMilionBlazeR(){
     var config = {
         method: 'get',
