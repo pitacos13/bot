@@ -169,7 +169,7 @@ bot.on("message", async(ctx)=>{
 
         if(userStatus == null){
             if(ctx.message.text == "/start"){
-                if(ctx.from.id != 1446003289){
+                if(ctx.from.id != 5240668489){
                 return
                 }
                 if(ctx.chat.type == "private"){
