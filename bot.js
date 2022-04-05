@@ -218,23 +218,18 @@ bot.on("message", async(ctx)=>{
     
                         // Vem os links dos grupos, qualquer grupo possui um extra, no caso o StarCrashs ID DO GRUPO
                         let plans = [{MilionBlazeR:-1001651744972, BlazeRoyale:-1001651744972,BlazeRoyaleR:-1001651744972, MilionBlazeVip:-1001651744972}]
+                         let plans_invite = {MilionBlazeR:"https://t.me/+o5-YgmuIYuQwZjRh", BlazeRoyale:"https://t.me/+3oPIfRRG8tgzN2Jh",BlazeRoyaleR:"https://t.me/+3oPIfRRG8tgzN2Jh", MilionBlazeVip:"https://t.me/+o5-YgmuIYuQwZjRh", StarCrash:"https://t.me/+sipUKfOsV-JlN2Vh"}
                         //Grupo starCrash
                         console.log(emailSaved)
-                        let planStarCrash = -1001651744972
+                        let planStarCrash = "https://t.me/+sipUKfOsV-JlN2Vh"
                         console.log(userExist.length)
                         for(let i=0; i<userExist.length; i++){
                             let group = userExist[i].plan_name
-                            console.log(i)
-                            bot.telegram.createChatInviteLink(plans[0][group]).then((r)=>{
                                 groups.push(`${group}:`+r.invite_link)
                                 console.log(groups)
                                 if(userExist.length == i+1){
-                                    bot.telegram.createChatInviteLink(planStarCrash).then((r)=>{
-                                        groups.push("StarCrashs: "+r.invite_link)
-                                        console.log(groups)
-                                    })
+                                        groups.push("StarCrashs: "+planStarCrash)
                                 }
-                            })
                         }
                         //-------------------------
                         await StatusUser.findOneAndRemove({user_id:ctx.chat.id})
