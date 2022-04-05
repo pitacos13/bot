@@ -39,7 +39,7 @@ module.exports = async function UpdateAndVerify(mail, user_id){
         axios(config)
         .then((r)=>{
             let lastUrl = r.data.last_page_url
-            return toLastUrl1(lastUrl)
+            return toLastUrl1(url)
         })
         function toLastUrl1(url){
         const config = {
@@ -53,6 +53,7 @@ module.exports = async function UpdateAndVerify(mail, user_id){
         axios(config)
         .then((r)=>{
             let result = r.data.data
+            let next_url = r.data.next_page_url
             let approved = false;
             for(let i in result){
               result[i].client_email == mail && result[i].trans_status == "Pagamento Aprovado"?(()=>{
@@ -73,7 +74,7 @@ module.exports = async function UpdateAndVerify(mail, user_id){
                   links.push("BlazeRoyale: "+"https://t.me/+3oPIfRRG8tgzN2Jh")
                   return Two()
               }
-            })():Two()
+            })():next_url != null?toLastUrl1(next_url):Two()
         })
       }
   })();
@@ -109,7 +110,7 @@ module.exports = async function UpdateAndVerify(mail, user_id){
         axios(config)
         .then((r)=>{
             let lastUrl = r.data.last_page_url
-            return toLastUrl2(lastUrl)
+            return toLastUrl2(url)
         })
         function toLastUrl2(url){
         const config = {
@@ -123,6 +124,7 @@ module.exports = async function UpdateAndVerify(mail, user_id){
         axios(config)
         .then((r)=>{
             let result = r.data.data
+                        let next_url = r.data.next_page_url
             let approved = false;
             for(let i in result){
               result[i].client_email == mail && result[i].trans_status == "Pagamento Aprovado"?(()=>{
@@ -142,7 +144,7 @@ module.exports = async function UpdateAndVerify(mail, user_id){
                   links.push("BlazeRoyaleR: "+"https://t.me/+3oPIfRRG8tgzN2Jh")
                   return Three() 
               }
-            })():Three()
+            })():next_url != null?toLastUrl2(next_url):Three() 
         })
       }
   })();
@@ -177,7 +179,7 @@ module.exports = async function UpdateAndVerify(mail, user_id){
         axios(config)
         .then((r)=>{
             let lastUrl = r.data.last_page_url
-            return toLastUrl3(lastUrl)
+            return toLastUrl3(url)
         })
         function toLastUrl3(url){
         const config = {
@@ -191,6 +193,7 @@ module.exports = async function UpdateAndVerify(mail, user_id){
         axios(config)
         .then((r)=>{
             let result = r.data.data
+            let next_url = r.data.next_page_url
             let approved = false;
             for(let i in result){
               result[i].client_email == mail && result[i].trans_status == "Pagamento Aprovado"?(()=>{
@@ -211,7 +214,7 @@ module.exports = async function UpdateAndVerify(mail, user_id){
                 links.push("MilionBlazeR: "+"https://t.me/+o5-YgmuIYuQwZjRh")
                 return Four()
               }
-            })():Four()
+            })():next_url != null?toLastUrl3(next_url):Four()
         })
       }
   })();
@@ -247,7 +250,7 @@ module.exports = async function UpdateAndVerify(mail, user_id){
         axios(config)
         .then((r)=>{
             let lastUrl = r.data.last_page_url
-            return toLastUrl4(lastUrl)
+            return toLastUrl4(url)
         })
         function toLastUrl4(url){
         const config = {
@@ -261,6 +264,7 @@ module.exports = async function UpdateAndVerify(mail, user_id){
         axios(config)
         .then((r)=>{
             let result = r.data.data
+            let next_url = r.data.next_page_url
             let approved = false;
             for(let i in result){
               result[i].client_email == mail && result[i].trans_status == "Pagamento Aprovado"?(()=>{
@@ -280,7 +284,7 @@ module.exports = async function UpdateAndVerify(mail, user_id){
                   links.push("MilionBlazeVip: "+"https://t.me/+o5-YgmuIYuQwZjRh")
                   return Five()
               }
-            })():Five()
+            })():next_url != null?toLastUrl4(next_url):Five()
         })
       }
   })();
