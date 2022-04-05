@@ -228,7 +228,7 @@ bot.on("message", async(ctx)=>{
                         console.log(userExist.length)
                         for(let i=0; i<userExist.length; i++){
                             let group = userExist[i].plan_name
-                                groups.push(`${group}:`+r.invite_link)
+                                groups.push(`${group}:`+plans_invite[group])
                                 console.log(groups)
                                 if(userExist.length == i+1){
                                         groups.push("StarCrashs: "+planStarCrash)
