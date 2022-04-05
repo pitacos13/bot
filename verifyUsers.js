@@ -26,7 +26,7 @@ module.exports = async function UpdateAndVerify(mail, user_id){
     async function One(){
       await BlazeRoyale.findOne({email_user:mail}) == null?(()=>{
         // Before initialize two, running verification in last page of api reference to plan.
-        let url = `https://ev.braip.com/api/vendas?product_key=${plans_key[0]["BlazeRoyale"]}&date_min=${after_date} 11:15:00&date_max=${now_date} 11:15:00`;
+        let url = `https://ev.braip.com/api/vendas?product_key=${plans_key[0]["BlazeRoyale"]}&date_min=${after_date} 00:00:00&date_max=${now_date} 23:59:00`;
         (()=>{
           const config = {
             url:url,
@@ -96,7 +96,7 @@ module.exports = async function UpdateAndVerify(mail, user_id){
     One()
     async function Two(){
       await BlazeRoyaleR.findOne({email_user:mail}) == null?(()=>{
-        let url = `https://ev.braip.com/api/vendas?product_key=${plans_key[0]["BlazeRoyaleR"]}&date_min=${after_date} 11:15:00&date_max=${now_date} 11:15:00`;
+        let url = `https://ev.braip.com/api/vendas?product_key=${plans_key[0]["BlazeRoyaleR"]}&date_min=${after_date} 00:00:00&date_max=${now_date} 23:59:00`;
         (()=>{
           const config = {
             url:url,
@@ -164,7 +164,7 @@ module.exports = async function UpdateAndVerify(mail, user_id){
     }
     async function Three(){
       await MilionBlazeR.findOne({email_user:mail}) == null?(()=>{
-        let url = `https://ev.braip.com/api/vendas?product_key=${plans_key[0]["MilionBlazeR"]}&date_min=${after_date} 11:15:00&date_max=${now_date} 11:15:00`;
+        let url = `https://ev.braip.com/api/vendas?product_key=${plans_key[0]["MilionBlazeR"]}&date_min=${after_date} 00:00:00&date_max=${now_date} 23:59:00`;
         (()=>{
           const config = {
             url:url,
@@ -234,7 +234,7 @@ module.exports = async function UpdateAndVerify(mail, user_id){
     }
     async function Four(){
       await MilionBlazeVip.findOne({email_user:mail}) == null?(()=>{
-        let url = `https://ev.braip.com/api/vendas?product_key=${plans_key[0]["MilionBlazeVip"]}&date_min=${after_date} 11:15:00&date_max=${now_date} 11:15:00`;
+        let url = `https://ev.braip.com/api/vendas?product_key=${plans_key[0]["MilionBlazeVip"]}&date_min=${after_date} 00:00:00&date_max=${now_date} 23:59:00`;
         (()=>{
           const config = {
             url:url,
