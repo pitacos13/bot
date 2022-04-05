@@ -1,5 +1,6 @@
 const mongoose = require("mongoose")
 let { Telegraf } = require("telegraf")
+const path = require("path")
 let bot = new Telegraf("5272128151:AAE5T62G6usrSk7iYyUwVcy-p5tX05Lewh8")
 module.exports = async function removeUsersPending(){
     // Vai pegar todos usuarios verificado// Ir no banco de dados que acabou de atualizar // Verificar
@@ -39,6 +40,8 @@ module.exports = async function removeUsersPending(){
          kikeUserOrAdd(userMail, userId, active, planName)
       }
     }
+    let status = require(path.join(__dirname, "../models/Verification"))
+    await status.findOneAndRemove({running:true})
 }
 
 
