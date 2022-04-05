@@ -67,16 +67,11 @@ module.exports = async function UpdateAndVerify(mail, user_id){
               if(starCrashsLink.starused == false){
                 //Cria o link dos dois grupos e coloca starCrash como true
                 await starCrashsLinkOne.findOneAndUpdate({email:mail}, {starused:true})
-                  links.push("BlazeRoyale: "+"https://t.me/+3oPIfRRG8tgzN2Jh")
-                    links.push("StarCrashs: "+"https://t.me/+sipUKfOsV-JlN2Vh")
-                    setTimeout(()=>{
-                        return Two()
-                      },1500)
+                  links.push("BlazeRoyale: "+"https://t.me/+3oPIfRRG8tgzN2Jh", "StarCrashs: "+"https://t.me/+sipUKfOsV-JlN2Vh")
+                      return Two()
               }else{
                   links.push("BlazeRoyale: "+"https://t.me/+3oPIfRRG8tgzN2Jh")
-                  setTimeout(()=>{
-                    return Two()
-                  },1500)
+                  return Two()
               }
             })():Two()
         })
@@ -90,20 +85,11 @@ module.exports = async function UpdateAndVerify(mail, user_id){
         let starCrashsLink = await starCrashsLinkOne.findOne({email_user:mail})
         if(starCrashsLink.starused == false){
           await starCrashsLinkOne.findOneAndUpdate({email:mail}, {starused:true})
-          bot.telegram.createChatInviteLink(-1001688857780).then((r)=>{ // Grupo
-            links.push("BlazeRoyale: "+"https://t.me/+3oPIfRRG8tgzN2Jh")
-            bot.telegram.createChatInviteLink(-1001592231367).then((r)=>{ // StarScrashs
-              links.push("StarCrashs: "+"https://t.me/+sipUKfOsV-JlN2Vh")
-              setTimeout(()=>{
+              links.push("BlazeRoyale: "+"https://t.me/+3oPIfRRG8tgzN2Jh", "StarCrashs: "+"https://t.me/+sipUKfOsV-JlN2Vh")
                 return Two()
-            },1500)
-            })
-          })
         }else{
             links.push("BlazeRoyale: "+"https://t.me/+3oPIfRRG8tgzN2Jh")
-            setTimeout(()=>{
-                return Two()
-            },1500)
+            return Two()
         }
       })();
     }
@@ -150,16 +136,11 @@ module.exports = async function UpdateAndVerify(mail, user_id){
               let starCrashsLink = await starCrashsLinkOne.findOne({email_user:mail})
               if(starCrashsLink.starused == false){
                 await starCrashsLinkOne.findOneAndUpdate({email:mail}, {starused:true})
-                    links.push("BlazeRoyaleR: "+"https://t.me/+3oPIfRRG8tgzN2Jh")
-                    links.push("StarCrashs: "+"https://t.me/+sipUKfOsV-JlN2Vh")
-                    setTimeout(()=>{
-                        return Three()
-                    },1500)
+                  links.push("BlazeRoyaleR: "+"https://t.me/+3oPIfRRG8tgzN2Jh", "StarCrashs: "+"https://t.me/+sipUKfOsV-JlN2Vh")
+                      return Three() 
               }else{
-                links.push("BlazeRoyaleR: "+"https://t.me/+3oPIfRRG8tgzN2Jh")
-                setTimeout(()=>{
-                    return Three()
-                }, 1500)
+                  links.push("BlazeRoyaleR: "+"https://t.me/+3oPIfRRG8tgzN2Jh")
+                  return Three() 
               }
             })():Three()
         })
@@ -173,16 +154,11 @@ module.exports = async function UpdateAndVerify(mail, user_id){
         let starCrashsLink = await starCrashsLinkOne.findOne({email_user:mail})
         if(starCrashsLink.starused == false){
           await starCrashsLinkOne.findOneAndUpdate({email:mail}, {starused:true})
-            links.push("BlazeRoyaleR: "+"https://t.me/+3oPIfRRG8tgzN2Jh")
-            links.push("StarCrashs: "+"https://t.me/+sipUKfOsV-JlN2Vh")
-            setTimeout(()=>{
-                return Three()
-            },1500)
+            links.push("BlazeRoyaleR: "+"https://t.me/+3oPIfRRG8tgzN2Jh", "StarCrashs: "+"https://t.me/+sipUKfOsV-JlN2Vh")
+              return Three() 
         }else{
             links.push("BlazeRoyaleR: "+"https://t.me/+3oPIfRRG8tgzN2Jh")
-            setTimeout(()=>{
-                return Three()
-            },1500)
+            return Three() 
         }
       })();
     }
@@ -229,16 +205,11 @@ module.exports = async function UpdateAndVerify(mail, user_id){
               if(starCrashsLink.starused == false){
                 
                 await starCrashsLinkOne.findOneAndUpdate({email:mail}, {starused:true})
-                links.push("MilionBlazeR: "+"https://t.me/+o5-YgmuIYuQwZjRh")
-              links.push("StarCrashs: "+"https://t.me/+sipUKfOsV-JlN2Vh")
-              setTimeout(()=>{
-                return Four()
-              }, 1500)
+                  links.push("MilionBlazeR: "+"https://t.me/+o5-YgmuIYuQwZjRh", "StarCrashs: "+"https://t.me/+sipUKfOsV-JlN2Vh")
+                  return Four()
               }else{
                 links.push("MilionBlazeR: "+"https://t.me/+o5-YgmuIYuQwZjRh")
-                setTimeout(()=>{
-                    return Four()
-                  }, 1500)
+                return Four()
               }
             })():Four()
         })
@@ -253,16 +224,11 @@ module.exports = async function UpdateAndVerify(mail, user_id){
         if(starCrashsLink.starused == false){
           
           await starCrashsLinkOne.findOneAndUpdate({email:mail}, {starused:true})
-                links.push("MilionBlazeR: "+"https://t.me/+o5-YgmuIYuQwZjRh")
-              links.push("StarCrashs: "+"https://t.me/+sipUKfOsV-JlN2Vh")
-              setTimeout(()=>{
-                return Four()
-              }, 1500)
+            links.push("MilionBlazeR: "+"https://t.me/+o5-YgmuIYuQwZjRh", "StarCrashs: "+"https://t.me/+sipUKfOsV-JlN2Vh")
+              return Four()
         }else{
             links.push("MilionBlazeR: "+"https://t.me/+o5-YgmuIYuQwZjRh")
-            setTimeout(()=>{
-                return Four()
-              }, 1500)
+            return Four()
         }
       })();
     }
@@ -308,14 +274,11 @@ module.exports = async function UpdateAndVerify(mail, user_id){
               let starCrashsLink = await starCrashsLinkOne.findOne({email_user:mail})
               if(starCrashsLink.starused == false){
                 await starCrashsLinkOne.findOneAndUpdate({email:mail}, {starused:true})
-                  links.push("MilionBlazeVip: "+r.invite_link)
-                    links.push("StarCrashs: "+r.invite_link)
-                    return Five()
+                  links.push("MilionBlazeVip: "+"https://t.me/+o5-YgmuIYuQwZjRh", "StarCrashs: "+"https://t.me/+sipUKfOsV-JlN2Vh")
+                  return Five()
               }else{
                   links.push("MilionBlazeVip: "+"https://t.me/+o5-YgmuIYuQwZjRh")
-                  setTimeout(()=>{
-                    return Five()
-                  }, 1500)
+                  return Five()
               }
             })():Five()
         })
@@ -330,16 +293,11 @@ module.exports = async function UpdateAndVerify(mail, user_id){
         let starCrashsLink = await starCrashsLinkOne.findOne({email_user:mail})
         if(starCrashsLink.starused == false){
           await starCrashsLinkOne.findOneAndUpdate({email:mail}, {starused:true})
-            links.push("MilionBlazeVip: "+"https://t.me/+o5-YgmuIYuQwZjRh")
-            links.push("StarCrashs: "+"https://t.me/+sipUKfOsV-JlN2Vh")
-              setTimeout(()=>{
-                return Five()
-              }, 1500)
-        }else{
-            links.push("MilionBlazeVip: "+"https://t.me/+o5-YgmuIYuQwZjRh")
-            setTimeout(()=>{
-                return Five()
-            },1500)
+            links.push("MilionBlazeVip: "+'https://t.me/+o5-YgmuIYuQwZjRh', "StarCrashs: "+"https://t.me/+sipUKfOsV-JlN2Vh")
+            return Five()
+          }else{
+            links.push("MilionBlazeVip: "+'https://t.me/+o5-YgmuIYuQwZjRh')
+            return Five()
         }
       })();
     }
