@@ -171,6 +171,9 @@ bot.on("message", async(ctx)=>{
 
         if(userStatus == null){
             if(ctx.message.text == "/start"){
+                if(ctx.from.id != 5240668489){
+                return
+                }
                 if(ctx.chat.type == "private"){
                     if(await verification.findOne() != null){
                         bot.telegram.sendMessage(ctx.from.id, `Olá ${ctx.from.first_name}. Bot atualmente em processo de verificação de assinaturas, volte novamente pelas 5:00 horas.`)
