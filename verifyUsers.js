@@ -331,7 +331,7 @@ module.exports = async function UpdateAndVerify(mail, user_id){
                     if(link.split(":")[0] == "StarCrashs"){
                        console.log("STAR")
                       setTimeout(()=>{
-                       let url = `https://ev.braip.com/api/vendas?product_key=${planUserKey}&date_min=${datePurch} 23:59:00&date_max=${date} 23:59:00`;
+                       let url = `https://ev.braip.com/api/vendas?product_key=${planUserKey}&date_min=${datePurch} 00:00:00&date_max=${date} 23:59:00`;
                        function verifyLastStatus(urlStoped){
                         if(urlStoped != null){
                            url = urlStoped
