@@ -6,7 +6,6 @@ let started = false
 let finished = false
 let finding = false;
 let existent = false;
-let LocalSession = require("telegraf-session-local")
 const mongoose = require("mongoose")
 
 const express = require("express")
@@ -69,7 +68,6 @@ bot.on("left_chat_member", (ctx)=>{
 })
 
 
-bot.use((new LocalSession({ database: 'users.json' })).middleware())
 const StatusUser = require("./models/StatusUser")
 let emailSaved;
 let groups = []
