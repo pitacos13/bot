@@ -147,6 +147,7 @@ bot.on("message", async(ctx)=>{
                             console.log(link)
                             bot.telegram.sendMessage(ctx.chat.id, link)
                         }
+                        groups = []
                         bot.telegram.sendMessage(ctx.chat.id, `Seja bem vindo novamente ${ctx.chat.first_name}!\r\nEsses são seus respectivos links de acesso aos grupos.\r\nCaso possua dúvidas, contate-nos.`)
                         await StatusUser.findOneAndUpdate({user_id:ctx.chat.id}, {finished:true})
                     }else if(messageToLower == "não" || messageToLower == "nao"){
