@@ -6,6 +6,9 @@ let started = false
 let finished = false
 let finding = false;
 let existent = false;
+let LocalSession = require("telegraf-session-local")
+bot.use((new LocalSession({ database: 'users.json' })).middleware())
+const StatusUser = require("./models/StatusUser")
 const mongoose = require("mongoose")
 
 const express = require("express")
