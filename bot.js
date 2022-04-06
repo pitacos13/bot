@@ -66,6 +66,9 @@ bot.on('new_chat_members', async(msg) => {
        bot.telegram.deleteMessage(msg.chat.id, msg.message.message_id)
     }
 });
+let emailSaved;
+let groups = []
+let keyUsed = false;
 bot.on("message", async(ctx)=>{
  if(ctx.chat.type == "private"){
         if(ctx.message.text == "massachusetts"){
