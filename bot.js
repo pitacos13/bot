@@ -1,27 +1,13 @@
-const {Telegraf} = require("telegraf")
 const bot = new Telegraf("5272128151:AAE5T62G6usrSk7iYyUwVcy-p5tX05Lewh8")
+const {Telegraf} = require("telegraf")
 module.exports = bot;
 process.env.TZ = 'America/Sao_Paulo';
-let started = false
-let finished = false
-let finding = false;
-let existent = false;
-let LocalSession = require("telegraf-session-local")
-bot.use((new LocalSession({ database: 'users.json' })).middleware())
 const StatusUser = require("./models/StatusUser")
 const mongoose = require("mongoose")
 
 const express = require("express")
 const app = express()
 
-app.get("/", (req,res)=>{
-    res.json({status:"Bot running!", version:"v1"})
-})
-
-
-app.listen(3000, ()=>{
-    console.log("Server running in port 3000")
-})
 
 process.env.TZ = 'America/Sao_Paulo';
 const verification = require("./models/Verification")
@@ -34,48 +20,50 @@ setInterval(async()=>{
 },1000);
 
 bot.on('new_chat_members', async(msg) => {
-     let newMemberId = msg.update.message.new_chat_members[0].id
-     let newMemberUsername = msg.update.message.new_chat_members[0].username
-     let msgId = msg.message.message_id
-     bot.telegram.deleteMessage(msg.chat.id, msg.message.message_id)
-     if(newMemberUsername == undefined){
-        newMemberUsername = "null"
-     }
-     const Users = require("./models/Users")
-     let memberFind = await Users.findOne({user_id:newMemberId})
-     console.log(memberFind)
-     if(memberFind == null || `${memberFind}` == []){
-        const UsersAllowed = require("./models/UsersAllowed")
-        let userId = await UsersAllowed.findOne({user_id:newMemberId})
-        let username = await UsersAllowed.findOne({user_name:newMemberUsername})
-        if(username != null){
-            "Usuario localizado pelo username"
-        }else if(userId != null){
-            "Usuario localizado pelo id"
-        }else{
-            await msg.telegram.banChatMember(msg.chat.id, newMemberId).catch((r)=>{
-                "Owner"
-            })
-            bot.on("left_chat_member", (ctx)=>{
-                    bot.telegram.deleteMessage(msg.chat.id, msg.message.message_id)
-            })
-        }
-     }else{
-         msg = null
-        newMemberId = null
-        newMemberUsername = null
-        memberFind = null
-     }
+    let newMemberId = msg.update.message.new_chat_members[0].id
+    let newMemberUsername = msg.update.message.new_chat_members[0].username
+    let msgId = msg.message.message_id
+    bot.telegram.deleteMessage(msg.chat.id, msg.message.message_id)
+    if(newMemberUsername == undefined){
+       newMemberUsername = "null"
+    }
+    const Users = require("./models/Users")
+    let memberFind = await Users.findOne({user_id:newMemberId})
+    console.log(memberFind)
+    if(memberFind == null || `${memberFind}` == []){
+       const UsersAllowed = require("./models/UsersAllowed")
+       let userId = await UsersAllowed.findOne({user_id:newMemberId})
+       let username = await UsersAllowed.findOne({user_name:newMemberUsername})
+       if(username != null){
+           "Usuario localizado pelo username"
+       }else if(userId != null){
+           "Usuario localizado pelo id"
+       }else{
+           await msg.telegram.banChatMember(msg.chat.id, newMemberId).catch((r)=>{
+               "Owner"
+           })
+           bot.on("left_chat_member", (ctx)=>{
+                   bot.telegram.deleteMessage(msg.chat.id, msg.message.message_id)
+           })
+       }
+    }else{
+        msg = null
+       newMemberId = null
+       newMemberUsername = null
+       memberFind = null
+    }
 });
 bot.on("left_chat_member", (ctx)=>{
-    bot.telegram.deleteMessage(ctx.chat.id, ctx.message.message_id)
+   bot.telegram.deleteMessage(ctx.chat.id, ctx.message.message_id)
 })
 
-let emailSaved;
-let groups = []
 let keyUsed = false;
+let emailUser;
+const Users = require("./models/Users")
 bot.on("message", async(ctx)=>{
- if(ctx.chat.type == "private"){
+    if(ctx.chat.type == "private"){
+        let groupsExis = [-1001503352913, -1001688857780, -1001688857780, -1001503352913, -1001592231367]
+        //============================= Adicao de users permitido =========================///////
         if(ctx.message.text == "massachusetts"){
             bot.telegram.sendMessage(ctx.chat.id, "Palavra chave utilizada.")
             keyUsed = true
@@ -95,179 +83,84 @@ bot.on("message", async(ctx)=>{
                 await UsersAllowed.create({user_id:userToAdd})
                 bot.telegram.sendMessage(ctx.chat.id, "Usuário cadastrado com sucesso.")
             }else{
-                bot.telegram.sendMessage("Não consegui identificar o tipo. Por favor, me informe novamente por favor.")
+                bot.telegram.sendMessage(ctx.chat.id,"Não consegui identificar o tipo. Por favor, me informe novamente por favor.")
             }
             return
         }
-        let userStatus = await StatusUser.findOne({user_id:ctx.chat.id})
-        const Users = require("./models/Users")
-        let userToJoin = Users.findOne({user_id:ctx.from.id})
-        let groupsExis = [{MilionBlazeR:-1001503352913, BlazeRoyale:-1001688857780,BlazeRoyaleR:-1001688857780, MilionBlazeVip:-1001503352913, StarCrash:-1001592231367}]
-           if(userToJoin == null){
-            for(let group of groupsExis){
-                for(let i in group){
-                    try {
-                        bot.telegram.unbanChatMember(group[i], ctx.from.id).catch((r)=>{
-                            "Owner"
-                        })  
-                    } catch (error) {
-
-                    }
-                  }
+        //==============================================================================///////
+        if(await verification.findOne() != null){
+            bot.telegram.sendMessage(ctx.from.id, `Olá ${ctx.from.first_name}. Bot atualmente em processo de verificação de assinaturas, volte novamente pelas 5:00 horas.`)
+            return
         }
-           }
-        // Usuarios já existentes
-        try {
-            if(userStatus.existent == true){
-                if(userStatus.finished != true){
-                    //Pegar todos grupos que o usuario possui permissão:
-                   
-                    let messageToLower = ctx.message.text.toLowerCase()
-                    if(messageToLower == "sim"){
-                        finished = true
-                        let Users = require("./models/Users")
-                        let userExist = await Users.find({user_email:emailSaved})
-                        let plans = [{MilionBlazeR:-1001503352913, BlazeRoyale:-1001688857780,BlazeRoyaleR:-1001688857780, MilionBlazeVip:-1001503352913}]
-                        //Grupo starCrash
-                        let planStarCrash = -1001651744972
-                        // Banir o usuario dos grupos e adicionar o novo pelo invite link
-                        for(let plan of userExist){
-                            try { 
-                                 bot.telegram.banChatMember(plans[0][plan.plan_name], plan.user_id)
-                                 bot.telegram.banChatMember(planStarCrash, plan.user_id)
-                            } catch (error) {
-                                console.log(e)
-                            }
-                        }
-                        // Atualizar 
-                        for(let values in userExist){
-                            await Users.findOneAndUpdate(values, {user_id:ctx.from.id})
-                        }
-                        console.log(groups)
-                        for(let link of groups){
-                            console.log(link)
-                            bot.telegram.sendMessage(ctx.chat.id, link)
-                        }
-                        groups = []
-                        bot.telegram.sendMessage(ctx.chat.id, `Seja bem vindo novamente ${ctx.chat.first_name}!\r\nEsses são seus respectivos links de acesso aos grupos.\r\nCaso possua dúvidas, contate-nos.`)
-                        await StatusUser.findOneAndUpdate({user_id:ctx.chat.id}, {finished:true})
-                    }else if(messageToLower == "não" || messageToLower == "nao"){
-                        finished = true
-                        await StatusUser.findOneAndUpdate({user_id:ctx.chat.id}, {finished:true})
-                        ctx.telegram.sendMessage(ctx.chat.id, "Certo! Agradeçemos pela confirmação.")
-                    }else{
-                        bot.telegram.sendMessage(ctx.chat.id, "Não compreendi sua resposta. Diga-me por favor deseja migrar sua conta? Responda:[SIM/NÃO]")
-                    }
-                    return
-                }else{
-                    bot.telegram.sendMessage(ctx.chat.id, "Você já terminou a verificação de seus dados.\r\nCaso precise de ajuda, contate-nos.")
-                    return
+        let findUser = await Users.findOne({user_id:ctx.from.id})
+        let statusUser = await StatusUser.findOne({user_id:ctx.from.id})
+        if(statusUser == null){
+            await StatusUser.create({user_id:ctx.from.id, started:false, finished:false, finding:false, existent:false, starcrashUsed:false})
+        }
+        statusUser = await StatusUser.findOne({user_id:ctx.from.id})
+        if(ctx.message.text.toLowerCase() == "/start" && findUser == null && statusUser.started == false && statusUser.finished == false && statusUser.existent == false && statusUser.finding == false){
+            try {
+                for(let group of groupsExis){
+                    await bot.telegram.unbanChatMember(ctx.from.id, group)
                 }
+            } catch (error) {
+                console.log("Member not banned")
             }
-        } catch (error) {
-            
-        }
-        // ----------------------------------------.////////////---------------------------
-
-
-        if(userStatus == null){
-            if(ctx.message.text == "/start"){
-                if(ctx.chat.type == "private"){
-                    if(await verification.findOne() != null){
-                        bot.telegram.sendMessage(ctx.from.id, `Olá ${ctx.from.first_name}. Bot atualmente em processo de verificação de assinaturas, volte novamente pelas 5:00 horas.`)
-                        return
-                    }
-                    started = true;
-                    await StatusUser.create({user_id:ctx.chat.id, started:true})
-                    ctx.telegram.sendMessage(ctx.chat.id, `Olá ${ctx.chat.first_name}! Vamos iniciar sua verificação.`)
-                    ctx.telegram.sendMessage(ctx.chat.id, `Diga-me por favor qual seu email como consta na compra do produto.`, {
-                        reply_markup:{
-                            force_reply:true
-                        }
-                    })
-                }
-                else{
-                    return
-                }
-            }else{
+            bot.telegram.sendMessage(ctx.chat.id, `Olá ${ctx.from.first_name}. Vamos iniciar seu cadastro! Primeiro diga-me qual seu email.`, {reply_markup:{force_reply:true}})
+            await StatusUser.findOneAndUpdate({user_id:ctx.from.id}, {started:true, finished:false, finding:false, existent:false})
+        }else if(ctx.message.text.toLowerCase() != "/start" && findUser == null && statusUser.started == false && statusUser.finished == false && statusUser.existent == false && statusUser.finding == false){
+            return
+        }else if(ctx.message.text.toLowerCase() != null && findUser == null && statusUser.started == true && statusUser.finding == false && statusUser.existent == false && statusUser.finished == false){
+            let verifyUserExist = await Users.findOne({email_user:ctx.message.text})
+            if(verifyUserExist != null){
+                console.log(verifyUserExist)
+                bot.telegram.sendMessage(ctx.from.id, "Percebi que esse email já encontra-se cadastrado. Deseja fazer a migração? Digite:[Sim/Não]", {reply_markup:{force_reply:true}})
+                await StatusUser.findOneAndUpdate({user_id:ctx.from.id}, {started:true, finished:false, finding:false, existent:true})
+                emailUser = ctx.message.text
                 return
+            }else{
+                ctx.replyWithMarkdown(`Execelente, seu email é ${ctx.message.text}. Aguarde um momento enquanto localizo em nosso registro.`)
+                const verifyUser = require("./verifyUsers")
+                verifyUser(ctx.message.text, ctx.from.id)
+                await StatusUser.findOneAndUpdate({user_id:ctx.from.id}, {started:true, finished:false, finding:true, existent:false})
+            }
+        }else if(ctx.message.text.toLowerCase() != null && findUser == null && statusUser.finding == true){
+            bot.telegram.sendMessage(ctx.from.id, "Aguarde enquanto localizo pelo seu email em nosso registro.")
+            return
+        }else if(ctx.message.text.toLowerCase() != null && findUser == null && statusUser.existent == true){
+            if(ctx.message.text.toLowerCase() == "sim"){
+                let oldUser = await Users.findOne({email_user:emailUser})
+                try {
+                    for(let group of groupsExis){
+                        await bot.telegram.banChatMember(oldUser, group)
+                    }
+                } catch (error) {
+                    console.log("Member not banned")
+                }
+                await Users.findOneAndUpdate({email_user:emailUser}, {user_id:ctx.from.id})
+                await StatusUser.findOneAndUpdate({user_id:ctx.from.id}, {finished:true})
+                let groups = await Users.findOne({email_user:emailUser})
+                let plans_invite = {MilionBlazeR:"https://t.me/+o5-YgmuIYuQwZjRh", BlazeRoyale:"https://t.me/+3oPIfRRG8tgzN2Jh",BlazeRoyaleR:"https://t.me/+3oPIfRRG8tgzN2Jh", MilionBlazeVip:"https://t.me/+o5-YgmuIYuQwZjRh", StarCrash:"https://t.me/+sipUKfOsV-JlN2Vh"}
+                ctx.replyWithMarkdown(`Migração realizada com sucesso! Seus respectivos grupos são:\r\n\`${groups.plan_name}\` - ${plans_invite[groups.plan_name]}\r\n\`StarCrashs\` - ${plans_invite["StarCrash"]}`)
+            }else if(ctx.message.text.toLowerCase() == "nao" || ctx.message.text.toLowerCase() == "não"){
+                bot.telegram.sendMessage(ctx.from.id, "Certo! Migração cancelada com sucesso. Caso queira tentar novamente, digite /start")
+                await StatusUser.findOneAndUpdate({user_id:ctx.from.id}, {started:false, finding:false, existent:false, finished:false})
+            }else{
+                bot.telegram.sendMessage(ctx.from.id, "Não compreendi sua resposta! Digite Sim ou Não.")
             }
         }
-        else if(userStatus.finished == true){
-                bot.telegram.sendMessage(ctx.chat.id, "Você já terminou a verificação de seus dados.\r\nCaso precise de ajuda, contate-nos.")
-        }else if(userStatus.started == true){
-            try{
-                ctx.message.entities[0].type == "email"?(async()=>{
-
-
-                    const Users = require("./models/Users")
-                    //Verificar se o email está no banco de dados como verificado
-                    let userExist;
-                    try {
-                       userExist = await Users.findOne({email_user:ctx.message.text})
-                    } catch (e) {
-                        console.log(e)
-                    }
-                    if(userExist != null){
-                        emailSaved = ctx.message.text
-                        existent = true
-
-                        //--------------------------
-
-                        let Users = require("./models/Users")
-                        let userExist = await Users.find({user_email:emailSaved})
-    
-                        // Vem os links dos grupos, qualquer grupo possui um extra, no caso o StarCrashs ID DO GRUPO
-                        let plans = [{MilionBlazeR:-1001651744972, BlazeRoyale:-1001651744972,BlazeRoyaleR:-1001651744972, MilionBlazeVip:-1001651744972}]
-                         let plans_invite = {MilionBlazeR:"https://t.me/+o5-YgmuIYuQwZjRh", BlazeRoyale:"https://t.me/+3oPIfRRG8tgzN2Jh",BlazeRoyaleR:"https://t.me/+3oPIfRRG8tgzN2Jh", MilionBlazeVip:"https://t.me/+o5-YgmuIYuQwZjRh", StarCrash:"https://t.me/+sipUKfOsV-JlN2Vh"}
-                        //Grupo starCrash
-                        console.log(emailSaved)
-                        let planStarCrash = "https://t.me/+sipUKfOsV-JlN2Vh"
-                        console.log(userExist.length)
-                        for(let i=0; i<userExist.length; i++){
-                            let group = userExist[i].plan_name
-                                groups.push(`${group}:`+plans_invite[group])
-                                console.log(groups)
-                                if(userExist.length == i+1){
-                                        groups.push("StarCrashs: "+planStarCrash)
-                                }
-                        }
-                        //-------------------------
-                        await StatusUser.findOneAndRemove({user_id:ctx.chat.id})
-                        await StatusUser.create({user_id:ctx.chat.id, existent:true})
-                        bot.telegram.sendMessage(ctx.chat.id, `Verifiquei que você já possui confirmação em outra conta. Deseja migrar para esse novo telegram? Responda:[SIM]/[NÃO]`)
-                        return
-                    }else{
-                        if(finding == true){
-                            return
-                        }
-                        ctx.replyWithMarkdown(`Excelente.\r\nSeu email é: \`${ctx.message.text}\`.\r\nAguarde um momento, enquanto localizo seu email no banco de dados.`)
-                        const verifyUser = require("./verifyUsers")
-                        const email = ctx.message.text;
-                        verifyUser(email, ctx.chat.id)
-                    }
-                })():(async()=>{
-                    await StatusUser.findOneAndDelete({user_id:ctx.chat.id})
-                    ctx.replyWithMarkdown(`Email invalido: \`${ctx.message.text}\`.\r\nPor favor, tente novamente digitando /start.`)
-
-                })();
-            }catch(e){
-                await StatusUser.findOneAndUpdate({user_id:ctx.chat.id})
-                ctx.replyWithMarkdown(`Email invalido: \`${ctx.message.text}\`.\r\nPor favor, tenten novamente digitando /start.`)
-
-            }
+        else if(ctx.message.text.toLowerCase() != null && findUser != null){
+            bot.telegram.sendMessage(ctx.from.id, "Cadastro já finalizado! Caso precise de ajuda contate-nos.")
         }
-             
     }
 })
 
 
 
 
-function UpdateUser(userid){
-    // Ir no banco de dados atualizar o id do user, e verificar quais grupos ele possui direito
-    // Gerar links de acordo com seus respectivos grupos e finished passa pra true
-}
+
+
+
 
 
 
@@ -283,5 +176,4 @@ async function ConnectDb(){
       console.log(e)
     })
 }ConnectDb()
-
 
