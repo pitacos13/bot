@@ -73,7 +73,6 @@ bot.on("left_chat_member", (ctx)=>{
 let emailSaved;
 let groups = []
 let keyUsed = false;
-bot.on("left_chat_member"
 bot.on("message", async(ctx)=>{
  if(ctx.chat.type == "private"){
         if(ctx.message.text == "massachusetts"){
