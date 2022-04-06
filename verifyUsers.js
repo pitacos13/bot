@@ -12,8 +12,7 @@ module.exports = async function UpdateAndVerify(mail, user_id){
     const Users = require("./models/Users")
     const bot = require("./bot")
     const StatusUser = require("./models/StatusUser")
-    let starCrashsLinkOne = require("./models/OneStarCrashLink")
-    await starCrashsLinkOne.create({email_user:mail, starused:false})
+    let starCrashsLinkOne = require("./models/StatusUser")
     let starCrashsLink = false;
     let dateToPurchase;
     let planUserKey;
@@ -23,6 +22,7 @@ module.exports = async function UpdateAndVerify(mail, user_id){
     let after_date = after[2]+"-"+after[1]+"-"+after[0]
     let now = new Date(Date.now() + (86400000*2)).toLocaleDateString("pt-BR").split("/")
     let now_date = now[2]+"-"+now[1]+"-"+now[0]
+    try {
     async function One(){
       await BlazeRoyale.findOne({email_user:mail}) == null?(()=>{
         // Before initialize two, running verification in last page of api reference to plan.
@@ -64,10 +64,10 @@ module.exports = async function UpdateAndVerify(mail, user_id){
             approved == true?(async()=>{
               planUser = "pro5ydyq"
               await Users.create({user_id:user_id, email_user:mail, plan_name:"BlazeRoyale", status_plan:true})
-              let starCrashsLink = await starCrashsLinkOne.findOne({email_user:mail})
-              if(starCrashsLink.starused == false){
+              let starCrashsLink = await starCrashsLinkOne.findOne({user_id:user_id})
+              if(starCrashsLink.starcrashUsed == false){
                 //Cria o link dos dois grupos e coloca starCrash como true
-                await starCrashsLinkOne.findOneAndUpdate({email:mail}, {starused:true})
+                await starCrashsLinkOne.findOneAndUpdate({user_id:user_id}, {starcrashUsed:true})
                   links.push("BlazeRoyale: "+"https://t.me/+3oPIfRRG8tgzN2Jh", "StarCrashs: "+"https://t.me/+sipUKfOsV-JlN2Vh")
                       return Two()
               }else{
@@ -83,9 +83,9 @@ module.exports = async function UpdateAndVerify(mail, user_id){
         dateToPurchase = UserValues.date_payment
         await Users.create({user_id:user_id, email_user:mail, plan_name:"BlazeRoyale", status_plan:true})
         // Criar o link do StarCrash juntamente, e colocar true para não criar novamente, caso ele encontre um grupo do user
-        let starCrashsLink = await starCrashsLinkOne.findOne({email_user:mail})
-        if(starCrashsLink.starused == false){
-          await starCrashsLinkOne.findOneAndUpdate({email:mail}, {starused:true})
+        let starCrashsLink = await starCrashsLinkOne.findOne({user_id:user_id})
+        if(starCrashsLink.starcrashUsed == false){
+          await starCrashsLinkOne.findOneAndUpdate({user_id:user_id}, {starcrashUsed:true})
               links.push("BlazeRoyale: "+"https://t.me/+3oPIfRRG8tgzN2Jh", "StarCrashs: "+"https://t.me/+sipUKfOsV-JlN2Vh")
                 return Two()
         }else{
@@ -135,9 +135,9 @@ module.exports = async function UpdateAndVerify(mail, user_id){
             approved == true?(async()=>{
               planUserKey = "prorv677"
               await Users.create({user_id:user_id, email_user:mail, plan_name:"BlazeRoyaleR", status_plan:true})
-              let starCrashsLink = await starCrashsLinkOne.findOne({email_user:mail})
-              if(starCrashsLink.starused == false){
-                await starCrashsLinkOne.findOneAndUpdate({email:mail}, {starused:true})
+              let starCrashsLink = await starCrashsLinkOne.findOne({user_id:user_id})
+              if(starCrashsLink.starcrashUsed == false){
+                await starCrashsLinkOne.findOneAndUpdate({user_id:user_id}, {starcrashUsed:true})
                   links.push("BlazeRoyaleR: "+"https://t.me/+3oPIfRRG8tgzN2Jh", "StarCrashs: "+"https://t.me/+sipUKfOsV-JlN2Vh")
                       return Three() 
               }else{
@@ -153,9 +153,9 @@ module.exports = async function UpdateAndVerify(mail, user_id){
         let UserValues = await BlazeRoyaleR.findOne({email_user:mail})
         dateToPurchase = UserValues.date_payment
         await Users.create({user_id:user_id, email_user:mail, plan_name:"BlazeRoyaleR",status_plan:true})
-        let starCrashsLink = await starCrashsLinkOne.findOne({email_user:mail})
-        if(starCrashsLink.starused == false){
-          await starCrashsLinkOne.findOneAndUpdate({email:mail}, {starused:true})
+        let starCrashsLink = await starCrashsLinkOne.findOne({user_id:user_id})
+        if(starCrashsLink.starcrashUsed == false){
+          await starCrashsLinkOne.findOneAndUpdate({user_id:user_id}, {starcrashUsed:true})
             links.push("BlazeRoyaleR: "+"https://t.me/+3oPIfRRG8tgzN2Jh", "StarCrashs: "+"https://t.me/+sipUKfOsV-JlN2Vh")
               return Three() 
         }else{
@@ -204,10 +204,10 @@ module.exports = async function UpdateAndVerify(mail, user_id){
             approved == true?(async()=>{
               planUserKey = "pro7rwod"
               await Users.create({user_id:user_id, email_user:mail, plan_name:"MilionBlazeR", status_plan:true})
-              let starCrashsLink = await starCrashsLinkOne.findOne({email_user:mail})
-              if(starCrashsLink.starused == false){
+              let starCrashsLink = await starCrashsLinkOne.findOne({user_id:user_id})
+              if(starCrashsLink.starcrashUsed == false){
                 
-                await starCrashsLinkOne.findOneAndUpdate({email:mail}, {starused:true})
+                await starCrashsLinkOne.findOneAndUpdate({user_id:user_id}, {starcrashUsed:true})
                   links.push("MilionBlazeR: "+"https://t.me/+o5-YgmuIYuQwZjRh", "StarCrashs: "+"https://t.me/+sipUKfOsV-JlN2Vh")
                   return Four()
               }else{
@@ -223,10 +223,10 @@ module.exports = async function UpdateAndVerify(mail, user_id){
         let UserValues = await MilionBlazeR.findOne({email_user:mail})
         dateToPurchase = UserValues.date_payment
         await Users.create({user_id:user_id, email_user:mail, plan_name:"MilionBlazeR", status_plan:true})
-        let starCrashsLink = await starCrashsLinkOne.findOne({email_user:mail})
-        if(starCrashsLink.starused == false){
+        let starCrashsLink = await starCrashsLinkOne.findOne({user_id:user_id})
+        if(starCrashsLink.starcrashUsed == false){
           
-          await starCrashsLinkOne.findOneAndUpdate({email:mail}, {starused:true})
+          await starCrashsLinkOne.findOneAndUpdate({user_id:user_id}, {starcrashUsed:true})
             links.push("MilionBlazeR: "+"https://t.me/+o5-YgmuIYuQwZjRh", "StarCrashs: "+"https://t.me/+sipUKfOsV-JlN2Vh")
               return Four()
         }else{
@@ -275,9 +275,9 @@ module.exports = async function UpdateAndVerify(mail, user_id){
             approved == true?(async()=>{
               planUserKey = "proox1gw"
               await Users.create({user_id:user_id, email_user:mail, plan_name:"MilionBlazeVip", status_plan:true})
-              let starCrashsLink = await starCrashsLinkOne.findOne({email_user:mail})
-              if(starCrashsLink.starused == false){
-                await starCrashsLinkOne.findOneAndUpdate({email:mail}, {starused:true})
+              let starCrashsLink = await starCrashsLinkOne.findOne({user_id:user_id})
+              if(starCrashsLink.starcrashUsed == false){
+                await starCrashsLinkOne.findOneAndUpdate({user_id:user_id}, {starcrashUsed:true})
                   links.push("MilionBlazeVip: "+"https://t.me/+o5-YgmuIYuQwZjRh", "StarCrashs: "+"https://t.me/+sipUKfOsV-JlN2Vh")
                   return Five()
               }else{
@@ -294,9 +294,9 @@ module.exports = async function UpdateAndVerify(mail, user_id){
         planUserKey = "proox1gw"
         //--------------------------------------
         await Users.create({user_id:user_id, email_user:mail, plan_name:"MilionBlazeVip", status_plan:true})
-        let starCrashsLink = await starCrashsLinkOne.findOne({email_user:mail})
-        if(starCrashsLink.starused == false){
-          await starCrashsLinkOne.findOneAndUpdate({email:mail}, {starused:true})
+        let starCrashsLink = await starCrashsLinkOne.findOne({user_id:user_id})
+        if(starCrashsLink.starcrashUsed == false){
+          await starCrashsLinkOne.findOneAndUpdate({user_id:user_id}, {starcrashUsed:true})
             links.push("MilionBlazeVip: "+'https://t.me/+o5-YgmuIYuQwZjRh', "StarCrashs: "+"https://t.me/+sipUKfOsV-JlN2Vh")
             return Five()
           }else{
@@ -323,9 +323,11 @@ module.exports = async function UpdateAndVerify(mail, user_id){
                 let date = dateNow[2]+"-"+dateNow[1]+"-"+dateNow[0]
                 let dateTwo = new Date(new Date(Date.now()).getTime() - 864000000).toLocaleDateString("pt-BR").split("/")
                 let datePurch = dateTwo[2]+"-"+dateTwo[1]+"-"+dateTwo[0]
+                let dateN = Date.now() - 864000000
+                let daeP = new Date(dateToPurchase).getTime()
                 let userFinded;
                 console.log(datePayment, dateToDay, datePayment >= dateToDay)
-                if(datePayment >= dateToDay){
+                if(daeP >= dateN){
                     console.log("AQUI 1")
                   for(let link of links){
                     if(link.split(":")[0] == "StarCrashs"){
@@ -367,7 +369,8 @@ module.exports = async function UpdateAndVerify(mail, user_id){
                           }
                         }).catch((e)=>{
                           let lastUrl = url
-                          if(e) return verifyLastStatus(lastUrl)
+                          console.log(e)
+                          throw(e)
                         })
                        }verifyLastStatus()
                       }, 604800000)
@@ -392,6 +395,10 @@ module.exports = async function UpdateAndVerify(mail, user_id){
           }
         })();
     }
+          
+  } catch (error) {
+    return console.log(error)
+  }
 }
 
 async function ConnectDb(){
