@@ -59,6 +59,7 @@ bot.on('new_chat_members', async(msg) => {
             })
         }
      }else{
+         msg = null
         newMemberId = null
         newMemberUsername = null
         memberFind = null
