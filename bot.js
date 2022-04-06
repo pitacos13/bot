@@ -45,16 +45,16 @@ bot.on('new_chat_members', async(msg) => {
        let username = await UsersAllowed.findOne({user_name:newMemberUsername})
        if(username != null){
            "Usuario localizado pelo username"
-           bot.telegram.deleteMessage(msg.chat.id, msg.message.message_id)
+           await bot.telegram.deleteMessage(msg.chat.id, msg.message.message_id)
        }else if(userId != null){
            "Usuario localizado pelo id"
-           bot.telegram.deleteMessage(msg.chat.id, msg.message.message_id)
+           await bot.telegram.deleteMessage(msg.chat.id, msg.message.message_id)
        }else{
            await msg.telegram.banChatMember(msg.chat.id, newMemberId).catch((r)=>{
                "Owner"
            })
-           bot.telegram.deleteMessage(msg.chat.id, msg.message.message_id)
-           bot.on("left_chat_member", (ctx)=>{
+           await bot.telegram.deleteMessage(msg.chat.id, msg.message.message_id)
+           await bot.on("left_chat_member", (ctx)=>{
                    bot.telegram.deleteMessage(msg.chat.id, msg.message.message_id)
            })
        }
@@ -63,7 +63,7 @@ bot.on('new_chat_members', async(msg) => {
        newMemberId = null
        newMemberUsername = null
        memberFind = null
-       bot.telegram.deleteMessage(msg.chat.id, msg.message.message_id)
+       await bot.telegram.deleteMessage(msg.chat.id, msg.message.message_id)
     }
 });
 bot.on("left_chat_member", (ctx)=>{
