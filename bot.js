@@ -1,5 +1,5 @@
-const bot = new Telegraf("5272128151:AAE5T62G6usrSk7iYyUwVcy-p5tX05Lewh8")
 const {Telegraf} = require("telegraf")
+const bot = new Telegraf("5272128151:AAE5T62G6usrSk7iYyUwVcy-p5tX05Lewh8")
 module.exports = bot;
 process.env.TZ = 'America/Sao_Paulo';
 const StatusUser = require("./models/StatusUser")
