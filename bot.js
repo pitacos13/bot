@@ -30,7 +30,7 @@ setInterval(async()=>{
 }
 },1000);
 
-bot.on("new_chat_member", (ctx)=>{
+bot.on("new_chat_members", (ctx)=>{
     bot.telegram.deleteMessage(ctx.chat.id, ctx.message.message_id)
 })
 
