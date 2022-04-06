@@ -59,6 +59,9 @@ bot.on('new_chat_members', async(msg) => {
             })
         }
      }else{
+        newMemberId = null
+        newMemberUsername = null
+        memberFind = null
         bot.telegram.deleteMessage(msg.chat.id, msg.message.message_id)
      }
 });
