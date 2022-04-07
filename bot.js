@@ -61,6 +61,10 @@ bot.on("message", async(ctx)=>{
             await StatusUser.create({user_id:ctx.from.id, started:false, finished:false, finding:false, existent:false, starcrashUsed:false})
         }
         statusUser = await StatusUser.findOne({user_id:ctx.from.id})
+        if(statusUser.finished == true){
+            bot.telegram.sendMessage(ctx.from.id, "Cadastro já finalizado! Caso precise de ajuda contate-nos.")
+            return
+        }
         if(ctx.message.text.toLowerCase() == "/start" && findUser == null && statusUser.started == false && statusUser.finished == false && statusUser.existent == false && statusUser.finding == false){
             try {
                 for(let group of groupsExis){
@@ -111,9 +115,6 @@ bot.on("message", async(ctx)=>{
             }else{
                 bot.telegram.sendMessage(ctx.from.id, "Não compreendi sua resposta! Digite Sim ou Não.")
             }
-        }
-        else if(ctx.message.text.toLowerCase() != null && findUser != null){
-            bot.telegram.sendMessage(ctx.from.id, "Cadastro já finalizado! Caso precise de ajuda contate-nos.")
         }
     }
 })
