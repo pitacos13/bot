@@ -125,7 +125,7 @@ bot.on("message", async(ctx)=>{
                 return
             }else{
                 bot.telegram.sendMessage(ctx.from.id, `Execelente, seu email é ${ctx.message.text}. Aguarde um momento enquanto localizo em nosso registro.`)
-                UpdateAndVerify(ctx.message.text, ctx.from.id)
+                verifyEmail(ctx.message.text, ctx.from.id)
                 await StatusUser.findOneAndUpdate({user_id:ctx.from.id}, {started:true, finished:false, finding:true, existent:false})
             }
         }else if(ctx.message.text.toLowerCase() != null && findUser == null && statusUser.finding == true){
