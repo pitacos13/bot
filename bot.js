@@ -160,7 +160,7 @@ bot.on("message", async(ctx)=>{
 
 
 
-module.exports = async function verifyEmail(email, userid) {
+async function verifyEmail(email, userid) {
   const axios = require("axios")
   const bot = require("./bot")
   const BlazeRoyale = require("./models/BlazeRoyale")
