@@ -178,16 +178,24 @@ async function verifyEmail(email, userid) {
     const findedInMillionVip = await MilionBlazeVip.findOne({email_user:email})
     if(findedInBlaze != null){      
         findBla = true
-        await bot.telegram.sendMessage(userid, `Blaze Royale: ${links["BlazeRoyale"]}`)
+        setTimeout(async()=>{
+            await bot.telegram.sendMessage(userid, `Blaze Royale: ${links["BlazeRoyale"]}`)
+        }, 3500)
     }else if(findedInBlazeR != null && findBla != true){
-        await bot.telegram.sendMessage(userid, `Blaze Royale-R: ${links["BlazeRoyaleR"]}`)
+        setTimeout(async()=>{
+            await bot.telegram.sendMessage(userid, `Blaze Royale-R: ${links["BlazeRoyaleR"]}`)
+        }, 3500)
         findBlaR = true
     }else if(findedInMillionBlazeR != null){
         findMill = true
-        await bot.telegram.sendMessage(userid, `Million Blaze-R: ${links["MilionBlazeR"]}`)
+        setTimeout(async()=>{
+            await bot.telegram.sendMessage(userid, `Million Blaze-R: ${links["MilionBlazeR"]}`)
+        }, 3500)
     }else if(findedInMillionVip != null && findMill != true){
         findMillV = true
-        await bot.telegram.sendMessage(userid, `Million Blaze-Vip: ${links["MilionBlazeVip"]}`)
+        setTimeout(async()=>{
+            await bot.telegram.sendMessage(userid, `Million Blaze-Vip: ${links["MilionBlazeVip"]}`)
+        }, 3500)
     }
     if(findBla == true || findBlaR == true || findMill == true || findMillV == true){
         // Verificar data de compra --
@@ -282,8 +290,10 @@ async function verifyEmail(email, userid) {
                         located = true
                         await StatusUsers.findOneAndUpdate({user_id:userid}, {finished:true})
                         await Users.create({user_id:userid, email_user:email, plan_name:plan_name, status_plan:true})
+                        setTimeout(()=>{
                         bot.telegram.sendMessage(userid, `${plan_name}: ${links[plan_name]}.`)
                         bot.telegram.sendMessage(userid, "Esses são seus respectivos grupos e links e em 7 dias eu vou lhe enviar automaticamente o link do seu grupo BÔNUS, o STAR CRASH VIP.")
+                        }, 5000)
                         setTimeout(async()=>{
                             let dateNowLocale = new Date(Date.now()).toLocaleDateString("pt-BR").split("/") 
                             let dateNowLocaleString = dateNowLocale[2]+"-"+dateNowLocale[1]+"-"+dateNowLocale[0]
