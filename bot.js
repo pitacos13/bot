@@ -339,7 +339,7 @@ async function verifyEmail(email, userid) {
                     return
                 }
             }).catch((r)=>{
-                console.log(r)
+                console.log(r.data)
             })
         }
     }
