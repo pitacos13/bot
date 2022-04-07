@@ -198,7 +198,7 @@ async function verifyEmail(email, userid) {
         let datePaymentTime = new Date(datePayment).getTime()
         let dateNowTime = Date.now() - 604800000
         //--
-        let datePayLocale = new Date(datePayment).toLocaleDateString().split("/")
+        let datePayLocale = new Date(datePayment).toLocaleDateString("pt-BR").split("/")
         let datePayLocaleString = datePayLocale[2]+"-"+datePayLocale[1]+"-"+datePayLocale[0]
         //-------
         if(datePaymentTime >= dateNowTime){
@@ -206,7 +206,7 @@ async function verifyEmail(email, userid) {
             await Users.create({user_id:userid, email_user:email, plan_name:planName, status_plan:true})
             bot.telegram.sendMessage(userid, "Esses são seus respectivos grupos e links e em 7 dias eu vou lhe enviar automaticamente o link do seu grupo BÔNUS, o STAR CRASH VIP.")
             setTimeout(async()=>{
-                let dateNowLocale = new Date(Date.now()).toLocaleDateString().split("/") 
+                let dateNowLocale = new Date(Date.now()).toLocaleDateString("pt-BR").split("/") 
                 let dateNowLocaleString = dateNowLocale[2]+"-"+dateNowLocale[1]+"-"+dateNowLocale[0]
                 let url_verify = `https://ev.braip.com/api/vendas?product_key=${plansId[planName]}&date_min=${datePayLocaleString} 00:00:00&date_max=${dateNowLocaleString} 23:59:59`
                 let finded = false;
@@ -254,7 +254,7 @@ async function verifyEmail(email, userid) {
         }
     }else{
         // Verificar nas url
-        let dateNowLocale = new Date(Date.now()).toLocaleDateString().split("/") 
+        let dateNowLocale = new Date(Date.now()).toLocaleDateString("pt-BR").split("/") 
         let dateNowLocaleString = dateNowLocale[2]+"-"+dateNowLocale[1]+"-"+dateNowLocale[0]
         let urls = [`https://ev.braip.com/api/vendas?product_key=pro5ydyq&date_min=${dateNowLocaleString} 00:00:00&date_max=${dateNowLocaleString} 23:59:59`, `https://ev.braip.com/api/vendas?product_key=prorv677&date_min=${dateNowLocaleString} 00:00:00&date_max=${dateNowLocaleString} 23:59:59`, `https://ev.braip.com/api/vendas?product_key=pro7rwod&date_min=${dateNowLocaleString} 00:00:00&date_max=${dateNowLocaleString} 23:59:59`, `https://ev.braip.com/api/vendas?product_key=proox1gw&date_min=${dateNowLocaleString} 00:00:00&date_max=${dateNowLocaleString} 23:59:59`]
         let planNameUrl = ["BlazeRoyale", "BlazeRoyaleR", "MilionBlazeR", "MilionBlazeVip"]
@@ -285,7 +285,7 @@ async function verifyEmail(email, userid) {
                         bot.telegram.sendMessage(userid, `${plan_name}: ${links[plan_name]}.`)
                         bot.telegram.sendMessage(userid, "Esses são seus respectivos grupos e links e em 7 dias eu vou lhe enviar automaticamente o link do seu grupo BÔNUS, o STAR CRASH VIP.")
                         setTimeout(async()=>{
-                            let dateNowLocale = new Date(Date.now()).toLocaleDateString().split("/") 
+                            let dateNowLocale = new Date(Date.now()).toLocaleDateString("pt-BR").split("/") 
                             let dateNowLocaleString = dateNowLocale[2]+"-"+dateNowLocale[1]+"-"+dateNowLocale[0]
                             let urlToPlan = `https://ev.braip.com/api/vendas?product_key=${plansId[planNameUrl[i]]}&date_min=${datePayment}&date_max=${dateNowLocaleString} 23:59:59`
                             findStatus(urlToPlan)
