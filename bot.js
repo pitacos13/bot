@@ -20,6 +20,44 @@ setInterval(async()=>{
 },1000);
 
 
+bot.on('new_chat_members', async(msg) => {
+    let newMemberId = msg.update.message.new_chat_members[0].id
+    let newMemberUsername = msg.update.message.new_chat_members[0].username
+    let msgId = msg.message.message_id
+    bot.telegram.deleteMessage(msg.chat.id, msg.message.message_id)
+    if(newMemberUsername == undefined){
+       newMemberUsername = "null"
+    }
+    const Users = require("./models/Users")
+    let memberFind = await Users.findOne({user_id:newMemberId})
+    console.log(memberFind)
+    if(memberFind == null || `${memberFind}` == []){
+       const UsersAllowed = require("./models/UsersAllowed")
+       let userId = await UsersAllowed.findOne({user_id:newMemberId})
+       let username = await UsersAllowed.findOne({user_name:newMemberUsername})
+       if(username != null){
+           "Usuario localizado pelo username"
+       }else if(userId != null){
+           "Usuario localizado pelo id"
+       }else{
+           await msg.telegram.banChatMember(msg.chat.id, newMemberId).catch((r)=>{
+               "Owner"
+           })
+           bot.on("left_chat_member", (ctx)=>{
+                   bot.telegram.deleteMessage(msg.chat.id, msg.message.message_id)
+           })
+       }
+    }else{
+        msg = null
+       newMemberId = null
+       newMemberUsername = null
+       memberFind = null
+    }
+});
+bot.on("left_chat_member", (ctx)=>{
+   bot.telegram.deleteMessage(ctx.chat.id, ctx.message.message_id)
+})
+
 let keyUsed = false;
 let emailUser;
 const Users = require("./models/Users")
@@ -119,49 +157,6 @@ bot.on("message", async(ctx)=>{
     }
 })
 
-
-
-
-
-
-
-bot.on('new_chat_members', async(msg) => {
-    let newMemberId = msg.update.message.new_chat_members[0].id
-    let newMemberUsername = msg.update.message.new_chat_members[0].username
-    let msgId = msg.message.message_id
-    bot.telegram.deleteMessage(msg.chat.id, msg.message.message_id)
-    if(newMemberUsername == undefined){
-       newMemberUsername = "null"
-    }
-    const Users = require("./models/Users")
-    let memberFind = await Users.findOne({user_id:newMemberId})
-    console.log(memberFind)
-    if(memberFind == null || `${memberFind}` == []){
-       const UsersAllowed = require("./models/UsersAllowed")
-       let userId = await UsersAllowed.findOne({user_id:newMemberId})
-       let username = await UsersAllowed.findOne({user_name:newMemberUsername})
-       if(username != null){
-           "Usuario localizado pelo username"
-       }else if(userId != null){
-           "Usuario localizado pelo id"
-       }else{
-           await msg.telegram.banChatMember(msg.chat.id, newMemberId).catch((r)=>{
-               "Owner"
-           })
-           bot.on("left_chat_member", (ctx)=>{
-                   bot.telegram.deleteMessage(msg.chat.id, msg.message.message_id)
-           })
-       }
-    }else{
-        msg = null
-       newMemberId = null
-       newMemberUsername = null
-       memberFind = null
-    }
-});
-bot.on("left_chat_member", (ctx)=>{
-   bot.telegram.deleteMessage(ctx.chat.id, ctx.message.message_id)
-})
 
 
 
