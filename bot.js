@@ -162,7 +162,6 @@ bot.on("message", async(ctx)=>{
 
 async function verifyEmail(email, userid) {
   const axios = require("axios")
-  const bot = require("./bot")
   const BlazeRoyale = require("./models/BlazeRoyale")
   const BlazeRoyaleR = require("./models/BlazeRoyaleR")
   const MilionBlazeR = require("./models/MilionBlazeR")
