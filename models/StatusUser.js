@@ -4,7 +4,9 @@ let StatusUser = new mongoose.model("StatusUser", {
     user_id:Number,
     started:Boolean,
     finished:Boolean,
-    existent:Boolean
+    finding:Boolean,
+    existent:Boolean,
+    starcrashUsed:Boolean
 })
 
 module.exports = StatusUser;
