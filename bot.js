@@ -338,8 +338,8 @@ async function verifyEmail(email, userid) {
                 }else{
                     return
                 }
-            }).catch((r)=>{
-                console.log(r.data)
+            }).catch((error)=>{
+                console.log(error.response.data)
             })
         }
     }
