@@ -274,7 +274,7 @@ async function verifyEmail(email, userid) {
         }else{
             await StatusUsers.findOneAndUpdate({user_id:userid}, {finished:true})
             await Users.create({user_id:userid, email_user:email, plan_name:planName, status_plan:true})
-            setTimeout(()=>{
+            setTimeout(async()=>{
               await bot.telegram.sendMessage(userid, "Star Crash: https://t.me/+sipUKfOsV-JlN2Vh")
               await bot.telegram.sendMessage(userid, "Esses são seus respectivos links/Grupos. Quaisquer dúvidas, contate-nos.")
             },10000)
