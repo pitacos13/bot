@@ -197,22 +197,22 @@ async function verifyEmail(email, userid) {
         findBla = true
         setTimeout(async()=>{
             await bot.telegram.sendMessage(userid, `Blaze Royale: ${links["BlazeRoyale"]}`)
-        }, 3500)
+        }, 10000)
     }else if(findedInBlazeR != null && findBla != true){
         setTimeout(async()=>{
             await bot.telegram.sendMessage(userid, `Blaze Royale-R: ${links["BlazeRoyaleR"]}`)
-        }, 3500)
+        }, 10000)
         findBlaR = true
     }else if(findedInMillionBlazeR != null){
         findMill = true
         setTimeout(async()=>{
             await bot.telegram.sendMessage(userid, `Million Blaze-R: ${links["MilionBlazeR"]}`)
-        }, 3500)
+        }, 10000)
     }else if(findedInMillionVip != null && findMill != true){
         findMillV = true
         setTimeout(async()=>{
             await bot.telegram.sendMessage(userid, `Million Blaze-Vip: ${links["MilionBlazeVip"]}`)
-        }, 3500)
+        }, 10000)
     }
     if(findBla == true || findBlaR == true || findMill == true || findMillV == true){
         // Verificar data de compra --
@@ -274,7 +274,9 @@ async function verifyEmail(email, userid) {
         }else{
             await StatusUsers.findOneAndUpdate({user_id:userid}, {finished:true})
             await Users.create({user_id:userid, email_user:email, plan_name:planName, status_plan:true})
-            await bot.telegram.sendMessage(userid, "Star Crash: https://t.me/+sipUKfOsV-JlN2Vh")
+            setTimeout(()=>{
+              await bot.telegram.sendMessage(userid, "Star Crash: https://t.me/+sipUKfOsV-JlN2Vh")
+            },10000)
             await bot.telegram.sendMessage(userid, "Esses são seus respectivos links/Grupos. Quaisquer dúvidas, contate-nos.")
         }
     }else{
