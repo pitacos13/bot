@@ -29,10 +29,11 @@ bot.on('new_chat_members', async(msg) => {
        newMemberUsername = "null"
     }
     const Users = require("./models/Users")
-    const UsersOfMone = require("./models/UsersMone")
+    const UsersOfMone = require("./models/UsersStatusMone")
     let memberFind = await Users.findOne({user_id:newMemberId})
+    let memberFindMone = await UsersOfMone.findOne({user_id:newMemberId})
     console.log(memberFind)
-    if(memberFind == null || `${memberFind}` == []){
+    if(memberFind == null || `${memberFind}` == [] && memberFindMone == null){
        const UsersAllowed = require("./models/UsersAllowed")
        let userId = await UsersAllowed.findOne({user_id:newMemberId})
        let username = await UsersAllowed.findOne({user_name:newMemberUsername})
