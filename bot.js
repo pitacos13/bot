@@ -128,6 +128,7 @@ bot.on("message", async(ctx)=>{
                 emailUser = ctx.message.text
                 return
             }else{
+                let usersMoneti = require("./models/UsersStatusMone")
                 bot.telegram.sendMessage(ctx.from.id, `Execelente, seu email é ${ctx.message.text}. Aguarde um momento enquanto localizo em nosso registro.`)
                 verifyEmail(ctx.message.text, ctx.from.id)
                 await StatusUser.findOneAndUpdate({user_id:ctx.from.id}, {started:true, finished:false, finding:true, existent:false})
