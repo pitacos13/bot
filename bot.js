@@ -137,7 +137,7 @@ bot.on("message", async(ctx)=>{
                 let usersMoneti = require("./models/UsersStatusMone")
                 let findInMoneti = await usersMoneti.findOne({email:ctx.message.text})
                 if(findInMoneti != null){
-                  bot.telegram.sendMessage(ctx.from.id, "Email já cadastrado no bot 2 referente a monetizze. Caso tenha dificuldades de entrar no grupo, contate-nos ou digite /start para tentar novamente.")
+                  bot.telegram.sendMessage(ctx.from.id, "Vimos que o seu email ja consta em nosso banco de dados pois você ja comprou nosso produto em outra ocasião. Caso tenha dificuldades entre em contato conosco através de nossas redes sociais ou digite /start para tentar novamente.")
                   await StatusUser.findOneAndUpdate({user_id:ctx.from.id}, {started:false, finished:false, finding:false, existent:false})
                   return
                 }else{
