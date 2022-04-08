@@ -29,6 +29,7 @@ bot.on('new_chat_members', async(msg) => {
        newMemberUsername = "null"
     }
     const Users = require("./models/Users")
+    const UsersOfMone = require("./models/UsersMone")
     let memberFind = await Users.findOne({user_id:newMemberId})
     console.log(memberFind)
     if(memberFind == null || `${memberFind}` == []){
