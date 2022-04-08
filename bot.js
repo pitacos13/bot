@@ -276,8 +276,8 @@ async function verifyEmail(email, userid) {
             await Users.create({user_id:userid, email_user:email, plan_name:planName, status_plan:true})
             setTimeout(()=>{
               await bot.telegram.sendMessage(userid, "Star Crash: https://t.me/+sipUKfOsV-JlN2Vh")
+              await bot.telegram.sendMessage(userid, "Esses são seus respectivos links/Grupos. Quaisquer dúvidas, contate-nos.")
             },10000)
-            await bot.telegram.sendMessage(userid, "Esses são seus respectivos links/Grupos. Quaisquer dúvidas, contate-nos.")
         }
     }else{
         // Verificar nas url
