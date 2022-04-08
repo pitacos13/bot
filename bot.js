@@ -356,7 +356,7 @@ async function verifyEmail(email, userid) {
                     // ---- Proxima url -- //
                     i++
                     if(urls[i] == null || urls[i] == undefined){
-                        bot.telegram.sendMessage(userid, "Não localizei nenhum registro em nosso banco de dados. Tente novamente digitando /start ou contate-nos.")
+                        bot.telegram.sendMessage(userid, "Não localizei nenhum registro em nosso banco de dados. Tente novamente em nosso segundo bot @ClubMilionBot2_bot, ou verifique se o email digitado está correto e tente novamente digitando /start. Quaisquer problemas contate-nos.")
                         await StatusUsers.findOneAndUpdate({user_id:userid}, {started:false, finding:false, finished:false, existent:false})
                         return
                     }else{
