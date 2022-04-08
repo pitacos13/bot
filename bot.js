@@ -95,7 +95,7 @@ bot.on("message", async(ctx)=>{
             return
         }
         //==============================================================================///////
-        if(ctx.message.text != String){
+        if(typeof(ctx.message.text) != "string"){
           return
         }
         if(await verification.findOne() != null){
