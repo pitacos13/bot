@@ -43,6 +43,12 @@ bot.on('new_chat_members', async(msg) => {
            await msg.telegram.banChatMember(msg.chat.id, newMemberId).catch((r)=>{
                "Owner"
            })
+           try{
+             await bot.telegram.sendMessage(newMemberId, "Olá! Percebi que você tentou entrar no grupo e foi banido. Caso esteja utilizando um link antigo, talvez seu cadastro não seja mais existente.\r\n\Tente novamente digitando /start ou contate-nos.")
+           }catch(e){
+            "-------"
+             console.log(e)
+           }
            bot.on("left_chat_member", (ctx)=>{
                    bot.telegram.deleteMessage(msg.chat.id, msg.message.message_id)
            })
@@ -129,9 +135,16 @@ bot.on("message", async(ctx)=>{
                 return
             }else{
                 let usersMoneti = require("./models/UsersStatusMone")
-                bot.telegram.sendMessage(ctx.from.id, `Execelente, seu email é ${ctx.message.text}. Aguarde um momento enquanto localizo em nosso registro.`)
-                verifyEmail(ctx.message.text, ctx.from.id)
-                await StatusUser.findOneAndUpdate({user_id:ctx.from.id}, {started:true, finished:false, finding:true, existent:false})
+                let findInMoneti = await usersMoneti.findOne({email:ctx.message.text})
+                if(findInMoneti != null){
+                  bot.telegram.sendMessage(ctx.from.id, "Email já cadastrado no bot 2 referente a monetizze. Caso tenha dificuldades de entrar no grupo, contate-nos ou digite /start para tentar novamente.")
+                  await StatusUser.findOneAndUpdate({user_id:ctx.from.id}, {started:false, finished:false, finding:false, existent:false})
+                  return
+                }else{
+                  bot.telegram.sendMessage(ctx.from.id, `Execelente, seu email é ${ctx.message.text}. Aguarde um momento enquanto localizo em nosso registro.`)
+                  verifyEmail(ctx.message.text, ctx.from.id)
+                  await StatusUser.findOneAndUpdate({user_id:ctx.from.id}, {started:true, finished:false, finding:true, existent:false})
+                }
             }
         }else if(ctx.message.text.toLowerCase() != null && findUser == null && statusUser.finding == true){
             bot.telegram.sendMessage(ctx.from.id, "Aguarde enquanto localizo pelo seu email em nosso registro.")
