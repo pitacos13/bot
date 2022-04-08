@@ -64,6 +64,7 @@ const Users = require("./models/Users")
 bot.on("message", async(ctx)=>{
     if(ctx.from.id != 5240668489){
     bot.telegram.sendMessage(ctx.from.id, "Bot atualmente em processo de atualização")
+      return
     }
     if(ctx.chat.type == "private"){
         let groupsExis = [-1001503352913, -1001688857780, -1001688857780, -1001503352913, -1001592231367]
