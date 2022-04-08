@@ -31,8 +31,7 @@ bot.on('new_chat_members', async(msg) => {
     const Users = require("./models/Users")
     const UsersOfMone = require("./models/UsersStatusMone")
     let memberFind = await Users.findOne({user_id:newMemberId})
-    let memberFindMone = await UsersOfMone.findOne({user_id:newMemberId})
-    console.log(memberFind)
+    let memberFindMone = await UsersOfMone.findOne({user_id:newMemberId, finished:true})
     if(memberFind == null || `${memberFind}` == [] && memberFindMone == null){
        const UsersAllowed = require("./models/UsersAllowed")
        let userId = await UsersAllowed.findOne({user_id:newMemberId})
