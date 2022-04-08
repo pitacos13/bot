@@ -238,7 +238,7 @@ function VerifyGroupMilionBlazeR(){
                   if(nexturl != null){
                       url = nexturl
                   }else{
-                      url = `https://ev.braip.com/api/vendas?product_key=${plans_key[plan]}&date_min=${min_date}%2011%3A15%3A00&date_max=${max_date}%2011%3A15%3A00`
+                      url = `https://ev.braip.com/api/vendas?product_key=${plans_key[plan]}&date_min=${min_date} 00:00:00&date_max=${max_date} 23:59:59`
                   }
                   const config = {
                       url:url,
