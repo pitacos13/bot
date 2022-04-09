@@ -69,10 +69,6 @@ let emailUser;
   let keyUsed;
 const Users = require("./models/Users")
 bot.on("message", async(ctx)=>{
-  if(ctx.from.id != 5240668489){
-    bot.telegram.sendMessage(ctx.from.id, "Bot atualemte em manutenção. Voltaremos em breve.")
-    return
-  }
         if(keyUsed == true){
             const UsersAllowed = require("./models/UsersAllowed")
             let userToAdd = ctx.message.text
