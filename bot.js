@@ -75,7 +75,8 @@ bot.on("message", async(ctx)=>{
     return
   }
       let UserKey = await UsersKey.findOne({user_id:ctx.from.id})  
-      if(UserKey.keyused == true){
+      if(UserKey != null){
+        if(UserKey.keyused == true){
             const UsersAllowed = require("./models/UsersAllowed")
             let userToAdd = ctx.message.text
             let typeUser = typeof(userToAdd)
@@ -91,8 +92,9 @@ bot.on("message", async(ctx)=>{
             }else{
                 bot.telegram.sendMessage(ctx.chat.id,"Não consegui identificar o tipo. Por favor, me informe novamente por favor.")
             }
-            return
+            return                  
         }
+      }
     if(ctx.chat.type == "private"){
         let groupsExis = [-1001503352913, -1001688857780, -1001688857780, -1001503352913, -1001592231367]
         //============================= Adicao de users permitido =========================///////
