@@ -73,6 +73,7 @@ bot.on("message", async(ctx)=>{
             const UsersAllowed = require("./models/UsersAllowed")
             let userToAdd = ctx.message.text
             let typeUser = typeof(userToAdd)
+            console.log(typeUser)
             if(typeUser != "number"){
                 await UsersAllowed.create({user_name:userToAdd})
                 bot.telegram.sendMessage(ctx.chat.id, "Usuário cadastrado com sucesso.")
