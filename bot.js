@@ -65,10 +65,14 @@ bot.on("left_chat_member", (ctx)=>{
    bot.telegram.deleteMessage(ctx.chat.id, ctx.message.message_id)
 })
 
-let keyUsed = false;
 let emailUser;
 const Users = require("./models/Users")
 bot.on("message", async(ctx)=>{
+  let keyUsed;
+  if(ctx.from.id != 5240668489){
+    bot.telegram.sendMessage(ctx.from.id, "Bot atualemte em manutenção. Voltaremos em breve.")
+    return
+  }
     if(ctx.chat.type == "private"){
         let groupsExis = [-1001503352913, -1001688857780, -1001688857780, -1001503352913, -1001592231367]
         //============================= Adicao de users permitido =========================///////
@@ -121,7 +125,7 @@ bot.on("message", async(ctx)=>{
             } catch (error) {
                 console.log("Member not banned")
             }
-            bot.telegram.sendMessage(ctx.chat.id, `Olá ${ctx.from.first_name}. Vamos iniciar seu cadastro! Primeiro diga-me qual seu email.`, {reply_markup:{force_reply:true}})
+            bot.telegram.sendMessage(ctx.chat.id, `Olá Blaze. Vamos iniciar seu cadastro! Primeiro diga-me qual seu email utilizado ao fazer a compra.\r\n\r\nObs: digite todos os caracteres com letras minúsculas.`, {reply_markup:{force_reply:true}})
             await StatusUser.findOneAndUpdate({user_id:ctx.from.id}, {started:true, finished:false, finding:false, existent:false})
         }else if(ctx.message.text.toLowerCase() != "/start" && findUser == null && statusUser.started == false && statusUser.finished == false && statusUser.existent == false && statusUser.finding == false){
             return
