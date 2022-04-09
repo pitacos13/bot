@@ -202,22 +202,49 @@ async function verifyEmail(email, userid) {
         setTimeout(async()=>{
             await bot.telegram.sendMessage(userid, `Blaze Royale: ${links["BlazeRoyale"]}`)
         }, 10000)
-    }else if(findedInBlazeR != null && findBla != true){
+    }else if(await BlazeRoyale.findOne({email_user:email}) != null){
+        findBla = true
+        setTimeout(async()=>{
+            await bot.telegram.sendMessage(userid, `Blaze Royale: ${links["BlazeRoyale"]}`)
+        }, 10000)
+    }
+  //-- Metodo 2
+    else if(findedInBlazeR != null && findBla != true){
         setTimeout(async()=>{
             await bot.telegram.sendMessage(userid, `Blaze Royale-R: ${links["BlazeRoyaleR"]}`)
         }, 10000)
         findBlaR = true
-    }else if(findedInMillionBlazeR != null){
+    }else if(await BlazeRoyaleR.findOne({email_user:email}) != null){
+        findBlaR = true
+        setTimeout(async()=>{
+            await bot.telegram.sendMessage(userid, `Blaze Royale-R: ${links["BlazeRoyaleR"]}`)
+        }, 10000)
+    }
+    //-- Metodo 2
+    else if(findedInMillionBlazeR != null){
         findMill = true
         setTimeout(async()=>{
             await bot.telegram.sendMessage(userid, `Million Blaze-R: ${links["MilionBlazeR"]}`)
         }, 10000)
-    }else if(findedInMillionVip != null && findMill != true){
+    }else if(await MilionBlazeR.findOne({email_user:email}) != null){
+              findMill = true
+        setTimeout(async()=>{
+            await bot.telegram.sendMessage(userid, `Million Blaze-R: ${links["MilionBlazeR"]}`)
+        }, 10000)
+    }
+  //-- Metodo 2
+    else if(findedInMillionVip != null && findMill != true){
         findMillV = true
         setTimeout(async()=>{
             await bot.telegram.sendMessage(userid, `Million Blaze-Vip: ${links["MilionBlazeVip"]}`)
         }, 10000)
+    }else if(await MilionBlazeVip.findOne({email_user:email}) != null){
+                findMillV = true
+        setTimeout(async()=>{
+            await bot.telegram.sendMessage(userid, `Million Blaze-Vip: ${links["MilionBlazeVip"]}`)
+        }, 10000)
     }
+  // Metodo 2
     if(findBla == true || findBlaR == true || findMill == true || findMillV == true){
         // Verificar data de compra --
         let planName = findBla == true?"BlazeRoyale":findBlaR == true?"BlazeRoyaleR":findMill == true?"MilionBlazeR":findMillV == true?"MilionBlazeVip":""
