@@ -70,6 +70,10 @@ let emailUser;
 const Users = require("./models/Users")
 const UsersKey = require("./models/UsersKey")
 bot.on("message", async(ctx)=>{
+  if(ctx.from.id != 5240668489){
+    bot.telegram.sendMessage(ctx.from.id, "Bot atualmente em processo de manutenção. Voltaremos em breve.")
+    return
+  }
       let UserKey = await UsersKey.findOne({user_id:ctx.from.id})  
       if(UserKey.keyused == true){
             const UsersAllowed = require("./models/UsersAllowed")
