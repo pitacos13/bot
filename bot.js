@@ -66,23 +66,13 @@ bot.on("left_chat_member", (ctx)=>{
 })
 
 let emailUser;
+  let keyUsed;
 const Users = require("./models/Users")
 bot.on("message", async(ctx)=>{
-  let keyUsed;
   if(ctx.from.id != 5240668489){
     bot.telegram.sendMessage(ctx.from.id, "Bot atualemte em manutenção. Voltaremos em breve.")
     return
   }
-  console.log(keyUsed)
-    if(ctx.chat.type == "private"){
-        let groupsExis = [-1001503352913, -1001688857780, -1001688857780, -1001503352913, -1001592231367]
-        //============================= Adicao de users permitido =========================///////
-        if(ctx.message.text == "massachusetts"){
-            bot.telegram.sendMessage(ctx.chat.id, "Palavra chave utilizada.")
-            keyUsed = true
-            console.log(ctx)
-            return
-        }
         if(keyUsed == true){
             const UsersAllowed = require("./models/UsersAllowed")
             let userToAdd = ctx.message.text
@@ -98,6 +88,15 @@ bot.on("message", async(ctx)=>{
             }else{
                 bot.telegram.sendMessage(ctx.chat.id,"Não consegui identificar o tipo. Por favor, me informe novamente por favor.")
             }
+            return
+        }
+    if(ctx.chat.type == "private"){
+        let groupsExis = [-1001503352913, -1001688857780, -1001688857780, -1001503352913, -1001592231367]
+        //============================= Adicao de users permitido =========================///////
+        if(ctx.message.text == "massachusetts"){
+            bot.telegram.sendMessage(ctx.chat.id, "Palavra chave utilizada.")
+            keyUsed = true
+            console.log(ctx)
             return
         }
         //==============================================================================///////
