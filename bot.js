@@ -73,14 +73,14 @@ bot.on("message", async(ctx)=>{
             const UsersAllowed = require("./models/UsersAllowed")
             let userToAdd = ctx.message.text
             let typeUser = typeof(userToAdd)
-            if(typeUser == "string"){
-                keyUsed = false
+            if(typeUser != "number"){
                 await UsersAllowed.create({user_name:userToAdd})
                 bot.telegram.sendMessage(ctx.chat.id, "Usuário cadastrado com sucesso.")
-            }else if(typeUser == "number"){
                 keyUsed = false
+            }else if(typeUser == "number"){
                 await UsersAllowed.create({user_id:userToAdd})
                 bot.telegram.sendMessage(ctx.chat.id, "Usuário cadastrado com sucesso.")
+                keyUsed = false
             }else{
                 bot.telegram.sendMessage(ctx.chat.id,"Não consegui identificar o tipo. Por favor, me informe novamente por favor.")
             }
