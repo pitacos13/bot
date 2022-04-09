@@ -193,10 +193,10 @@ async function verifyEmail(email, userid) {
     let findBla, findBlaR, findMill, findMillV;
     const links = {MilionBlazeR:"https://t.me/+o5-YgmuIYuQwZjRh", BlazeRoyale:"https://t.me/+3oPIfRRG8tgzN2Jh",BlazeRoyaleR:"https://t.me/+3oPIfRRG8tgzN2Jh", MilionBlazeVip:"https://t.me/+o5-YgmuIYuQwZjRh", StarCrash:"https://t.me/+sipUKfOsV-JlN2Vh"}
     let plansId = {BlazeRoyaleR:"prorv677", MilionBlazeR:"pro7rwod", BlazeRoyale:"pro5ydyq", MilionBlazeVip:"proox1gw"}
-    const findedInBlaze = await BlazeRoyale.findOne({email_user:email})
-    const findedInBlazeR = await BlazeRoyaleR.findOne({email_user:email})
-    const findedInMillionBlazeR = await MilionBlazeR.findOne({email_user:email})
-    const findedInMillionVip = await MilionBlazeVip.findOne({email_user:email})
+    const findedInBlaze = await BlazeRoyale.findOne({email_user:email.toLowerCase()})
+    const findedInBlazeR = await BlazeRoyaleR.findOne({email_user:email.toLowerCase()})
+    const findedInMillionBlazeR = await MilionBlazeR.findOne({email_user:email.toLowerCase()})
+    const findedInMillionVip = await MilionBlazeVip.findOne({email_user:email.toLowerCase()})
     if(findedInBlaze != null){      
         findBla = true
         setTimeout(async()=>{
