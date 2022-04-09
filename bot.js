@@ -99,7 +99,7 @@ bot.on("message", async(ctx)=>{
         let groupsExis = [-1001503352913, -1001688857780, -1001688857780, -1001503352913, -1001592231367]
         //============================= Adicao de users permitido =========================///////
         if(ctx.message.text == "massachusetts"){
-            if(await UsersKey.findOne({user_id:ctx.from.id} != null)){
+            if(await UsersKey.findOne({user_id:ctx.from.id}) != null){
               await UsersKey.findOneAndUpdate({user_id:ctx.from.id}, {keyused:true})
             }else{
               await UsersKey.create({user_id:ctx.from.id, keyused:true})
