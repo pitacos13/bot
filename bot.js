@@ -68,8 +68,10 @@ bot.on("left_chat_member", (ctx)=>{
 let emailUser;
   let keyUsed;
 const Users = require("./models/Users")
+const UsersKey = require("./models/UsersKey")
 bot.on("message", async(ctx)=>{
-        if(keyUsed == true){
+      let UserKey = await UsersKey.findOne({user_id:ctx.from.id})  
+      if(UserKey.keyused == true){
             const UsersAllowed = require("./models/UsersAllowed")
             let userToAdd = ctx.message.text
             let typeUser = typeof(userToAdd)
@@ -77,11 +79,11 @@ bot.on("message", async(ctx)=>{
             if(typeUser != "number"){
                 await UsersAllowed.create({user_name:userToAdd})
                 bot.telegram.sendMessage(ctx.chat.id, "Usuário cadastrado com sucesso.")
-                keyUsed = false
+                await UsersKey.findOneAndUpdate({user_id:ctx.from.id}, {keyused:false})  
             }else if(typeUser == "number"){
                 await UsersAllowed.create({user_id:userToAdd})
                 bot.telegram.sendMessage(ctx.chat.id, "Usuário cadastrado com sucesso.")
-                keyUsed = false
+                await UsersKey.findOneAndUpdate({user_id:ctx.from.id}, {keyused:false})  
             }else{
                 bot.telegram.sendMessage(ctx.chat.id,"Não consegui identificar o tipo. Por favor, me informe novamente por favor.")
             }
@@ -91,8 +93,12 @@ bot.on("message", async(ctx)=>{
         let groupsExis = [-1001503352913, -1001688857780, -1001688857780, -1001503352913, -1001592231367]
         //============================= Adicao de users permitido =========================///////
         if(ctx.message.text == "massachusetts"){
+            if(await UsersKey.findOne({user_id:ctx.from.id} != null)){
+              await UsersKey.findOneAndUpdate({user_id:ctx.from.id}, {keyused:true})
+            }else{
+              await UsersKey.create({user_id:ctx.from.id, keyused:true})
+            }
             bot.telegram.sendMessage(ctx.chat.id, "Palavra chave utilizada.")
-            keyUsed = true
             console.log(ctx)
             return
         }
