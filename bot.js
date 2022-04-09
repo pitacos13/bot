@@ -73,6 +73,7 @@ bot.on("message", async(ctx)=>{
     bot.telegram.sendMessage(ctx.from.id, "Bot atualemte em manutenção. Voltaremos em breve.")
     return
   }
+  console.log(keyUsed)
     if(ctx.chat.type == "private"){
         let groupsExis = [-1001503352913, -1001688857780, -1001688857780, -1001503352913, -1001592231367]
         //============================= Adicao de users permitido =========================///////
