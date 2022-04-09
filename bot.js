@@ -164,7 +164,11 @@ bot.on("message", async(ctx)=>{
                 await StatusUser.findOneAndUpdate({user_id:ctx.from.id}, {finished:true})
                 let groups = await Users.findOne({email_user:emailUser})
                 let plans_invite = {MilionBlazeR:"https://t.me/+o5-YgmuIYuQwZjRh", BlazeRoyale:"https://t.me/+3oPIfRRG8tgzN2Jh",BlazeRoyaleR:"https://t.me/+3oPIfRRG8tgzN2Jh", MilionBlazeVip:"https://t.me/+o5-YgmuIYuQwZjRh", StarCrash:"https://t.me/+sipUKfOsV-JlN2Vh"}
-                ctx.replyWithMarkdown(`Migração realizada com sucesso! Seus respectivos grupos são:\r\n\`${groups.plan_name}\` - ${plans_invite[groups.plan_name]}\r\n\`StarCrashs\` - ${plans_invite["StarCrash"]}`)
+                try{
+                  ctx.replyWithMarkdown(`Migração realizada com sucesso! Seus respectivos grupos são:\r\n\`${groups.plan_name}\` - ${plans_invite[groups.plan_name]}\r\n\`StarCrashs\` - ${plans_invite["StarCrash"]}`)
+                }catch(e){
+                console.log(e)
+                }
             }else if(ctx.message.text.toLowerCase() == "nao" || ctx.message.text.toLowerCase() == "não"){
                 bot.telegram.sendMessage(ctx.from.id, "Certo! Migração cancelada com sucesso. Caso queira tentar novamente, digite /start")
                 await StatusUser.findOneAndUpdate({user_id:ctx.from.id}, {started:false, finding:false, existent:false, finished:false})
