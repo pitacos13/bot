@@ -28,6 +28,7 @@ async function RemoveOrAdd(){
                 // Year - month - day
                 let date_today = data_json.split("/")[2]+"-"+data_json.split("/")[1]+"-"+data_json.split("/")[0]
                 let dataMy_json = JSON.parse(JSON.stringify(dateMyAfter))
+                console.log(dataMy_json)
                 let date_before = dataMy_json.date_until.split("/")[2]+"-"+dataMy_json.date_until.split("/")[1]+"-"+dataMy_json.date_until.split("/")[0]
                 /////// ---------- Functions ---------//////
 let urls = [
