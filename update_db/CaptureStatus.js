@@ -38,6 +38,7 @@ let urls = [
 `https://ev.braip.com/api/vendas?product_key=pro7rwod&date_min=${date_before} 00:00:00&date_max=${date_today} 23:59:59`]
 let plansOfUrls = ["MilionBlazeVip", "BlazeRoyaleR", "BlazeRoyale", "MilionBlazeR"]
 let i = 0;
+let usersApproved = [];
 getAllAppproved(urls[i])
 function getAllAppproved(url){
     const config = {
@@ -58,11 +59,18 @@ function getAllAppproved(url){
                 let date_payment = value.trans_updatedate
                 let trans_status = value.trans_status
                 let plan_id = value.product_key
-                SaveDataRecived(email_user, trans_status, plan_id, Models, url, date_payment)
+                usersApproved.push({email_user:email_user, plan_status:trans_status, date_payment:date_payment, plan_id:plan_id, page_find:url})
             }
         }
-      async function SaveDataRecived(email, status, planId, model, url_finded, datepay){
-      let user = await model.findOne({email_user:email})
+        if(next_url != null){
+            getAllAppproved(next_url)
+        }else{
+            console.log("Finished")
+          for(let value of usersApproved){
+             SaveDataRecived(value.email_user, value.plan_status, value.plan_id, Models, value.url, value.date_payment)        
+          }
+            async function SaveDataRecived(email, status, planId, model, url_finded, datepay){
+              let user = await model.findOne({email_user:email})
                   user == null?(async()=>{
                     await model.create({
                       email_user:email,
@@ -74,11 +82,7 @@ function getAllAppproved(url){
                       date_payment:datepay
                     })
                   })():""
-    }
-        if(next_url != null){
-            getAllAppproved(next_url)
-        }else{
-            console.log("Finished")
+            }
             i++
             if(url[i] == undefined){
 
