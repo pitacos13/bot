@@ -39,6 +39,7 @@ let urls = [
 ]
 let plansOfUrls = ["MilionBlazeVip", "BlazeRoyaleR", "BlazeRoyale", "MilionBlazeR"]
 let i = 0;
+let emailsMillionVip = []
 getAllAppproved(urls[i])
 async function getAllAppproved(url){
     const config = {
@@ -50,8 +51,6 @@ async function getAllAppproved(url){
         }
     }
     axios(config).then(async(r)=>{
-      console.log(date_before)
-      console.log(date_today)
         let values = r.data.data
         let next_url = r.data.next_page_url
         const Models = require(`./models/${plansOfUrls[i]}`)
@@ -61,11 +60,15 @@ async function getAllAppproved(url){
                 let date_payment = value.trans_updatedate
                 let trans_status = value.trans_status
                 let plan_id = value.product_key
+                if(plan_id == "proox1gw"){
+                emailsMillionVip.push(email_user)
+                }
                 SaveDataRecived(email_user, trans_status, plan_id, Models, url, date_payment)
             }
         }
         if(next_url != null){
             getAllAppproved(next_url)
+            console.log(emailsMillionVip.length)
         }else{
             console.log("Finished")
             i++
