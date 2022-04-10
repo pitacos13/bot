@@ -32,13 +32,14 @@ async function RemoveOrAdd(){
                 let date_before = dataMy_json.date_until.split("/")[2]+"-"+dataMy_json.date_until.split("/")[1]+"-"+dataMy_json.date_until.split("/")[0]
                 /////// ---------- Functions ---------//////
 let urls = [
+`https://ev.braip.com/api/vendas?product_key=proox1gw&date_min=${date_before} 00:00:00&date_max=${date_today} 23:59:59`,
 `https://ev.braip.com/api/vendas?product_key=prorv677&date_min=${date_before} 00:00:00&date_max=${date_today} 23:59:59`, 
 `https://ev.braip.com/api/vendas?product_key=pro5ydyq&date_min=${date_before} 00:00:00&date_max=${date_today} 23:59:59`,
-`https://ev.braip.com/api/vendas?product_key=pro7rwod&date_min=${date_before} 00:00:00&date_max=${date_today} 23:59:59`,
-`https://ev.braip.com/api/vendas?product_key=proox1gw&date_min=${date_before} 00:00:00&date_max=${date_today} 23:59:59`]
-let plansOfUrls = ["BlazeRoyaleR", "BlazeRoyale", "MilionBlazeR", "MilionBlazeVip"]
+`https://ev.braip.com/api/vendas?product_key=pro7rwod&date_min=${date_before} 00:00:00&date_max=${date_today} 23:59:59`
+]
+let plansOfUrls = ["MilionBlazeVip", "BlazeRoyaleR", "BlazeRoyale", "MilionBlazeR"]
 let i = 0;
-getAllAppproved(urls[i])
+async getAllAppproved(urls[i])
 function getAllAppproved(url){
     const config = {
         url:url,
@@ -58,7 +59,7 @@ function getAllAppproved(url){
                 let date_payment = value.trans_updatedate
                 let trans_status = value.trans_status
                 let plan_id = value.product_key
-                SaveDataRecived(email_user, trans_status, plan_id, Models, url, date_payment)
+                await SaveDataRecived(email_user, trans_status, plan_id, Models, url, date_payment)
             }
         }
         if(next_url != null){
@@ -91,7 +92,6 @@ function getAllAppproved(url){
 
 async function SaveDataRecived(email, status, planId, model, url_finded, datepay){
   let user = await model.findOne({email_user:email})
-            try {
               user == null?(async()=>{
                 await model.create({
                   email_user:email,
@@ -103,9 +103,6 @@ async function SaveDataRecived(email, status, planId, model, url_finded, datepay
                   date_payment:datepay
                 })
               })():""
-            } catch (e) {
-              console.log(e)
-            }
 }
 
             })
