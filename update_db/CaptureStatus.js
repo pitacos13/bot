@@ -50,6 +50,8 @@ async function getAllAppproved(url){
         }
     }
     axios(config).then(async(r)=>{
+      console.log(date_before)
+      console.log(date_today)
         let values = r.data.data
         let next_url = r.data.next_page_url
         const Models = require(`./models/${plansOfUrls[i]}`)
