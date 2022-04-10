@@ -5,7 +5,7 @@ const fs = require("fs");
 const bot = require("../bot");
 process.env.TZ = 'America/Sao_Paulo';
 function RemoveOrAdd(){
-  const RemoveUsers = require("./removeUsers")
+  const RemoveUsers = require("../remove_addusers/removeUsers"")
 
     fs.readFile("./update_db/date.txt", "utf-8", (err,data)=>{
         if(err) return console.log(err)
