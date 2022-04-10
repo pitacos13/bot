@@ -39,8 +39,8 @@ let urls = [
 ]
 let plansOfUrls = ["MilionBlazeVip", "BlazeRoyaleR", "BlazeRoyale", "MilionBlazeR"]
 let i = 0;
-async getAllAppproved(urls[i])
-function getAllAppproved(url){
+getAllAppproved(urls[i])
+async function getAllAppproved(url){
     const config = {
         url:url,
         method:"get",
