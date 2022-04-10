@@ -59,7 +59,7 @@ async function getAllAppproved(url){
                 let date_payment = value.trans_updatedate
                 let trans_status = value.trans_status
                 let plan_id = value.product_key
-                await SaveDataRecived(email_user, trans_status, plan_id, Models, url, date_payment)
+                SaveDataRecived(email_user, trans_status, plan_id, Models, url, date_payment)
             }
         }
         if(next_url != null){
