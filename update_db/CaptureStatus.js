@@ -2,7 +2,6 @@ const mongoose = require("mongoose")
 
 var axios = require('axios');
 const fs = require("fs");
-const bot = require("../bot");
 process.env.TZ = 'America/Sao_Paulo';
 function RemoveOrAdd(){
   const RemoveUsers = require("../remove_addusers/removeUsers")
@@ -59,20 +58,23 @@ function getAllAppproved(url){
                 let date_payment = value.trans_updatedate
                 let trans_status = value.trans_status
                 let plan_id = value.product_key
-                let user = await Models.findOne({email_user:email_user})
-                user == null?(async()=>{
-                  await Models.create({
-                    email_user:email_user,
-                    plan_status:trans_status,
-                    plan_id:plan_id,
-                    max_date:date_today.toString(),
-                    min_date:date_before.toString(),
-                    page_find:url,
-                    date_payment:date_payment
-                  })
-                })():""
+                SaveDataRecived(email_user, trans_status, plan_id, Models, url, date_payment)
             }
         }
+      async function SaveDataRecived(email, status, planId, model, url_finded, datepay){
+      let user = await model.findOne({email_user:email})
+                  user == null?(async()=>{
+                    await model.create({
+                      email_user:email,
+                      plan_status:status,
+                      plan_id:planId,
+                      max_date:date_today.toString(),
+                      min_date:date_before.toString(),
+                      page_find:url_finded,
+                      date_payment:datepay
+                    })
+                  })():""
+    }
         if(next_url != null){
             getAllAppproved(next_url)
         }else{
