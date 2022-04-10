@@ -26,7 +26,8 @@ async function RemoveOrAdd(){
                 let data_json = new Date(dateNowMy).toLocaleDateString("pt-BR")
                 // Year - month - day
                 let date_today = data_json.split("/")[2]+"-"+data_json.split("/")[1]+"-"+data_json.split("/")[0]
-                let date_before = data_json.date_until.split("/")[2]+"-"+data_json.date_until.split("/")[1]+"-"+data_json.date_until.split("/")[0]
+                let dataMy_json = data
+                let date_before = dataMy_json.date_until.split("/")[2]+"-"+dataMy_json.date_until.split("/")[1]+"-"+dataMy_json.date_until.split("/")[0]
                 /////// ---------- Functions ---------//////
 let urls = [
 `https://ev.braip.com/api/vendas?product_key=prorv677&date_min=${date_before} 00:00:00&date_max=${date_today} 23:59:59`, 
