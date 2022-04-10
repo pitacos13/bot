@@ -4,7 +4,7 @@ var axios = require('axios');
 const fs = require("fs");
 const bot = require("../bot");
 process.env.TZ = 'America/Sao_Paulo';
-module.exports = function RemoveOrAdd(){
+async function RemoveOrAdd(){
   const RemoveUsers = require("../remove_addusers/removeUsers")
 
     fs.readFile("./update_db/date.txt", "utf-8", (err,data)=>{
@@ -282,6 +282,7 @@ async function SaveDataRecived(email, status, planId, model, url_finded, datepay
         })
     })
 };
+RemoveOrAdd()
 
 (async()=>{
   let user = "botTelegram"
