@@ -105,6 +105,10 @@ bot.on("message", async(ctx)=>{
             return
         }
         //==============================================================================///////
+         if(ctx.message.text){
+          bot.telegram.sendMessage(ctx.from.id, "Bot atualmente em manutenção, tente em nosso segundo bot: @ClubMilionBot2_bot ou volte mais tarde quanto terminarmos o processo.")
+           return 
+         }
         if(typeof(ctx.message.text) != "string"){
           return
         }
