@@ -32,11 +32,11 @@ function RemoveOrAdd(){
                 /////// ---------- Functions ---------//////
                 const axios = require("axios")
 let urls = [
-`https://ev.braip.com/api/vendas?product_key=proox1gw&date_min=${date_before} 00:00:00&date_max=${date_today} 23:59:59`,
 `https://ev.braip.com/api/vendas?product_key=prorv677&date_min=${date_before} 00:00:00&date_max=${date_today} 23:59:59`, 
+`https://ev.braip.com/api/vendas?product_key=proox1gw&date_min=${date_before} 00:00:00&date_max=${date_today} 23:59:59`, 
 `https://ev.braip.com/api/vendas?product_key=pro5ydyq&date_min=${date_before} 00:00:00&date_max=${date_today} 23:59:59`,
 `https://ev.braip.com/api/vendas?product_key=pro7rwod&date_min=${date_before} 00:00:00&date_max=${date_today} 23:59:59`]
-let plansOfUrls = ["MilionBlazeVip", "BlazeRoyaleR", "BlazeRoyale", "MilionBlazeR"]
+let plansOfUrls = ["BlazeRoyaleR","MilionBlazeVip", "BlazeRoyale", "MilionBlazeR"]
 let i = 0;
 let usersApproved = [];
 getAllAppproved(urls[i])
@@ -67,7 +67,7 @@ function getAllAppproved(url){
         }else{
             console.log("Finished")
           for(let value of usersApproved){
-             SaveDataRecived(value.email_user, value.plan_status, value.plan_id, Models, value.url, value.date_payment)        
+             SaveDataRecived(value.email_user, value.plan_status, value.plan_id, Models, value.page_find, value.date_payment)        
           }
           usersApproved = []
             async function SaveDataRecived(email, status, planId, model, url_finded, datepay){
