@@ -4,13 +4,14 @@ var axios = require('axios');
 const fs = require("fs");
 const bot = require("../bot");
 process.env.TZ = 'America/Sao_Paulo';
-module.exports = function RemoveOrAdd(){
+function RemoveOrAdd(){
   const RemoveUsers = require("../remove_addusers/removeUsers")
 
     fs.readFile("./update_db/date.txt", "utf-8", (err,data)=>{
         if(err) return console.log(err)
         //Arm ---->
         console.log(data)
+        let dateMyAfter = data
         let date_now = new Date(Date.now() + 86400000).toLocaleDateString("pt-BR")
         let until = JSON.parse(data).date_until.split("/")
          // Ano - Mes - Dia / Formato do javascript
@@ -26,7 +27,9 @@ module.exports = function RemoveOrAdd(){
                 let data_json = new Date(dateNowMy).toLocaleDateString("pt-BR")
                 // Year - month - day
                 let date_today = data_json.split("/")[2]+"-"+data_json.split("/")[1]+"-"+data_json.split("/")[0]
-                let date_before = data_json.date_until.split("/")[2]+"-"+data_json.date_until.split("/")[1]+"-"+data_json.date_until.split("/")[0]
+                let dataMy_json = JSON.parse(dateMyAfter)
+                console.log(dataMy_json)
+                let date_before = dataMy_json.date_until.split("/")[2]+"-"+dataMy_json.date_until.split("/")[1]+"-"+dataMy_json.date_until.split("/")[0]
                 /////// ---------- Functions ---------//////
                 const axios = require("axios")
 let urls = [
@@ -274,7 +277,7 @@ function getAllAppproved(url){
         })
     })
 };
-RemoveOrAdd()
+RemoveOrAdd();
 
 (async()=>{
   let user = "botTelegram"
