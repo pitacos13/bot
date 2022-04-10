@@ -59,7 +59,7 @@ function getAllAppproved(url){
                 let date_payment = value.trans_updatedate
                 let trans_status = value.trans_status
                 let plan_id = value.product_key
-                let user = await Models.findOne({email_user:email})
+                let user = await Models.findOne({email_user:email_user})
                 user == null?(async()=>{
                   await Models.create({
                     email_user:email_user,
