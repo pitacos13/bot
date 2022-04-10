@@ -25,7 +25,7 @@ module.exports = function RemoveOrAdd(){
                 let dateNowMy = Date.now()
                 let data_json = new Date(dateNowMy).toLocaleDateString("pt-BR")
                 // Year - month - day
-                let date_today = data_json.date_today.split("/")[2]+"-"+data_json.date_today.split("/")[1]+"-"+data_json.date_today.split("/")[0]
+                let date_today = data_json.split("/")[2]+"-"+data_json.split("/")[1]+"-"+data_json.split("/")[0]
                 let date_before = data_json.date_until.split("/")[2]+"-"+data_json.date_until.split("/")[1]+"-"+data_json.date_until.split("/")[0]
                 /////// ---------- Functions ---------//////
                 
