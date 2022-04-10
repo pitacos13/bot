@@ -69,6 +69,7 @@ function getAllAppproved(url){
           for(let value of usersApproved){
              SaveDataRecived(value.email_user, value.plan_status, value.plan_id, Models, value.url, value.date_payment)        
           }
+          usersApproved = []
             async function SaveDataRecived(email, status, planId, model, url_finded, datepay){
               let user = await model.findOne({email_user:email})
                   user == null?(async()=>{
