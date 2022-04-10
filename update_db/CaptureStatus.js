@@ -282,7 +282,7 @@ async function SaveDataRecived(email, status, planId, model, url_finded, datepay
         })
     })
 };
-RemoveOrAdd()
+RemoveOrAdd();
 
 (async()=>{
   let user = "botTelegram"
