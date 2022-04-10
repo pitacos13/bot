@@ -9,6 +9,7 @@ async function RemoveOrAdd(){
 
     fs.readFile("./date.txt", "utf-8", (err,data)=>{
         if(err) return console.log(err)
+        let dateMyAfter = data
         //Arm ---->
         console.log(data)
         let date_now = new Date(Date.now() + 86400000).toLocaleDateString("pt-BR")
@@ -26,7 +27,7 @@ async function RemoveOrAdd(){
                 let data_json = new Date(dateNowMy).toLocaleDateString("pt-BR")
                 // Year - month - day
                 let date_today = data_json.split("/")[2]+"-"+data_json.split("/")[1]+"-"+data_json.split("/")[0]
-                let dataMy_json = data
+                let dataMy_json = JSON.parse(JSON.stringify(dateMyAfter))
                 let date_before = dataMy_json.date_until.split("/")[2]+"-"+dataMy_json.date_until.split("/")[1]+"-"+dataMy_json.date_until.split("/")[0]
                 /////// ---------- Functions ---------//////
 let urls = [
