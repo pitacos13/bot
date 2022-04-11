@@ -2,7 +2,9 @@ const mongoose = require("mongoose")
 let { Telegraf } = require("telegraf")
 const path = require("path")
 let bot = new Telegraf("5272128151:AAE5T62G6usrSk7iYyUwVcy-p5tX05Lewh8")
-     let chatId;
+let chatId;
+let plans_invite = {MilionBlazeR:"https://t.me/+o5-YgmuIYuQwZjRh", BlazeRoyale:"https://t.me/+3oPIfRRG8tgzN2Jh",BlazeRoyaleR:"https://t.me/+3oPIfRRG8tgzN2Jh", MilionBlazeVip:"https://t.me/+o5-YgmuIYuQwZjRh", StarCrash:"https://t.me/+sipUKfOsV-JlN2Vh"}
+let planInvite;
 async function removeUsersPending(){
      const bot = require("../bot")
      const myUsers = require("../models/Users")
@@ -14,12 +16,16 @@ async function removeUsersPending(){
       const planName = usersRecived[i].plan_name
       if(planName == "MilionBlazeR"){
           chatId = -1001503352913
+           planInvite = "https://t.me/+o5-YgmuIYuQwZjRh"
       }else if(planName == "BlazeRoyale"){
           chatId = -1001688857780
+          planInvite = "https://t.me/+3oPIfRRG8tgzN2Jh"
       }else if(planName == "BlazeRoyaleR"){
           chatId = -1001688857780
+           planInvite = "https://t.me/+3oPIfRRG8tgzN2Jh"
       }else if(planName == "MilionBlazeVip"){
           chatId = -1001503352913
+           planInvite = "https://t.me/+o5-YgmuIYuQwZjRh"
       }
       let active = Boolean;
        const Plans = require(`../models/${planName}`)
@@ -53,7 +59,6 @@ async function kikeUserOrAdd(user_mail, user_id, status, plan){
     myUsers = require("./models/Users")
   }
   const user = await myUsers.findOneAndUpdate({email_user:user_mail, plan_name:plan}, {status_plan:status}) // FindOne não, aqui é outro metodo.
-  let plans_invite = {MilionBlazeR:"https://t.me/+o5-YgmuIYuQwZjRh", BlazeRoyale:"https://t.me/+3oPIfRRG8tgzN2Jh",BlazeRoyaleR:"https://t.me/+3oPIfRRG8tgzN2Jh", MilionBlazeVip:"https://t.me/+o5-YgmuIYuQwZjRh", StarCrash:"https://t.me/+sipUKfOsV-JlN2Vh"}
   status == false?(async()=>{
     let oneStatusTrue = false;
     const userToFind = await myUsers.find({email_user:user_mail})
@@ -80,11 +85,11 @@ async function kikeUserOrAdd(user_mail, user_id, status, plan){
       bot.telegram.unbanChatMember(chatId, user_id) // Grupo
       bot.telegram.unbanChatMember(-1001592231367, user_id) // StarCrash
       // Grupo 
-      bot.telegram.sendMessage(user_id, plans_invite[plan])
+      bot.telegram.sendMessage(user_id, planInvite)
       // StarCrash // Se o star Crash Já foi usado 1 vez, e o email for igual, evitamos enviar ele novamente
-      bot.telegram.sendMessage(user_id, plans_invite["StarCrashs"])
+      bot.telegram.sendMessage(user_id, "https://t.me/+sipUKfOsV-JlN2Vh")
         })():(()=>{
-          throw("User not removed");
+          console.log("User not removed")
         })();
       }).catch((e)=>{
         console.log(e)
