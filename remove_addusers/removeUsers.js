@@ -16,7 +16,7 @@ async function removeUsersPending(){
       let status = Boolean;
          
         const Plans = require(`../models/${planName}`)
-        let find_User = await Plans.findOne({email_user:userMail})   
+        let find_User = await Plans.findOne({email_user:user_mail})   
         if(find_User == null){
           //Remove
           status = false
