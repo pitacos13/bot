@@ -138,8 +138,7 @@ bot.on("message", async(ctx)=>{
                 bot.telegram.sendMessage(ctx.from.id, "Cadastro reinicializado! Digite /start para cadastrar-se novamente.", {reply_markup:{force_reply:true}})
             }
             return
-        }
-       
+        }else{
         if(await verification.findOne() != null){
             bot.telegram.sendMessage(ctx.from.id, `Olá ${ctx.from.first_name}. Bot atualmente em processo de verificação de assinaturas, volte mais tarde pelas 5horas.`)
             return
@@ -216,7 +215,8 @@ bot.on("message", async(ctx)=>{
                 bot.telegram.sendMessage(ctx.from.id, "Não compreendi sua resposta! Digite Sim ou Não.")
             }
         }
-    }
+    }  
+}
 })
 
 
