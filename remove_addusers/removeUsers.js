@@ -20,12 +20,12 @@ async function removeUsersPending(){
           //Remove
           active = false
           console.log("User not finded")
-           kikeUserOrAdd(userMail, userId, active, planName)
+           await kikeUserOrAdd(userMail, userId, active, planName)
         }
         else{
           // Encontrou
            active = true
-           kikeUserOrAdd(userMail, userId, active, planName)
+           await kikeUserOrAdd(userMail, userId, active, planName)
         }
     }
     const path = require("path")
