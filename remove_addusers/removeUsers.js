@@ -60,6 +60,7 @@ async function kikeUserOrAdd(user_mail, user_id, status, plan){
   let plans = [{MilionBlazeR:-1001503352913, BlazeRoyale:-1001688857780,BlazeRoyaleR:-1001688857780, MilionBlazeVip:-1001503352913, StarCrash:-1001592231367}]
   let plans_invite = {MilionBlazeR:"https://t.me/+o5-YgmuIYuQwZjRh", BlazeRoyale:"https://t.me/+3oPIfRRG8tgzN2Jh",BlazeRoyaleR:"https://t.me/+3oPIfRRG8tgzN2Jh", MilionBlazeVip:"https://t.me/+o5-YgmuIYuQwZjRh", StarCrash:"https://t.me/+sipUKfOsV-JlN2Vh"}
   status == false?(async()=>{
+    console.log(plans[0][plan])
     let oneStatusTrue = false;
     const userToFind = await myUsers.find({email_user:user_mail})
     for(let ele of userToFind){
@@ -72,6 +73,7 @@ async function kikeUserOrAdd(user_mail, user_id, status, plan){
   if(oneStatusTrue == true){
     const {Telegraf} = require("telegraf")
     const bot = require("../bot")
+    console.log(plans[0][plan])
     bot.telegram.banChatMember(plans[0][plan], user_id)
   }else{
     const {Telegraf} = require("telegraf")
