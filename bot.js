@@ -123,7 +123,7 @@ bot.on("message", async(ctx)=>{
             if(userExist == null){
                 bot.telegram.sendMessage(ctx.from.id, "Você ainda não inicializou o cadastro. Por favor, digite /start para iniciar.")
             }else{
-                await User.findOneAnd({user_id:ctx.from.id})
+                await User.findOneAndRemove({user_id:ctx.from.id})
                 // Apagar o cadastro e permiti-lo refazer, removendo ele da lista de banidos de todos grupos.
                 await StatusUser.findOneAndRemove({user_id:ctx.from.id})
                 //--Unban
