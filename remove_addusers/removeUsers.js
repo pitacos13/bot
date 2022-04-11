@@ -12,6 +12,7 @@ async function removeUsersPending(){
       const user_mail = usersRecived[i].email_user
       const user_id = usersRecived[i].user_id
       const plan = usersRecived[i].plan_name
+      let planName = plan
       let status = Boolean;
          
         const Plans = require(`../models/${planName}`)
