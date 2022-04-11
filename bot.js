@@ -161,7 +161,7 @@ bot.on("message", async(ctx)=>{
             } catch (error) {
                 console.log("Member not banned")
             }
-            bot.telegram.sendMessage(ctx.chat.id, `Olá Blaze. Vamos iniciar seu cadastro! Primeiro diga-me qual seu email utilizado ao fazer a compra.\r\n\r\nObs: digite todos os caracteres com letras minúsculas.`, {reply_markup:{force_reply:true}})
+            bot.telegram.sendMessage(ctx.chat.id, `Olá Blaze. Vamos iniciar seu cadastro! Primeiro diga-me qual seu email utilizado ao fazer a compra.\r\n\r\nObs: digite seu email exatamente como consta na compra do produto, caso possua qualquer problema durante o cadastro digite /reiniciar.`, {reply_markup:{force_reply:true}})
             await StatusUser.findOneAndUpdate({user_id:ctx.from.id}, {started:true, finished:false, finding:false, existent:false})
         }else if(ctx.message.text.toLowerCase() == "/start" && findUser == null && statusUser.started == true && statusUser.finished == false && statusUser.existent == false && statusUser.finding == false){
           bot.telegram.sendMessage(ctx.from.id, "Por favor, diga-me qual seu email como consta na compra do produto.", {reply_markup:{force_reply:true}})
@@ -238,10 +238,40 @@ async function verifyEmail(email, userid) {
     let findBla, findBlaR, findMill, findMillV;
     const links = {MilionBlazeR:"https://t.me/+o5-YgmuIYuQwZjRh", BlazeRoyale:"https://t.me/+3oPIfRRG8tgzN2Jh",BlazeRoyaleR:"https://t.me/+3oPIfRRG8tgzN2Jh", MilionBlazeVip:"https://t.me/+o5-YgmuIYuQwZjRh", StarCrash:"https://t.me/+sipUKfOsV-JlN2Vh"}
     let plansId = {BlazeRoyaleR:"prorv677", MilionBlazeR:"pro7rwod", BlazeRoyale:"pro5ydyq", MilionBlazeVip:"proox1gw"}
-    const findedInBlaze = await BlazeRoyale.findOne({email_user:email.toLowerCase()})
-    const findedInBlazeR = await BlazeRoyaleR.findOne({email_user:email.toLowerCase()})
-    const findedInMillionBlazeR = await MilionBlazeR.findOne({email_user:email.toLowerCase()})
-    const findedInMillionVip = await MilionBlazeVip.findOne({email_user:email.toLowerCase()})
+    let findedInBlaze;
+    let findedInBlazeR;
+    let findedInMillionBlazeR;
+    let findedInMillionVip;
+    
+        let findInBlaze = await BlazeRoyale.find()
+        let toLowerBlaze = findInBlaze.map(value => value.email_user.toLowerCase())
+        let valueFindedB = findInBlaze.filter((v, i) => i == toLowerBlaze.indexOf(email.toLowerCase()))
+        email = valueFindedB.email_user
+        findedInBlaze = valueFindedB
+
+
+        let findInBlazeR = await BlazeRoyaleR.find()
+        let toLowerBlazeR = findInBlazeR.map(value => value.toLowerCase())
+        let valueFindedBR = findInBlazeR.filter((v, i) => i == toLowerBlazeR.indexOf(email.toLowerCase()))
+        email = valueFindedBR.email_user
+        findedInBlazeR = valueFindedBR
+
+
+
+        let findInMillionR = await MilionBlazeR.find()
+        let toLowerMillionR = findInMillionR.map(value => value.toLowerCase())
+        let valueFindedMR = findInMillionR.filter((v, i) => i == toLowerMillionR.indexOf(email.toLowerCase()))
+        email = valueFindedMR.email_user
+        findedInMillionBlazeR = valueFindedMR
+
+
+
+        let findInMillionVip = await BlazeRoyale.find()
+        let toLowerMillionVip = findInMillionVip.map(value => value.toLowerCase())
+        let valueFindedMV = findInMillionVip.filter((v, i) => i == toLowerMillionVip.indexOf(email.toLowerCase()))
+        email = valueFindedMV.email_user
+        findedInMillionVip = valueFindedMV
+
     if(findedInBlaze != null){      
         findBla = true
         setTimeout(async()=>{
