@@ -100,7 +100,6 @@ async function kikeUserOrAdd(user_mail, user_id, status, plan){
   })();
 }
 module.exports = removeUsersPending
-removeUsersPending();
 (async()=>{
     let user = "botTelegram"
     let password = "bottelegram2022"
