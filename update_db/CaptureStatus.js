@@ -86,7 +86,7 @@ function getAllAppproved(url){
                   })():""
             }
             i++
-            if(url[i] == undefined){
+            if(urls[i] == undefined){
 
                 //-------Metods-------------------------------
 
@@ -115,7 +115,7 @@ function getAllAppproved(url){
                     async function getDatePlans(){
                         if(plans[plan] == null){
                           const RemoveUsers = require("../remove_addusers/removeUsers")
-                          // Offiline return RemoveUsers()
+                          return RemoveUsers()
                         }else{
                             const Model = require(`./models/${plans[plan]}`)
                             let oneResultPlan = await Model.findOne()
@@ -266,6 +266,9 @@ function getAllAppproved(url){
                 getAllAppproved(urls[i])
             }
         }
+    }).catch((r)=>{
+         console.log(r.response.data)
+         return getAllAppproved(url)
     })
 }
 
