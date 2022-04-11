@@ -10,7 +10,7 @@ async function removeUsersPending(){
      const myUsers = require("../models/Users")
     let usersRecived = await myUsers.find()
     for(let i=0; i<usersRecived.length; i++){
-      console.log(usersRecived.length)
+      console.log(i)
       const userMail = usersRecived[i].email_user
       const userId = usersRecived[i].user_id
       const planName = usersRecived[i].plan_name
