@@ -246,31 +246,31 @@ async function verifyEmail(email, userid) {
         let findInBlaze = await BlazeRoyale.find()
         let toLowerBlaze = findInBlaze.map(value => value.email_user.toLowerCase())
         let valueFindedB = findInBlaze.filter((v, i) => i == toLowerBlaze.indexOf(email.toLowerCase()))
-        email = valueFindedB.email_user
-        findedInBlaze = valueFindedB
+        email = valueFindedB[0] == null?email:valueFindedB[0].email_user
+        findedInBlaze = valueFindedB[0]
 
 
         let findInBlazeR = await BlazeRoyaleR.find()
         let toLowerBlazeR = findInBlazeR.map(value => value.toLowerCase())
         let valueFindedBR = findInBlazeR.filter((v, i) => i == toLowerBlazeR.indexOf(email.toLowerCase()))
-        email = valueFindedBR.email_user
-        findedInBlazeR = valueFindedBR
+        email = valueFindedBR[0] == null?email:valueFindedBR[0].email_user
+        findedInBlazeR = valueFindedBR[0]
 
 
 
         let findInMillionR = await MilionBlazeR.find()
         let toLowerMillionR = findInMillionR.map(value => value.toLowerCase())
         let valueFindedMR = findInMillionR.filter((v, i) => i == toLowerMillionR.indexOf(email.toLowerCase()))
-        email = valueFindedMR.email_user
-        findedInMillionBlazeR = valueFindedMR
+        email = valueFindedMR[0] == null?email:valueFindedMR[0].email_user
+        findedInMillionBlazeR = valueFindedMR[0]
 
 
 
         let findInMillionVip = await BlazeRoyale.find()
         let toLowerMillionVip = findInMillionVip.map(value => value.toLowerCase())
         let valueFindedMV = findInMillionVip.filter((v, i) => i == toLowerMillionVip.indexOf(email.toLowerCase()))
-        email = valueFindedMV.email_user
-        findedInMillionVip = valueFindedMV
+        email = valueFindedMV[0] == null?email:valueFindedMV[0].email_user
+        findedInMillionVip = valueFindedMV[0]
 
     if(findedInBlaze != null){      
         findBla = true
