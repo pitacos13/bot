@@ -112,6 +112,29 @@ bot.on("message", async(ctx)=>{
         if(typeof(ctx.message.text) != "string"){
           return
         }
+         if(ctx.message.text.toLowerCase() == "/reiniciar"){
+            const User = require("./models/Users")
+            //-- Verificar na db pertencente ao usuario, verificar se já foi registrado, verificar se não foi registrado e se inicializou.
+            let userExist = await StatusUser.findOne({user_id:ctx.from.id})
+            if(userExist == null){
+                bot.telegram.sendMessage(ctx.from.id, "Você ainda não inicializou o cadastro. Por favor, digite /start para iniciar.")
+            }else{
+                await User.findOneAnd({user_id:ctx.from.id})
+                // Apagar o cadastro e permiti-lo refazer, removendo ele da lista de banidos de todos grupos.
+                await StatusUser.findOneAndRemove({user_id:ctx.from.id})
+                //--Unban
+                let groups = [-1001592231367, -1001688857780, -1001503352913]
+                for(let group of groups){
+                    try {
+                        await bot.telegram.unbanChatMember(ctx.from.id, group)
+                    } catch (error) {
+                        console.log("Member reinitialized but not banned.")
+                    }
+                }
+                bot.telegram.sendMessage(ctx.from.id, "Cadastro reinicializado! Digite /start para cadastrar-se novamente.", {reply_markup:{force_reply:true}})
+            }
+            return
+        }
         if(await verification.findOne() != null){
             bot.telegram.sendMessage(ctx.from.id, `Olá ${ctx.from.first_name}. Bot atualmente em processo de verificação de assinaturas, volte mais tarde pelas 5horas.`)
             return
@@ -272,7 +295,7 @@ async function verifyEmail(email, userid) {
         //-------
         if(datePaymentTime >= dateNowTime){
             await StatusUsers.findOneAndUpdate({user_id:userid}, {finished:true})
-            await Users.create({user_id:userid, email_user:email, plan_name:planName, status_plan:true})
+            await Users.create({user_id:userid, email_user:email.toLowerCase(), plan_name:planName, status_plan:true})
             bot.telegram.sendMessage(userid, "Esses são seus respectivos grupos e links e em 7 dias eu vou lhe enviar automaticamente o link do seu grupo BÔNUS, o STAR CRASH VIP.")
             setTimeout(async()=>{
                 let dateNowLocale = new Date(Date.now()).toLocaleDateString("pt-BR").split("/") 
@@ -317,7 +340,7 @@ async function verifyEmail(email, userid) {
             }, 604800000)
         }else{
             await StatusUsers.findOneAndUpdate({user_id:userid}, {finished:true})
-            await Users.create({user_id:userid, email_user:email, plan_name:planName, status_plan:true})
+            await Users.create({user_id:userid, email_user:email.toLowerCase(), plan_name:planName, status_plan:true})
             setTimeout(async()=>{
               await bot.telegram.sendMessage(userid, "Star Crash: https://t.me/+sipUKfOsV-JlN2Vh")
               await bot.telegram.sendMessage(userid, "Esses são seus respectivos links/Grupos. Quaisquer dúvidas, contate-nos.")
