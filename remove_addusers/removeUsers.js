@@ -9,20 +9,14 @@ async function removeUsersPending(){
     const myUsers = require("../models/Users")
     let usersRecived = await myUsers.find()
     for(let i=0; i<usersRecived.length; i++){
-      console.log(usersRecived.length)
       const userMail = usersRecived[i].email_user
       const userId = usersRecived[i].user_id
       const planName = usersRecived[i].plan_name
       let active = Boolean;
-      try {
+         
         const Plans = require(`../models/${planName}`)
-        let find_User = await Plans.find({email_user:userMail})   
-        if(`${find_User}` == []){
-          // Remove
-          active = false
-          console.log("User not finded")
-           kikeUserOrAdd(userMail, userId, active, planName)
-        }else if(find_User == null){
+        let find_User = await Plans.findOne({email_user:userMail})   
+        if(find_User == null){
           //Remove
           active = false
           console.log("User not finded")
@@ -30,16 +24,9 @@ async function removeUsersPending(){
         }
         else{
           // Encontrou
-          active = true
+           active = true
            kikeUserOrAdd(userMail, userId, active, planName)
         }
-      } catch (error) {
-        // Remove
-        console.log("User not finded")
-        active = false 
-        console.log("Plan not found.")
-         kikeUserOrAdd(userMail, userId, active, planName)
-      }
     }
     const path = require("path")
     let status = require(path.join(__dirname, "../models/Verification"))
