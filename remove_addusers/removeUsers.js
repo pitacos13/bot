@@ -95,7 +95,7 @@ async function kikeUserOrAdd(user_mail, user_id, status, plan){
         console.log(e)
       })
     }catch(e){
-      console.log("user not removed")
+      console.log(e)
     }
   })();
 }
