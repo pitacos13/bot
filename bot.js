@@ -150,7 +150,7 @@ bot.on("message", async(ctx)=>{
         }
         statusUser = await StatusUser.findOne({user_id:ctx.from.id})
         if(statusUser.finished == true){
-            bot.telegram.sendMessage(ctx.from.id, "Cadastro já finalizado! Caso precise de ajuda contate-nos.")
+            bot.telegram.sendMessage(ctx.from.id, "Cadastro já finalizado! Caso possua algum problema com seu cadastro, digite /reiniciar para reiniciar seu cadastro ou contate-nos.")
             return
         }
         if(ctx.message.text.toLowerCase() == "/start" && findUser == null && statusUser.started == false && statusUser.finished == false && statusUser.existent == false && statusUser.finding == false){
