@@ -113,7 +113,7 @@ bot.on("message", async(ctx)=>{
           return
         }
         if(await verification.findOne() != null){
-            bot.telegram.sendMessage(ctx.from.id, `Olá ${ctx.from.first_name}. Bot atualmente em manutenção, volte mais tarde.`)
+            bot.telegram.sendMessage(ctx.from.id, `Olá ${ctx.from.first_name}. Bot atualmente em processo de verificação de assinaturas, volte mais tarde pelas 5horas.`)
             return
         }
         let findUser = await Users.findOne({user_id:ctx.from.id})
