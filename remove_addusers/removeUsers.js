@@ -2,6 +2,7 @@ const mongoose = require("mongoose")
 let { Telegraf } = require("telegraf")
 const path = require("path")
 let bot = new Telegraf("5272128151:AAE5T62G6usrSk7iYyUwVcy-p5tX05Lewh8")
+     let chatId;
 async function removeUsersPending(){
      const bot = require("../bot")
      const myUsers = require("../models/Users")
@@ -11,8 +12,17 @@ async function removeUsersPending(){
       const userMail = usersRecived[i].email_user
       const userId = usersRecived[i].user_id
       const planName = usersRecived[i].plan_name
+      if(planName == "MilionBlazeR"){
+          chatId = -1001503352913
+      }else if(planName == "BlazeRoyale"){
+          chatId = -1001688857780
+      }else if(planName == "BlazeRoyaleR"){
+          chatId = -1001688857780
+      }else if(planName == "MilionBlazeVip"){
+          chatId = -1001503352913
+      }
       let active = Boolean;
-        const Plans = require(`../models/${planName}`)
+       const Plans = require(`../models/${planName}`)
         let find_User = await Plans.findOne({email_user:userMail})   
        if(find_User == null){
           //Remove
@@ -43,7 +53,6 @@ async function kikeUserOrAdd(user_mail, user_id, status, plan){
     myUsers = require("./models/Users")
   }
   const user = await myUsers.findOneAndUpdate({email_user:user_mail, plan_name:plan}, {status_plan:status}) // FindOne não, aqui é outro metodo.
-  let plans = [{MilionBlazeR:-1001503352913, BlazeRoyale:-1001688857780,BlazeRoyaleR:-1001688857780, MilionBlazeVip:-1001503352913}]
   let plans_invite = {MilionBlazeR:"https://t.me/+o5-YgmuIYuQwZjRh", BlazeRoyale:"https://t.me/+3oPIfRRG8tgzN2Jh",BlazeRoyaleR:"https://t.me/+3oPIfRRG8tgzN2Jh", MilionBlazeVip:"https://t.me/+o5-YgmuIYuQwZjRh", StarCrash:"https://t.me/+sipUKfOsV-JlN2Vh"}
   status == false?(async()=>{
     let oneStatusTrue = false;
@@ -56,20 +65,20 @@ async function kikeUserOrAdd(user_mail, user_id, status, plan){
       }
   }
   if(oneStatusTrue == true){
-    bot.telegram.banChatMember(plans[0][plan], user_id)
+    bot.telegram.banChatMember(chatId, user_id)
   }else{
     // Banir do grupo respectivo Verificaremos se o email do usuario ainda consta no Users, caso conste, mantenha ele no StarCrash 
     // Caso contrario, remova ele do StarCrashs [Localizar todos registro do usuario, e todos status, caso um esteja ativo, mantenha-o]
-    bot.telegram.banChatMember(plans[0][plan], user_id) // Grupo
-    bot.telegram.banChatMember(plans[0]["StarCrashs"], user_id) //StarCrashs
+    bot.telegram.banChatMember(chatId, user_id) // Grupo
+    bot.telegram.banChatMember(chatId, user_id) //StarCrashs
   }
   })():(()=>{
     try{
-      bot.telegram.getChatMember(plans[0][plan], user_id)
+      bot.telegram.getChatMember(chatId, user_id)
       .then((e)=>{
       e.status == "kicked"?(()=>{
-      bot.telegram.unbanChatMember(plans[0][plan], user_id) // Grupo
-      bot.telegram.unbanChatMember(plans[0]["StarCrashs"], user_id) // StarCrash
+      bot.telegram.unbanChatMember(chatId, user_id) // Grupo
+      bot.telegram.unbanChatMember(-1001592231367, user_id) // StarCrash
       // Grupo 
       bot.telegram.sendMessage(user_id, plans_invite[plan])
       // StarCrash // Se o star Crash Já foi usado 1 vez, e o email for igual, evitamos enviar ele novamente
