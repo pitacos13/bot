@@ -112,10 +112,6 @@ bot.on("message", async(ctx)=>{
         if(typeof(ctx.message.text) != "string"){
           return
         }
-        if(ctx.from.id != 5240668489){
-          bot.telegram.sendMessage(ctx.from.id, "Bot atualmente em manutenção. Volte mais tarde ou tente em nosso segundo bot @ClubMilionBot2_bot")
-          return
-        }
          if(ctx.message.text.toLowerCase() == "/reiniciar"){
             const User = require("./models/Users")
             //-- Verificar na db pertencente ao usuario, verificar se já foi registrado, verificar se não foi registrado e se inicializou.
