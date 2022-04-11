@@ -163,7 +163,11 @@ bot.on("message", async(ctx)=>{
             }
             bot.telegram.sendMessage(ctx.chat.id, `Olá Blaze. Vamos iniciar seu cadastro! Primeiro diga-me qual seu email utilizado ao fazer a compra.\r\n\r\nObs: digite todos os caracteres com letras minúsculas.`, {reply_markup:{force_reply:true}})
             await StatusUser.findOneAndUpdate({user_id:ctx.from.id}, {started:true, finished:false, finding:false, existent:false})
-        }else if(ctx.message.text.toLowerCase() != "/start" && findUser == null && statusUser.started == false && statusUser.finished == false && statusUser.existent == false && statusUser.finding == false){
+        }else if(ctx.message.text.toLowerCase() == "/start" && findUser == null && statusUser.started == true && statusUser.finished == false && statusUser.existent == false && statusUser.finding == false){
+          bot.telegram.sendMessage(ctx.from.id, "Por favor, diga-me qual seu email como consta na compra do produto.", {reply_markup:{force_reply:true}})
+          return
+        }
+        else if(ctx.message.text.toLowerCase() != "/start" && findUser == null && statusUser.started == false && statusUser.finished == false && statusUser.existent == false && statusUser.finding == false){
             return
         }else if(ctx.message.text.toLowerCase() != null && findUser == null && statusUser.started == true && statusUser.finding == false && statusUser.existent == false && statusUser.finished == false){
             let verifyUserExist = await Users.findOne({email_user:ctx.message.text})
