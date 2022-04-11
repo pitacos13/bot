@@ -14,7 +14,7 @@ function RemoveOrAdd(){
         let date_now = new Date(Date.now() + 86400000).toLocaleDateString("pt-BR")
         let until = JSON.parse(data).date_until.split("/")
          // Ano - Mes - Dia / Formato do javascript
-        let datas = new Date(until[2]+"-"+until[1]+"-"+until[0]).getTime() + (86400000*2)
+        let datas = new Date(until[2]+"-"+until[1]+"-"+until[0]).getTime() + (86400000)
         let dateUntil = new Date(datas).toLocaleDateString("pt-BR")
         // <-----
         fs.writeFile("./date.txt", JSON.stringify({date_today:date_now, date_until:dateUntil}), (err, data)=>{
