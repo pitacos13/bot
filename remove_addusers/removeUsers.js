@@ -2,7 +2,7 @@ const mongoose = require("mongoose")
 let { Telegraf } = require("telegraf")
 const path = require("path")
 let bot = new Telegraf("5272128151:AAE5T62G6usrSk7iYyUwVcy-p5tX05Lewh8")
-module.exports = async function removeUsersPending(){
+async function removeUsersPending(){
     // Vai pegar todos usuarios verificado// Ir no banco de dados que acabou de atualizar // Verificar
     // Se eles vão constar nas tabelas respectivas// Sim = True Não = False + Remove;
     const myUsers = require("../models/Users")
@@ -105,7 +105,8 @@ async function kikeUserOrAdd(user_mail, user_id, status, plan){
     }
   })();
 }
-
+module.exports = removeUsersPending
+removeUsersPending()
 (async()=>{
     let user = "botTelegram"
     let password = "bottelegram2022"
