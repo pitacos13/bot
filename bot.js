@@ -168,6 +168,7 @@ bot.on("message", async(ctx)=>{
           return
         }
         else if(ctx.message.text.toLowerCase() != "/start" && findUser == null && statusUser.started == false && statusUser.finished == false && statusUser.existent == false && statusUser.finding == false){
+            bot.telegram.sendMessage(ctx.from.id, "Para inicializar seu cadastro digite /start.")
             return
         }else if(ctx.message.text.toLowerCase() != null && findUser == null && statusUser.started == true && statusUser.finding == false && statusUser.existent == false && statusUser.finished == false){
             let verifyUserExist = await Users.findOne({email_user:ctx.message.text})
