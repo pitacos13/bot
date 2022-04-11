@@ -57,7 +57,7 @@ async function kikeUserOrAdd(user_mail, user_id, status, plan){
     myUsers = require("./models/Users")
   }
   const user = await myUsers.findOneAndUpdate({email_user:user_mail, plan_name:plan}, {status_plan:status}) // FindOne não, aqui é outro metodo.
-  let plans = [{MilionBlazeR:-1001503352913, BlazeRoyale:-1001688857780,BlazeRoyaleR:-1001688857780, MilionBlazeVip:-1001503352913, StarCrash:-1001592231367}]
+  let plans = {MilionBlazeR:-1001503352913, BlazeRoyale:-1001688857780,BlazeRoyaleR:-1001688857780, MilionBlazeVip:-1001503352913, StarCrash:-1001592231367}
   let plans_invite = {MilionBlazeR:"https://t.me/+o5-YgmuIYuQwZjRh", BlazeRoyale:"https://t.me/+3oPIfRRG8tgzN2Jh",BlazeRoyaleR:"https://t.me/+3oPIfRRG8tgzN2Jh", MilionBlazeVip:"https://t.me/+o5-YgmuIYuQwZjRh", StarCrash:"https://t.me/+sipUKfOsV-JlN2Vh"}
   status == false?(async()=>{
     console.log(plans[0][plan])
@@ -73,25 +73,25 @@ async function kikeUserOrAdd(user_mail, user_id, status, plan){
   if(oneStatusTrue == true){
     const {Telegraf} = require("telegraf")
     const bot = require("../bot")
-    console.log(plans[0][plan])
-    bot.telegram.banChatMember(plans[0][plan], user_id)
+    console.log(plans[plan])
+    bot.telegram.banChatMember(plans[plan], user_id)
   }else{
     const {Telegraf} = require("telegraf")
     const bot = require("../bot")
     // Banir do grupo respectivo Verificaremos se o email do usuario ainda consta no Users, caso conste, mantenha ele no StarCrash 
     // Caso contrario, remova ele do StarCrashs [Localizar todos registro do usuario, e todos status, caso um esteja ativo, mantenha-o]
-    bot.telegram.banChatMember(plans[0][plan], user_id) // Grupo
-    bot.telegram.banChatMember(plans[0]["StarCrashs"], user_id) //StarCrashs
+    bot.telegram.banChatMember(plans[plan], user_id) // Grupo
+    bot.telegram.banChatMember(plans["StarCrashs"], user_id) //StarCrashs
   }
   })():(()=>{
     const {Telegraf} = require("telegraf")
     const bot = require("../bot")
     try{
-      bot.telegram.getChatMember(plans[0][plan], user_id)
+      bot.telegram.getChatMember(plans[plan], user_id)
       .then((e)=>{
       e.status == "kicked"?(()=>{
-      bot.telegram.unbanChatMember(plans[0][plan], user_id) // Grupo
-      bot.telegram.unbanChatMember(plans[0]["StarCrashs"], user_id) // StarCrash
+      bot.telegram.unbanChatMember(plans[plan], user_id) // Grupo
+      bot.telegram.unbanChatMember(plans["StarCrashs"], user_id) // StarCrash
       // Grupo 
       bot.telegram.sendMessage(user_id, plans_invite[plan])
       // StarCrash // Se o star Crash Já foi usado 1 vez, e o email for igual, evitamos enviar ele novamente
