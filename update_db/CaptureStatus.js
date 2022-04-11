@@ -288,7 +288,6 @@ function getAllAppproved(url){
         })
     })
 };
-RemoveOrAdd();
 
 (async()=>{
   let user = "botTelegram"
