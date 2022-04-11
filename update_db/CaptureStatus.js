@@ -64,6 +64,7 @@ function getAllAppproved(url){
         }
         if(next_url != null){
             getAllAppproved(next_url)
+            console.log(usersApproved.lenght)
         }else{
             console.log("Finished")
           for(let value of usersApproved){
