@@ -3,10 +3,10 @@ const mongoose = require("mongoose")
 var axios = require('axios');
 const fs = require("fs");
 process.env.TZ = 'America/Sao_Paulo';
-function RemoveOrAdd(){
+module.exports = function RemoveOrAdd(){
   const RemoveUsers = require("../remove_addusers/removeUsers")
 
-    fs.readFile("./date.txt", "utf-8", (err,data)=>{
+    fs.readFile("./update_db/date.txt", "utf-8", (err,data)=>{
         if(err) return console.log(err)
         //Arm ---->
         console.log(data)
@@ -17,10 +17,10 @@ function RemoveOrAdd(){
         let datas = new Date(until[2]+"-"+until[1]+"-"+until[0]).getTime() + (86400000)
         let dateUntil = new Date(datas).toLocaleDateString("pt-BR")
         // <-----
-        fs.writeFile("./date.txt", JSON.stringify({date_today:date_now, date_until:dateUntil}), (err, data)=>{
+        fs.writeFile("./update_db/date.txt", JSON.stringify({date_today:date_now, date_until:dateUntil}), (err, data)=>{
             if(err) return console.log(err)
             console.log("Sucess")
-            fs.readFile("./date.txt", "utf-8", (err,data)=>{
+            fs.readFile("./update_db/date.txt", "utf-8", (err,data)=>{
                 if(err) return console.log(err)
                 let dateNowMy = Date.now()
                 let data_json = new Date(dateNowMy).toLocaleDateString("pt-BR")
