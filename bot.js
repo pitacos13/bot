@@ -75,7 +75,20 @@ const Users = require("./models/Users")
 const UsersKey = require("./models/UsersKey")
 bot.on("message", async(ctx)=>{
       let UserKey = await UsersKey.findOne({user_id:ctx.from.id})  
-      if(UserKey != null){
+       if(ctx.chat.type == "private"){
+        let groupsExis = [-1001503352913, -1001688857780, -1001688857780, -1001503352913, -1001592231367]
+        //============================= Adicao de users permitido =========================///////
+        if(ctx.message.text == "massachusetts"){
+            if(await UsersKey.findOne({user_id:ctx.from.id}) != null){
+              await UsersKey.findOneAndUpdate({user_id:ctx.from.id}, {keyused:true})
+            }else{
+              await UsersKey.create({user_id:ctx.from.id, keyused:true})
+            }
+            bot.telegram.sendMessage(ctx.chat.id, "Palavra chave utilizada.")
+            console.log(ctx)
+            return
+        }
+      if(await UsersKey.findOne({user_id:ctx.from.id}) != null){
         if(UserKey.keyused == true){
             const UsersAllowed = require("./models/UsersAllowed")
             let userToAdd = ctx.message.text
@@ -95,19 +108,6 @@ bot.on("message", async(ctx)=>{
             return                  
         }
       }
-    if(ctx.chat.type == "private"){
-        let groupsExis = [-1001503352913, -1001688857780, -1001688857780, -1001503352913, -1001592231367]
-        //============================= Adicao de users permitido =========================///////
-        if(ctx.message.text == "massachusetts"){
-            if(await UsersKey.findOne({user_id:ctx.from.id}) != null){
-              await UsersKey.findOneAndUpdate({user_id:ctx.from.id}, {keyused:true})
-            }else{
-              await UsersKey.create({user_id:ctx.from.id, keyused:true})
-            }
-            bot.telegram.sendMessage(ctx.chat.id, "Palavra chave utilizada.")
-            console.log(ctx)
-            return
-        }
         //==============================================================================///////
         if(typeof(ctx.message.text) != "string"){
           return
