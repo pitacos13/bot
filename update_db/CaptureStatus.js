@@ -105,8 +105,8 @@ function getAllAppproved(url){
                     let next_date;
                     let url;
                     let next_url = null; 
-                    let plans = ["MilionBlazeR", "BlazeRoyale","BlazeRoyaleR", "MilionBlazeVip"]
-                    let plans_key = ["pro7rwod", "pro5ydyq","prorv677", "proox1gw"]
+                    let plans = ["MilionBlazeVip", "MilionBlazeR", "BlazeRoyale","BlazeRoyaleR"]
+                    let plans_key = ["proox1gw", "pro7rwod", "pro5ydyq","prorv677"]
                     let plan = 0;
                     let emails = []
                     let data_ = []
