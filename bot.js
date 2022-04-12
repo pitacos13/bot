@@ -126,7 +126,7 @@ bot.on("message", async(ctx)=>{
                 let groups = [-1001592231367, -1001688857780, -1001503352913]
                 for(let group of groups){
                     try {
-                        await bot.telegram.unbanChatMember(ctx.from.id, group)
+                        await bot.telegram.unbanChatMember(group, ctx.from.id)
                     } catch (error) {
                         console.log("Member reinitialized but not banned.")
                     }
@@ -322,7 +322,7 @@ async function verifyEmail(email, userid) {
          let groups = [-1001592231367, -1001688857780, -1001503352913]
          for(let group of groups){
             try {
-              await bot.telegram.unbanChatMember(userid, group)
+              await bot.telegram.unbanChatMember(group, userid)
             } catch (error) {
                console.log("Member reinitialized but not banned.")
            }
@@ -419,6 +419,13 @@ async function verifyEmail(email, userid) {
                     let datePayment = value.trans_updatedate
                     if(emailFinded.toLowerCase() == userEmail.toLowerCase() && planStatus == "Pagamento Aprovado"){
                         located = true
+                         for(let group of groups){
+                          try {
+                            await bot.telegram.unbanChatMember(group, userid)
+                          } catch (error) {
+                             console.log("Member reinitialized but not banned.")
+                         }
+                        }
                         await StatusUsers.findOneAndUpdate({user_id:userid}, {finished:true})
                         await Users.create({user_id:userid, email_user:emailFinded, plan_name:plan_name, status_plan:true})
                         setTimeout(()=>{
