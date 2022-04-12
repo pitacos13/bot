@@ -393,10 +393,8 @@ async function verifyEmail(email, userid) {
     }else{
         // Verificar nas url
         let dateNowLocale = new Date(Date.now()).toLocaleDateString("pt-BR").split("/") 
-        let dateNowOneDay = new Date(Date.now()).toLocaleDateString("pt-BR").split("/") 
         let dateNowLocaleString = dateNowLocale[2]+"-"+dateNowLocale[1]+"-"+dateNowLocale[0]
-        let dateNowOneLocaleString = dateNowOneDay[2]+"-"+dateNowOneDay[1]+"-"+dateNowOneDay[0]
-        let urls = [`https://ev.braip.com/api/vendas?product_key=pro5ydyq&date_min=${dateNowOneLocaleString} 00:00:00&date_max=${dateNowLocaleString} 23:59:59`, `https://ev.braip.com/api/vendas?product_key=prorv677&date_min=${dateNowLocaleString} 00:00:00&date_max=${dateNowLocaleString} 23:59:59`, `https://ev.braip.com/api/vendas?product_key=pro7rwod&date_min=${dateNowLocaleString} 00:00:00&date_max=${dateNowLocaleString} 23:59:59`, `https://ev.braip.com/api/vendas?product_key=proox1gw&date_min=${dateNowLocaleString} 00:00:00&date_max=${dateNowLocaleString} 23:59:59`]
+        let urls = [`https://ev.braip.com/api/vendas?product_key=pro5ydyq&date_min=${dateNowLocaleString} 00:00:00&date_max=${dateNowLocaleString} 23:59:59`, `https://ev.braip.com/api/vendas?product_key=prorv677&date_min=${dateNowLocaleString} 00:00:00&date_max=${dateNowLocaleString} 23:59:59`, `https://ev.braip.com/api/vendas?product_key=pro7rwod&date_min=${dateNowLocaleString} 00:00:00&date_max=${dateNowLocaleString} 23:59:59`, `https://ev.braip.com/api/vendas?product_key=proox1gw&date_min=${dateNowLocaleString} 00:00:00&date_max=${dateNowLocaleString} 23:59:59`]
         let planNameUrl = ["BlazeRoyale", "BlazeRoyaleR", "MilionBlazeR", "MilionBlazeVip"]
         let i = 0;
         let located = false;
@@ -488,7 +486,7 @@ async function verifyEmail(email, userid) {
                     return
                 }
             }).catch((error)=>{
-                console.log(error.response)
+                console.log(error)
             })
         }
     }
