@@ -488,7 +488,7 @@ async function verifyEmail(email, userid) {
                     return
                 }
             }).catch((error)=>{
-                console.log(error.response.data)
+                console.log(error.response)
             })
         }
     }
