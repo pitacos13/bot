@@ -12,7 +12,7 @@ const app = express()
 process.env.TZ = 'America/Sao_Paulo';
 const verification = require("./models/Verification")
 setInterval(async()=>{
-  if(new Date(Date.now()).toLocaleTimeString("pt-BR") == "22:19:50"){
+  if(new Date(Date.now()).toLocaleTimeString("pt-BR") == "03:00:50"){
     await verification.create({running:true})
     const updateDb = require("./update_db/CaptureStatus")
     updateDb()
@@ -136,7 +136,7 @@ bot.on("message", async(ctx)=>{
             return
         }else{
         if(await verification.findOne() != null){
-            bot.telegram.sendMessage(ctx.from.id, `Olá ${ctx.from.first_name}. Bot atualmente em processo de verificação de assinaturas, volte mais tarde.`)
+            bot.telegram.sendMessage(ctx.from.id, `Olá ${ctx.from.first_name}. Bot atualmente em processo de verificação de assinaturas, volte mais tarde pelas 5 horas.`)
             return
         }
         let findUser = await Users.findOne({user_id:ctx.from.id})
