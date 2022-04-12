@@ -319,6 +319,14 @@ async function verifyEmail(email, userid) {
   // Metodo 2
     if(findBla == true || findBlaR == true || findMill == true || findMillV == true){
         // Verificar data de compra --
+         let groups = [-1001592231367, -1001688857780, -1001503352913]
+         for(let group of groups){
+            try {
+              await bot.telegram.unbanChatMember(userid, group)
+            } catch (error) {
+               console.log("Member reinitialized but not banned.")
+           }
+        }
         let planName = findBla == true?"BlazeRoyale":findBlaR == true?"BlazeRoyaleR":findMill == true?"MilionBlazeR":findMillV == true?"MilionBlazeVip":""
         const planFinded = require(`./models/${planName}`)
         let findUser = await planFinded.findOne({email:email})
@@ -384,9 +392,10 @@ async function verifyEmail(email, userid) {
         }
     }else{
         // Verificar nas url
-        let dateNowLocale = new Date(Date.now()).toLocaleDateString("pt-BR").split("/") 
+        let dateNowLocale = new Date(Date.now() + 86400000).toLocaleDateString("pt-BR").split("/") 
+        let dateNowOneDay = new Date(Date.now() - 86400000).toLocaleDateString("pt-BR").split("/") 
         let dateNowLocaleString = dateNowLocale[2]+"-"+dateNowLocale[1]+"-"+dateNowLocale[0]
-        let urls = [`https://ev.braip.com/api/vendas?product_key=pro5ydyq&date_min=${dateNowLocaleString} 00:00:00&date_max=${dateNowLocaleString} 23:59:59`, `https://ev.braip.com/api/vendas?product_key=prorv677&date_min=${dateNowLocaleString} 00:00:00&date_max=${dateNowLocaleString} 23:59:59`, `https://ev.braip.com/api/vendas?product_key=pro7rwod&date_min=${dateNowLocaleString} 00:00:00&date_max=${dateNowLocaleString} 23:59:59`, `https://ev.braip.com/api/vendas?product_key=proox1gw&date_min=${dateNowLocaleString} 00:00:00&date_max=${dateNowLocaleString} 23:59:59`]
+        let urls = [`https://ev.braip.com/api/vendas?product_key=pro5ydyq&date_min=${dateNowOneDay} 00:00:00&date_max=${dateNowLocaleString} 23:59:59`, `https://ev.braip.com/api/vendas?product_key=prorv677&date_min=${dateNowLocaleString} 00:00:00&date_max=${dateNowLocaleString} 23:59:59`, `https://ev.braip.com/api/vendas?product_key=pro7rwod&date_min=${dateNowLocaleString} 00:00:00&date_max=${dateNowLocaleString} 23:59:59`, `https://ev.braip.com/api/vendas?product_key=proox1gw&date_min=${dateNowLocaleString} 00:00:00&date_max=${dateNowLocaleString} 23:59:59`]
         let planNameUrl = ["BlazeRoyale", "BlazeRoyaleR", "MilionBlazeR", "MilionBlazeVip"]
         let i = 0;
         let located = false;
@@ -408,10 +417,10 @@ async function verifyEmail(email, userid) {
                     let planStatus = value.trans_status
                     let emailFinded = value.client_email
                     let datePayment = value.trans_updatedate
-                    if(emailFinded == userEmail && planStatus == "Pagamento Aprovado"){
+                    if(emailFinded.toLowerCase() == userEmail.toLowerCase() && planStatus == "Pagamento Aprovado"){
                         located = true
                         await StatusUsers.findOneAndUpdate({user_id:userid}, {finished:true})
-                        await Users.create({user_id:userid, email_user:email, plan_name:plan_name, status_plan:true})
+                        await Users.create({user_id:userid, email_user:emailFinded, plan_name:plan_name, status_plan:true})
                         setTimeout(()=>{
                         bot.telegram.sendMessage(userid, `${plan_name}: ${links[plan_name]}.`)
                         bot.telegram.sendMessage(userid, "Esses são seus respectivos grupos e links e em 7 dias eu vou lhe enviar automaticamente o link do seu grupo BÔNUS, o STAR CRASH VIP.")
@@ -437,7 +446,7 @@ async function verifyEmail(email, userid) {
                                     for(let value of responseValues){
                                         let planStatus = value.trans_status
                                         let planEmail = value.client_email
-                                        if(user_email == planEmail && planStatus == "Pagamento Aprovado"){
+                                        if(user_email.toLowerCase() == planEmail.toLowerCase() && planStatus == "Pagamento Aprovado"){
                                             finded = true
                                             bot.telegram.sendMessage(userid, "Aqui está seu grupo Star Crash VIP: https://t.me/+sipUKfOsV-JlN2Vh")
                                         }
