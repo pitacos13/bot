@@ -418,6 +418,7 @@ async function verifyEmail(email, userid) {
                     let datePayment = value.trans_updatedate
                     if(emailFinded.toLowerCase() == userEmail.toLowerCase() && planStatus == "Pagamento Aprovado"){
                         located = true
+                         let groups = [-1001592231367, -1001688857780, -1001503352913]
                          for(let group of groups){
                           try {
                             await bot.telegram.unbanChatMember(group, userid)
