@@ -97,7 +97,7 @@ function getAllAppproved(url){
                     // Deve verificar se o status esta como aprovado, caso não seja aprovado, ele deve remover o usuario do grupo, verificar se tem
                     // nex_url_site, caso possua, ir na próxima url e passar todos os usuarios mais uma vez de forma consecutiva, até chegar no fim.
                     
-                    //const RemoveUsers = require("../remove_addusers/removeUsers")
+                    const RemoveUsers = require("../remove_addusers/removeUsers")
                     let max_date;
                     let min_date;
                     let last_max_date;
@@ -114,8 +114,8 @@ function getAllAppproved(url){
                     // Vamos criar um metodo para ele aumentar o dia enquanto o usuario não for encontrado nas url, idependente se nao seja aprovado.
                     async function getDatePlans(){
                         if(plans[plan] == null){
-                          //const RemoveUsers = require("../remove_addusers/removeUsers")
-                          // Offline tempr return RemoveUsers()
+                          const RemoveUsers = require("../remove_addusers/removeUsers")
+                          return RemoveUsers()
                         }else{
                             const Model = require(`./models/${plans[plan]}`)
                             let oneResultPlan = await Model.findOne()
