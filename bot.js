@@ -71,7 +71,7 @@ bot.on("left_chat_member", (ctx)=>{
 })
 
 let emailUser;
-  let keyUsed;
+let keyUsed;
 const Users = require("./models/Users")
 const UsersKey = require("./models/UsersKey")
 bot.on("message", async(ctx)=>{
