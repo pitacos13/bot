@@ -31,14 +31,14 @@ module.exports = function RemoveOrAdd(){
                 let date_before = dataMy_json.date_until.split("/")[2]+"-"+dataMy_json.date_until.split("/")[1]+"-"+dataMy_json.date_until.split("/")[0]
                 /////// ---------- Functions ---------//////
                 const axios = require("axios")
-                let dbNames = ["MilionBlazeVip", "MilionBlazeR", "BlazeRoyale","BlazeRoyaleR"]
+                let dbNames = ["BlazeRoyaleR", "MilionBlazeVip", "MilionBlazeR", "BlazeRoyale"]
                 async function clearDb(){
                   for(let dbName of dbNames){
                      const collection = require(`./models/${dbName}`)
                      await collection.deleteMany({})
                   }
                 }
-               clearDb()
+               await clearDb()
 let urls = [
 `https://ev.braip.com/api/vendas?product_key=prorv677&date_min=${date_before} 00:00:00&date_max=${date_today} 23:59:59`, 
 `https://ev.braip.com/api/vendas?product_key=proox1gw&date_min=${date_before} 00:00:00&date_max=${date_today} 23:59:59`, 
@@ -47,7 +47,7 @@ let urls = [
 let plansOfUrls = ["BlazeRoyaleR", "MilionBlazeVip", "BlazeRoyale", "MilionBlazeR"]
 let i = 0;
 let usersApproved = [];
-getAllAppproved(urls[i])
+await getAllAppproved(urls[i])
 function getAllAppproved(url){
     const config = {
         url:url,
