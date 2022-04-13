@@ -12,12 +12,8 @@ module.exports = function RemoveOrAdd(){
         console.log(data)
         let dateMyAfter = data
         let date_now = new Date(Date.now() + 86400000).toLocaleDateString("pt-BR")
-        let until = JSON.parse(data).date_until.split("/")
-         // Ano - Mes - Dia / Formato do javascript
-        let datas = new Date(until[2]+"-"+until[1]+"-"+until[0]).getTime() + (86400000)
-        let dateUntil = new Date(datas).toLocaleDateString("pt-BR")
         // <-----
-        fs.writeFile("./update_db/date.txt", JSON.stringify({date_today:date_now, date_until:dateUntil}), (err, data)=>{
+        fs.writeFile("./update_db/date.txt", JSON.stringify({date_today:date_now, date_until:data}), (err, data)=>{
             if(err) return console.log(err)
             console.log("Sucess")
             fs.readFile("./update_db/date.txt", "utf-8", async(err,data)=>{
@@ -47,7 +43,9 @@ let urls = [
 let plansOfUrls = ["BlazeRoyaleR", "MilionBlazeVip", "BlazeRoyale", "MilionBlazeR"]
 let i = 0;
 let usersApproved = [];
+setTimeout(async()=>{
 await getAllAppproved(urls[i])
+}, 2500)
 function getAllAppproved(url){
     const config = {
         url:url,
