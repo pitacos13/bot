@@ -97,17 +97,7 @@ function getAllAppproved(url){
             if(urls[i] == undefined){
 
                 //-------Metods-------------------------------
-
-                (()=>{
-                    const axios =  require("axios");
-                    // Vamos pega o plano, logo pegaremos a primeira ocorrência, pegaremos a data max e data min, assim poderemos fazer uma requisição;
-                    // Utilizando a data max e data min como parametros de url, vamos passar todos usuarios na primeira url, os que ele encontrar
-                    // Deve verificar se o status esta como aprovado, caso não seja aprovado, ele deve remover o usuario do grupo, verificar se tem
-                    // nex_url_site, caso possua, ir na próxima url e passar todos os usuarios mais uma vez de forma consecutiva, até chegar no fim.
-                    const RemoveUsers = require("../remove_addusers/removeUsers")
-
-                //----------------------------------------------
-                    }
+                const RemoveUsers = require("../remove_addusers/removeUsers")
             }else{
                 getAllAppproved(urls[i])
             }
