@@ -70,32 +70,47 @@ async function kikeUserOrAdd(user_mail, user_id, status, plan){
       }
   }
   if(oneStatusTrue == true){
-    bot.telegram.banChatMember(chatId, user_id)
+    try{
+       bot.telegram.banChatMember(chatId, user_id)
+    }catch(e){
+       "NOT EXIST"
+    }
   }else{
     // Banir do grupo respectivo Verificaremos se o email do usuario ainda consta no Users, caso conste, mantenha ele no StarCrash 
     // Caso contrario, remova ele do StarCrashs [Localizar todos registro do usuario, e todos status, caso um esteja ativo, mantenha-o]
-    bot.telegram.banChatMember(chatId, user_id) // Grupo
-    bot.telegram.banChatMember(chatId, user_id) //StarCrashs
+     try{
+        bot.telegram.banChatMember(chatId, user_id) // Grupo
+     }catch(e){
+       "NOT EXIST"
+     }
+     try{
+        bot.telegram.banChatMember(chatId, user_id) //StarCrashs
+     }catch(e){
+       "NOT EXIST"
+     }
   }
   })():(()=>{
     try{
-      bot.telegram.getChatMember(chatId, user_id)
-      .then((e)=>{
-      e.status == "kicked"?(()=>{
       bot.telegram.unbanChatMember(chatId, user_id) // Grupo
+    }catch(e){
+      "NOT"
+    }
+    try {
       bot.telegram.unbanChatMember(-1001592231367, user_id) // StarCrash
-      // Grupo 
+    } catch (error) {
+      "NOT"
+    }
+    try {
       bot.telegram.sendMessage(user_id, planInvite)
+    } catch (error) {
+      "NOT"
+    }
+    try {
+            // Grupo 
       // StarCrash // Se o star Crash Já foi usado 1 vez, e o email for igual, evitamos enviar ele novamente
       bot.telegram.sendMessage(user_id, "https://t.me/+sipUKfOsV-JlN2Vh")
-        })():(()=>{
-          console.log("User not removed")
-        })();
-      }).catch((e)=>{
-        console.log(e)
-      })
-    }catch(e){
-      console.log(e)
+    } catch (error) {
+      "NOT"
     }
   })();
 }
