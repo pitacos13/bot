@@ -243,7 +243,7 @@ async function verifyEmail(email, userid) {
     
         let findInBlaze = await BlazeRoyale.find()
         let toLowerBlaze = findInBlaze.filter(value => value.email_user.toLowerCase() == email.toLowerCase())
-        console.log(toLowerBlaze)
+        console.log(toLowerBlaze+"AÄAAAAAA")
         email = toLowerBlaze == null?email:toLowerBlaze[0].email_user
         findedInBlaze = toLowerBlaze[0]
 
