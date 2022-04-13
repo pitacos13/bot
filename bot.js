@@ -32,7 +32,8 @@ bot.on('new_chat_members', async(msg) => {
     const UsersOfMone = require("./models/UsersStatusMone")
     let memberFind = await Users.findOne({user_id:newMemberId})
     let memberFindMone = await UsersOfMone.findOne({user_id:newMemberId, finished:true})
-    console.log(memberFindMone)
+    console.log(memberFindMone) 
+    console.log(memberFind)
     if(memberFindMone != null){
       console.log("user Located")
     }
