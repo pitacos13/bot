@@ -101,14 +101,14 @@ async function kikeUserOrAdd(user_mail, user_id, status, plan){
       "NOT"
     }
     try {
-      bot.telegram.sendMessage(user_id, planInvite)
+      //  bot.telegram.sendMessage(user_id, planInvite)
     } catch (error) {
       "NOT"
     }
     try {
             // Grupo 
       // StarCrash // Se o star Crash Já foi usado 1 vez, e o email for igual, evitamos enviar ele novamente
-      bot.telegram.sendMessage(user_id, "https://t.me/+sipUKfOsV-JlN2Vh")
+      // -- OFFLINE -- bot.telegram.sendMessage(user_id, "https://t.me/+sipUKfOsV-JlN2Vh")
     } catch (error) {
       "NOT"
     }
