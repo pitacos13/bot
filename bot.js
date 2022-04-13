@@ -89,11 +89,11 @@ bot.on('new_chat_members', async(msg) => {
        let groupsName = {"MilionBlazeVip":groupsOfUsers[1], "MilionBlazeR":groupsOfUsers[1], "BlazeRoyaleR":groupsOfUsers[0], "BlazeRoyale":groupsOfUsers[0]}
        if(memberFind.plan_name == "MilionBlazeVip" || memberFind.plan_name == "MilionBlazeR"){
         if(msg.chat.id != groupsName[memberFind.plan_name] && msg.chat.id != groupsOfUsers[2]){
-          bot.telegram.banChatMember(ctx.chat.id, ctx.from.id)
+          bot.telegram.banChatMember(msg.chat.id, msg.from.id)
         }
        }else if(memberFind.plan_name == "BlazeRoyaleR" || memberFind.plan_name == "BlazeRoyale"){
         if(msg.chat.id != groupsName[memberFind.plan_name] && msg.chat.id != groupsOfUsers[2]){
-          bot.telegram.banChatMember(ctx.chat.id, ctx.from.id)
+          bot.telegram.banChatMember(msg.chat.id, msg.from.id)
         }
       }
        msg = null
