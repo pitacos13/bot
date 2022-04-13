@@ -109,10 +109,6 @@ bot.on("message", async(ctx)=>{
         }
       }
         //==============================================================================///////
-        if(ctx.message.text){
-          bot.telegram.sendMessage(ctx.from.id, "Bot atualmente em manutenção. Aguarde.")
-          return
-        }
         if(typeof(ctx.message.text) != "string"){
           return
         }
