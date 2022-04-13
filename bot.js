@@ -86,7 +86,7 @@ bot.on('new_chat_members', async(msg) => {
        }
     }else if(memberFind != null || `${memberFind}` != []){
        let groupsOfUsers = [-1001688857780, -1001503352913, -1001592231367]
-       let groupsName = ["MilionBlazeVip":groupsOfUsers[1], "MilionBlazeR":groupsOfUsers[1], "BlazeRoyaleR":groupsOfUsers[0], "BlazeRoyale":groupsOfUsers[0]]
+       let groupsName = {"MilionBlazeVip":groupsOfUsers[1], "MilionBlazeR":groupsOfUsers[1], "BlazeRoyaleR":groupsOfUsers[0], "BlazeRoyale":groupsOfUsers[0]}
        if(memberFind.plan_name == "MilionBlazeVip" || memberFind.plan_name == "MilionBlazeR"){
         if(msg.chat.id != groupsName[memberFind.plan_name] && msg.chat.id != groupsOfUsers[2]){
           bot.telegram.banChatMember(ctx.chat.id, ctx.from.id)
