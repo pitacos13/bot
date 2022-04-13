@@ -14,7 +14,7 @@ async function removeAllNonAllowed(){
   const users = require("./models/Users")
   let allUsers = await users.find()
   let groupsOfUsers = [-1001688857780, -1001503352913]
-  let groupsName = ["MilionBlazeVip":groupsOfUsers[1], "MilionBlazeR":groupsOfUsers[1], "BlazeRoyaleR":groupsOfUsers[0], "BlazeRoyale":groupsOfUsers[0]]
+  let groupsName = {"MilionBlazeVip":groupsOfUsers[1], "MilionBlazeR":groupsOfUsers[1], "BlazeRoyaleR":groupsOfUsers[0], "BlazeRoyale":groupsOfUsers[0]}
   for(let user of allUsers){
     let planAllowed = user.plan_name
     if(planAllowed == "MilionBlazeVip" || planAllowed == "MilionBlazeR"){
