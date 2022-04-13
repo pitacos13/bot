@@ -20,7 +20,7 @@ module.exports = function RemoveOrAdd(){
         fs.writeFile("./update_db/date.txt", JSON.stringify({date_today:date_now, date_until:dateUntil}), (err, data)=>{
             if(err) return console.log(err)
             console.log("Sucess")
-            fs.readFile("./update_db/date.txt", "utf-8", (err,data)=>{
+            fs.readFile("./update_db/date.txt", "utf-8", async(err,data)=>{
                 if(err) return console.log(err)
                 let dateNowMy = Date.now()
                 let data_json = new Date(dateNowMy).toLocaleDateString("pt-BR")
