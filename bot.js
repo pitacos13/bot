@@ -241,33 +241,29 @@ async function verifyEmail(email, userid) {
     let findedInMillionVip;
     
         let findInBlaze = await BlazeRoyale.find()
-        let toLowerBlaze = findInBlaze.map(value => value.email_user.toLowerCase())
-        let valueFindedB = findInBlaze.filter((v, i) => i == toLowerBlaze.indexOf(email.toLowerCase()))
-        email = valueFindedB[0] == null?email:valueFindedB[0].email_user
-        findedInBlaze = valueFindedB[0]
+        let toLowerBlaze = findInBlaze.filter(value => value.email_user.toLowerCase() == email.toLowerCase())
+        email = toLowerBlaze == null?email:toLowerBlaze[0].email_user
+        findedInBlaze = toLowerBlaze[0]
 
 
         let findInBlazeR = await BlazeRoyaleR.find()
-        let toLowerBlazeR = findInBlazeR.map(value => value.email_user.toLowerCase())
-        let valueFindedBR = findInBlazeR.filter((v, i) => i == toLowerBlazeR.indexOf(email.toLowerCase()))
-        email = valueFindedBR[0] == null?email:valueFindedBR[0].email_user
-        findedInBlazeR = valueFindedBR[0]
+        let toLowerBlazeR = findInBlazeR.filter(value => value.email_user.toLowerCase() == email.toLowerCase())
+        email = toLowerBlazeR[0] == null?email:toLowerBlazeR[0].email_user
+        findedInBlazeR = toLowerBlazeR[0]
 
 
 
         let findInMillionR = await MilionBlazeR.find()
-        let toLowerMillionR = findInMillionR.map(value => value.email_user.toLowerCase())
-        let valueFindedMR = findInMillionR.filter((v, i) => i == toLowerMillionR.indexOf(email.toLowerCase()))
-        email = valueFindedMR[0] == null?email:valueFindedMR[0].email_user
-        findedInMillionBlazeR = valueFindedMR[0]
+        let toLowerMillionR = findInMillionR.filter(value => value.email_user.toLowerCase() == email.toLowerCase())
+        email = toLowerMillionR[0] == null?email:toLowerMillionR[0].email_user
+        findedInMillionBlazeR = toLowerMillionR[0]
 
 
 
         let findInMillionVip = await BlazeRoyale.find()
-        let toLowerMillionVip = findInMillionVip.map(value => value.email_user.toLowerCase())
-        let valueFindedMV = findInMillionVip.filter((v, i) => i == toLowerMillionVip.indexOf(email.toLowerCase()))
-        email = valueFindedMV[0] == null?email:valueFindedMV[0].email_user
-        findedInMillionVip = valueFindedMV[0]
+        let toLowerMillionVip = findInMillionVip.filter(value => value.email_user.toLowerCase() == email.toLowerCase())
+        email = toLowerMillionVip[0] == null?email:toLowerMillionVip[0].email_user
+        findedInMillionVip = toLowerMillionVip[0]
 
     if(findedInBlaze != null){      
         findBla = true
@@ -339,7 +335,7 @@ async function verifyEmail(email, userid) {
         //-------
         if(datePaymentTime >= dateNowTime){
             await StatusUsers.findOneAndUpdate({user_id:userid}, {finished:true})
-            await Users.create({user_id:userid, email_user:email.toLowerCase(), plan_name:planName, status_plan:true})
+            await Users.create({user_id:userid, email_user:email, plan_name:planName, status_plan:true})
             bot.telegram.sendMessage(userid, "Esses são seus respectivos grupos e links e em 7 dias eu vou lhe enviar automaticamente o link do seu grupo BÔNUS, o STAR CRASH VIP.")
             setTimeout(async()=>{
                 let dateNowLocale = new Date(Date.now()).toLocaleDateString("pt-BR").split("/") 
