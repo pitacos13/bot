@@ -101,14 +101,7 @@ async function kikeUserOrAdd(user_mail, user_id, status, plan){
       "NOT"
     }
     try {
-      //  bot.telegram.sendMessage(user_id, planInvite)
-    } catch (error) {
-      "NOT"
-    }
-    try {
-            // Grupo 
-      // StarCrash // Se o star Crash Já foi usado 1 vez, e o email for igual, evitamos enviar ele novamente
-      // -- OFFLINE -- bot.telegram.sendMessage(user_id, "https://t.me/+sipUKfOsV-JlN2Vh")
+      bot.telegram.sendMessage(user_id, "Assinaturas atualizadas. Caso tenha efetuado novamente o pagamento, tente entrar no grupo novamente ou digite /reiniciar.")
     } catch (error) {
       "NOT"
     }
