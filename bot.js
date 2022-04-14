@@ -25,7 +25,7 @@ async function removeAllBanned(){
   try{
     for(let user of allUsers){
       for(let group of groupsOfUsers){
-        bot.telegram.unbanChatMember(group, user.user_id)
+        bot.telegram.unbanChatMember(group, user.user_id, {only_if_banned:true})
       }
     }
   }catch(e){
