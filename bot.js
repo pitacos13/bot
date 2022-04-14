@@ -133,6 +133,7 @@ bot.on("message", async(ctx)=>{
             return                  
         }
       }
+         bot.telegram.sendMessage(ctx.from.id, "Bot atualmente em manutenção.")
          return
         //==============================================================================///////
         if(typeof(ctx.message.text) != "string"){
