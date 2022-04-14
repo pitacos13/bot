@@ -91,7 +91,8 @@ function getAllAppproved(url){
             }
             i++
             if(urls[i] == undefined){
-
+                const verification = require("../models/Verification")
+                await verification.findOneAndRemove()
                 //-------Metods-------------------------------
 
             }else{
