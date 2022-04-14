@@ -124,10 +124,6 @@ bot.on("message", async(ctx)=>{
         if(typeof(ctx.message.text) != "string"){
           return
         }
-        let statusUser = await StatusUser.findOne({user_id:ctx.from.id})
-        if(statusUser == null){
-            await StatusUser.create({user_id:ctx.from.id, started:false, finished:false, finding:false, existent:false, starcrashUsed:false})
-        }
          if(ctx.message.text.toLowerCase() == "/reiniciar"){
             const User = require("./models/Users")
             //-- Verificar na db pertencente ao usuario, verificar se já foi registrado, verificar se não foi registrado e se inicializou.
@@ -156,11 +152,15 @@ bot.on("message", async(ctx)=>{
             return
         }
         let findUser = await Users.findOne({user_id:ctx.from.id})
-         if(statusUser.finished == true){
+        let statusUser = await StatusUser.findOne({user_id:ctx.from.id})
+        if(statusUser == null){
+            await StatusUser.create({user_id:ctx.from.id, started:false, finished:false, finding:false, existent:false, starcrashUsed:false})
+            statusUser = await StatusUser.findOne({user_id:ctx.from.id})
+        }else if(statusUser.finished == true){
             bot.telegram.sendMessage(ctx.from.id, "Cadastro já finalizado! Caso possua algum problema com seu cadastro, digite /reiniciar para reiniciar seu cadastro ou contate-nos.")
             return
-         }
-                  statusUser = await StatusUser.findOne({user_id:ctx.from.id})
+        }
+        statusUser = await StatusUser.findOne({user_id:ctx.from.id})
         if(ctx.message.text.toLowerCase() == "/start" && findUser == null && statusUser.started == false && statusUser.finished == false && statusUser.existent == false && statusUser.finding == false){
             try {
                 for(let group of groupsExis){
