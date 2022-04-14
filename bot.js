@@ -153,9 +153,6 @@ bot.on("message", async(ctx)=>{
         }
         let findUser = await Users.findOne({user_id:ctx.from.id})
         let statusUser = await StatusUser.findOne({user_id:ctx.from.id})
-        if(statusUser == null){
-            await StatusUser.create({user_id:ctx.from.id, started:false, finished:false, finding:false, existent:false, starcrashUsed:false})
-        }
         try{
           if(statusUser.finished == false){
             await StatusUser.findOneAndRemove({user_id:ctx.from.id})
@@ -166,6 +163,9 @@ bot.on("message", async(ctx)=>{
          }
         }catch(e){
           await StatusUser.findOneAndRemove({user_id:ctx.from.id})
+        }
+                if(statusUser == null){
+            await StatusUser.create({user_id:ctx.from.id, started:false, finished:false, finding:false, existent:false, starcrashUsed:false})
         }
         statusUser = await StatusUser.findOne({user_id:ctx.from.id})
         if(ctx.message.text.toLowerCase() == "/start" && findUser == null && statusUser.started == false && statusUser.finished == false && statusUser.existent == false && statusUser.finding == false){
