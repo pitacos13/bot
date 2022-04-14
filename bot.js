@@ -32,7 +32,7 @@ setInterval(async()=>{
       }
     }
   }
-})();
+})//();
 
 bot.on('new_chat_members', async(msg) => {
     let newMemberId = msg.update.message.new_chat_members[0].id
