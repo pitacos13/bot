@@ -26,11 +26,9 @@ setInterval(async()=>{
   for(let user of allUsers){
     for(let group of groupsOfUsers){
       try{
-        bot.telegram.unbanChatMember(group, user.user_id, {only_if_banned:true}).then((r)=>{
-          console.log(r)
-        })
+        bot.telegram.unbanChatMember(group, user.user_id, {only_if_banned:true})
       }catch(e){
-        console.log("NAO BANIDO")
+         ""
       }
     }
   }
