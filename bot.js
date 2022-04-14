@@ -19,7 +19,7 @@ setInterval(async()=>{
 }
 },1000);
 
-async function unbanAllUser(){
+(async()=>{
   const users = require("./models/Users")
   let allUsers = await users.find({})
   let groupsOfUsers = [-1001688857780, -1001503352913, -1001592231367]
@@ -32,7 +32,7 @@ async function unbanAllUser(){
       }
     }
   }
-}unbanAllUser()
+})();
 
 bot.on('new_chat_members', async(msg) => {
     let newMemberId = msg.update.message.new_chat_members[0].id
