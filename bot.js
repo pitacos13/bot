@@ -9,16 +9,6 @@ const express = require("express")
 const app = express()
 
 
-
-async function removeAllNonAllowed(){
-  const users = require("./models/Users")
-  let allUsers = await users.find()
-  for(let user of allUsers){
-    if(user.finished)
-  }
-}
-
-
 process.env.TZ = 'America/Sao_Paulo';
 const verification = require("./models/Verification")
 setInterval(async()=>{
