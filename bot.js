@@ -8,7 +8,18 @@ const mongoose = require("mongoose")
 const express = require("express")
 const app = express()
 
-
+async function removeBug(){
+  let allUser = await StatusUser.find()
+  for(let user of allUser){
+    try{
+      if(user.finished == false){
+        await StatusUser.findOneAndRemove({user_id:user.user_id})
+      }
+    }catch(e){
+      await StatusUser.findOneAndRemove({user_id:user.user_id})
+    }
+  }
+}
 process.env.TZ = 'America/Sao_Paulo';
 const verification = require("./models/Verification")
 setInterval(async()=>{
