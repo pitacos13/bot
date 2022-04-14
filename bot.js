@@ -24,11 +24,11 @@ setInterval(async()=>{
   let allUsers = await users.find({})
   let groupsOfUsers = [-1001688857780, -1001503352913, -1001592231367]
   for(let user of allUsers){
-    console.log(user)
     for(let group of groupsOfUsers){
-      console.log(group, user.user_id)
       try{
-        bot.telegram.unbanChatMember(group, user.user_id)
+        bot.telegram.unbanChatMember(group, user.user_id, {only_if_banned:true}).then((r)=>{
+          console.log(r)
+        })
       }catch(e){
         console.log("NAO BANIDO")
       }
