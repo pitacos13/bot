@@ -123,15 +123,6 @@ bot.on("message", async(ctx)=>{
         if(typeof(ctx.message.text) != "string"){
           return
         }
-         
-         let UserFind = await StatusUser.findOne({user_id:ctx.from.id})
-         try{
-           if(UserFind.finished == false){
-            await StatusUser.findOneAndRemove({user_id:ctx.from.id})
-           }
-         }catch(e){
-          await StatusUser.findOneAndRemove({user_id:ctx.from.id})
-         }
          if(ctx.message.text.toLowerCase() == "/reiniciar"){
             const User = require("./models/Users")
             //-- Verificar na db pertencente ao usuario, verificar se já foi registrado, verificar se não foi registrado e se inicializou.
