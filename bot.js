@@ -19,6 +19,14 @@ setInterval(async()=>{
 }
 },1000);
 
+async function createAllUser(){
+  const Users = require("./models/Users")
+  let users = await Users.find({})
+  for(let user of users){
+    await StatusUser.create({user_id:user.user_id, started:true, finished:true, finding:false, existent:false, starcrashUsed:false})
+  }
+}
+
 bot.on('new_chat_members', async(msg) => {
     let newMemberId = msg.update.message.new_chat_members[0].id
     let newMemberUsername = msg.update.message.new_chat_members[0].username
@@ -127,6 +135,7 @@ bot.on("message", async(ctx)=>{
         if(statusUser == null){
             await StatusUser.create({user_id:ctx.from.id, started:false, finished:false, finding:false, existent:false, starcrashUsed:false})
         }
+         return
          if(ctx.message.text.toLowerCase() == "/reiniciar"){
             const User = require("./models/Users")
             //-- Verificar na db pertencente ao usuario, verificar se já foi registrado, verificar se não foi registrado e se inicializou.
