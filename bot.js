@@ -138,8 +138,6 @@ bot.on("message", async(ctx)=>{
         if(typeof(ctx.message.text) != "string"){
           return
         }
-         bot.telegram.sendMessage(ctx.from.id, "Bot atualmente em manutenção. Aguarde.")
-         return
          if(ctx.message.text.toLowerCase() == "/reiniciar"){
             const User = require("./models/Users")
             //-- Verificar na db pertencente ao usuario, verificar se já foi registrado, verificar se não foi registrado e se inicializou.
