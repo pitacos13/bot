@@ -8,18 +8,7 @@ const mongoose = require("mongoose")
 const express = require("express")
 const app = express()
 
-async function removeBug(){
-  let allUser = await StatusUser.find()
-  for(let user of allUser){
-    try{
-      if(user.finished == false){
-        await StatusUser.findOneAndRemove({user_id:user.user_id})
-      }
-    }catch(e){
-      await StatusUser.findOneAndRemove({user_id:user.user_id})
-    }
-  }
-}
+
 process.env.TZ = 'America/Sao_Paulo';
 const verification = require("./models/Verification")
 setInterval(async()=>{
@@ -130,11 +119,19 @@ bot.on("message", async(ctx)=>{
             return                  
         }
       }
-         return
         //==============================================================================///////
         if(typeof(ctx.message.text) != "string"){
           return
         }
+         
+         let UserFind = await StatusUser.findOne({user_id:ctx.from.id})
+         try{
+           if(UserFind.finished == false){
+            await StatusUser.findOneAndRemove({user_id:ctx.from.id})
+           }
+         }catch(e){
+          await StatusUser.findOneAndRemove({user_id:ctx.from.id})
+         }
          if(ctx.message.text.toLowerCase() == "/reiniciar"){
             const User = require("./models/Users")
             //-- Verificar na db pertencente ao usuario, verificar se já foi registrado, verificar se não foi registrado e se inicializou.
