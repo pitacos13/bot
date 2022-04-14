@@ -19,6 +19,9 @@ setInterval(async()=>{
 }
 },1000);
 
+async function unbanAllUser(){
+  const users = require("./models/Users")
+}
 
 bot.on('new_chat_members', async(msg) => {
     let newMemberId = msg.update.message.new_chat_members[0].id
