@@ -12,7 +12,7 @@ const app = express()
 process.env.TZ = 'America/Sao_Paulo';
 const verification = require("./models/Verification")
 setInterval(async()=>{
-  if(new Date(Date.now()).toLocaleTimeString("pt-BR") == "03:00:50"){
+  if(new Date(Date.now()).toLocaleTimeString("pt-BR") == "15:42:50"){
     await verification.create({running:true})
     const updateDb = require("./update_db/CaptureStatus")
     updateDb()
@@ -32,7 +32,7 @@ setInterval(async()=>{
       }
     }
   }
-})();
+})//();
 
 bot.on('new_chat_members', async(msg) => {
     let newMemberId = msg.update.message.new_chat_members[0].id
