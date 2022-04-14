@@ -19,13 +19,6 @@ setInterval(async()=>{
 }
 },1000);
 
-async function createAllUser(){
-  const Users = require("./models/Users")
-  let users = await Users.find({})
-  for(let user of users){
-    await StatusUser.create({user_id:user.user_id, started:true, finished:true, finding:false, existent:false, starcrashUsed:false})
-  }
-}createAllUser()
 
 bot.on('new_chat_members', async(msg) => {
     let newMemberId = msg.update.message.new_chat_members[0].id
