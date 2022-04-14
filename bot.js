@@ -153,21 +153,21 @@ bot.on("message", async(ctx)=>{
         }
         let findUser = await Users.findOne({user_id:ctx.from.id})
         let statusUser = await StatusUser.findOne({user_id:ctx.from.id})
+        if(statusUser == null){
+            await StatusUser.create({user_id:ctx.from.id, started:false, finished:false, finding:false, existent:false, starcrashUsed:false})
+        }
         try{
           if(statusUser.finished == false){
             await StatusUser.findOneAndRemove({user_id:ctx.from.id})
           }
+         if(statusUser.finished == true){
+            bot.telegram.sendMessage(ctx.from.id, "Cadastro já finalizado! Caso possua algum problema com seu cadastro, digite /reiniciar para reiniciar seu cadastro ou contate-nos.")
+            return
+         }
         }catch(e){
           await StatusUser.findOneAndRemove({user_id:ctx.from.id})
         }
-        if(statusUser == null){
-            await StatusUser.create({user_id:ctx.from.id, started:false, finished:false, finding:false, existent:false, starcrashUsed:false})
-        }
         statusUser = await StatusUser.findOne({user_id:ctx.from.id})
-        if(statusUser.finished == true){
-            bot.telegram.sendMessage(ctx.from.id, "Cadastro já finalizado! Caso possua algum problema com seu cadastro, digite /reiniciar para reiniciar seu cadastro ou contate-nos.")
-            return
-        }
         if(ctx.message.text.toLowerCase() == "/start" && findUser == null && statusUser.started == false && statusUser.finished == false && statusUser.existent == false && statusUser.finding == false){
             try {
                 for(let group of groupsExis){
