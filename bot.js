@@ -128,7 +128,6 @@ bot.on("message", async(ctx)=>{
         if(statusUser == null){
             await StatusUser.create({user_id:ctx.from.id, started:false, finished:false, finding:false, existent:false, starcrashUsed:false})
         }
-         return
          if(ctx.message.text.toLowerCase() == "/reiniciar"){
             const User = require("./models/Users")
             //-- Verificar na db pertencente ao usuario, verificar se já foi registrado, verificar se não foi registrado e se inicializou.
