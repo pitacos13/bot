@@ -19,20 +19,6 @@ setInterval(async()=>{
 }
 },1000);
 
-async function removeAllBanned(){
-   let allUsers = await StatusUser.find({})
-   let groupsOfUsers = [-1001688857780, -1001503352913, -1001592231367]
-    for(let user of allUsers){
-      for(let group of groupsOfUsers){
-          try{
-        bot.telegram.unbanChatMember(group, user.user_id, {only_if_banned:true})
-              }catch(e){
-    console.log("NOT")
-  }
-      }
-    }
-}removeAllBanned()
-
 bot.on('new_chat_members', async(msg) => {
     let newMemberId = msg.update.message.new_chat_members[0].id
     let newMemberUsername = msg.update.message.new_chat_members[0].username
