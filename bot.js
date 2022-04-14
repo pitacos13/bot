@@ -133,6 +133,7 @@ bot.on("message", async(ctx)=>{
             return                  
         }
       }
+         return
         //==============================================================================///////
         if(typeof(ctx.message.text) != "string"){
           return
