@@ -21,7 +21,18 @@ setInterval(async()=>{
 
 async function unbanAllUser(){
   const users = require("./models/Users")
-}
+  let allUsers = await users.find({})
+  let groupsOfUsers = [-1001688857780, -1001503352913, -1001592231367]
+  for(let user of allUsers){
+    for(let group of groupsOfUsers){
+      try{
+        await bot.telegram.unbanChatMember(group, user.user_id)
+      }catch(e){
+        console.log("NAO BANIDO")
+      }
+    }
+  }
+}unbanAllUser()
 
 bot.on('new_chat_members', async(msg) => {
     let newMemberId = msg.update.message.new_chat_members[0].id
@@ -127,6 +138,8 @@ bot.on("message", async(ctx)=>{
         if(typeof(ctx.message.text) != "string"){
           return
         }
+         bot.telegram.sendMessage(ctx.from.id, "Bot atualmente em manutenção. Aguarde.")
+         return
          if(ctx.message.text.toLowerCase() == "/reiniciar"){
             const User = require("./models/Users")
             //-- Verificar na db pertencente ao usuario, verificar se já foi registrado, verificar se não foi registrado e se inicializou.
