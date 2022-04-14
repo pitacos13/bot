@@ -13,23 +13,8 @@ const app = express()
 async function removeAllNonAllowed(){
   const users = require("./models/Users")
   let allUsers = await users.find()
-  let groupsOfUsers = [-1001688857780, -1001503352913]
-  let groupsName = {"MilionBlazeVip":groupsOfUsers[1], "MilionBlazeR":groupsOfUsers[1], "BlazeRoyaleR":groupsOfUsers[0], "BlazeRoyale":groupsOfUsers[0]}
   for(let user of allUsers){
-    let planAllowed = user.plan_name
-    if(planAllowed == "MilionBlazeVip" || planAllowed == "MilionBlazeR"){
-      try{
-        await bot.telegram.banChatMember(user.user_id, groupsName["BlazeRoyaleR"])
-      }catch(e){
-        console.log(e)
-      }
-    }else if(planAllowed == "BlazeRoyaleR" || planAllowed == "BlazeRoyale"){
-      try{
-        await bot.telegram.banChatMember(user.user_id, groupsName["MilionBlazeVip"])
-      }catch(e){
-        "AAAA"
-      }
-    }
+    if(user.finished)
   }
 }
 
@@ -178,6 +163,13 @@ bot.on("message", async(ctx)=>{
         }
         let findUser = await Users.findOne({user_id:ctx.from.id})
         let statusUser = await StatusUser.findOne({user_id:ctx.from.id})
+        try{
+          if(statusUser.finished == false){
+            await StatusUser.findOneAndRemove({user_id:ctx.from.id})
+          }
+        }catch(e){
+          await StatusUser.findOneAndRemove({user_id:ctx.from.id})
+        }
         if(statusUser == null){
             await StatusUser.create({user_id:ctx.from.id, started:false, finished:false, finding:false, existent:false, starcrashUsed:false})
         }
