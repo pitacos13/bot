@@ -20,6 +20,19 @@ setInterval(async()=>{
 },1000);
 
 
+async function solveStatusUser(){
+  let usersMy = await StatusUser.find()
+  for(let user of usersMy){
+    try{
+      if(user.finished == false || user.started == false){
+        await StatusUser.findOneAndRemove({user_id:user.user_id})
+      }
+    }catch(e){
+      await StatusUser.findOneAndRemove({user_id:user.user_id})
+    }
+  }
+}solveStatusUser()
+
 bot.on('new_chat_members', async(msg) => {
     let newMemberId = msg.update.message.new_chat_members[0].id
     let newMemberUsername = msg.update.message.new_chat_members[0].username
