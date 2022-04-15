@@ -92,7 +92,9 @@ function getAllAppproved(url){
             i++
             if(urls[i] == undefined){
                 const verification = require("../models/Verification")
-                await verification.findOneAndRemove()
+                setTimeout(async()=>{
+                    await verification.findOneAndRemove()
+                }, 1200000)
                 //-------Metods-------------------------------
 
             }else{
