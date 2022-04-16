@@ -22,7 +22,7 @@ module.exports = function RemoveOrAdd(){
                 let date_today = data_json.split("/")[2]+"-"+data_json.split("/")[1]+"-"+data_json.split("/")[0]
                 let dataMy_json = JSON.parse(dateMyAfter)
                 console.log(dataMy_json)
-                let date_before = dataMy_json.date_until.split("/")[2]+"-"+dataMy_json.date_until.split("/")[1]+"-"+dataMy_json.date_until.split("/")[0]
+                let date_before = "2022-02-15"
                 /////// ---------- Functions ---------//////
                 const axios = require("axios")
                 let dbNames = ["BlazeRoyaleR", "MilionBlazeVip", "MilionBlazeR", "BlazeRoyale"]
