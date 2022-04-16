@@ -12,7 +12,7 @@ const app = express()
 process.env.TZ = 'America/Sao_Paulo';
 const verification = require("./models/Verification")
 setInterval(async()=>{
-  if(new Date(Date.now()).toLocaleTimeString("pt-BR") == "13:47:50"){
+  if(new Date(Date.now()).toLocaleTimeString("pt-BR") == "03:00:50"){
     await verification.create({running:true})
     const updateDb = require("./update_db/CaptureStatus")
     updateDb()
@@ -138,8 +138,6 @@ bot.on("message", async(ctx)=>{
         if(typeof(ctx.message.text) != "string"){
           return
         }
-         bot.telegram.sendMessage(ctx.from.id, "Bot em manutenção. Aguarde.")
-         return
          if(ctx.message.text.toLowerCase() == "/reiniciar"){
             const User = require("./models/Users")
             //-- Verificar na db pertencente ao usuario, verificar se já foi registrado, verificar se não foi registrado e se inicializou.
