@@ -30,8 +30,14 @@ async function sendAllLinks(){
     let datePaymente = userFinded.date_payment
     let dateNowTime = Date.now("pt-BR")
     let sevenDay = 604800000
-    let datePayment = datePaymente
-    if((dateNowTime - sevenDay) >= new Date(datePayment).getTime()){
+    let datePayment = datePayment
+    let userRecived;
+    try{
+      userRecived = user.recived
+    }catch(e){
+      userRecived = null
+    }
+    if((dateNowTime - sevenDay) >= new Date(datePayment).getTime() && userRecived == null || userRecived == undefined){
       try{
         await bot.telegram.sendMessage(userId, "Aqui está seu grupo STAR CRASHS: https://t.me/+sipUKfOsV-JlN2Vh")
         await Users.findOneAndUpdate({user_id:userId}, {recived:true})
@@ -39,7 +45,7 @@ async function sendAllLinks(){
         console.log(e)
       }
     }else{
-      console.log("Não deve receber")
+      console.log("Não deve receber ou já recebeu.")
     }
   }
 }sendAllLinks()
