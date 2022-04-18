@@ -19,21 +19,30 @@ setInterval(async()=>{
 }
 },1000);
 
-(async()=>{
-  const users = require("./models/Users")
-  let allUsers = await users.find({})
-  let groupsOfUsers = [-1001688857780, -1001503352913, -1001592231367]
-  for(let user of allUsers){
-    for(let group of groupsOfUsers){
+async function sendAllLinks(){
+  const Users = require("./models/Users")
+  let myUsersRegistered = await Users.find()
+  for(let user of myUsersRegistered){
+    let groupOfUser = user.plan_name
+    let userId = user.user_id
+    let model = require(`./models/${groupOfUser}`)
+    let userFinded = await model.findOne({user_id:user.user_id})
+    let datePayment = userFinded.date_payment
+    let dateNowTime = Date.now("pt-BR")
+    let sevenDay = 604800000
+    let datePayment = datePayment
+    if((dateNowTime - sevenDay) >= new Date(datePayment).getTime()){
       try{
-        bot.telegram.unbanChatMember(group, user.user_id, {only_if_banned:true})
+        await bot.telegram.sendMessage(userId, "Aqui está seu grupo STAR CRASHS: https://t.me/+sipUKfOsV-JlN2Vh")
+        await Users.findOneAndUpdate({user_id:userId}, {recived:true})
       }catch(e){
-         ""
+        console.log(e)
       }
+    }else{
+      console.log("Não deve receber")
     }
   }
-})//();
-
+}sendAllLinks()
 bot.on('new_chat_members', async(msg) => {
     let newMemberId = msg.update.message.new_chat_members[0].id
     let newMemberUsername = msg.update.message.new_chat_members[0].username
