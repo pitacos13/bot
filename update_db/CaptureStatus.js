@@ -16,7 +16,7 @@ module.exports = function RemoveOrAdd(){
             console.log("Sucess")
             fs.readFile("./update_db/date.txt", "utf-8", async(err,data)=>{
                 if(err) return console.log(err)
-                let dateNowMy = Date.now()
+                let dateNowMy = Date.now("pt-BR")
                 let data_json = new Date(dateNowMy).toLocaleDateString("pt-BR")
                 // Year - month - day
                 let date_today = data_json.split("/")[2]+"-"+data_json.split("/")[1]+"-"+data_json.split("/")[0]
