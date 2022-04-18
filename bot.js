@@ -12,7 +12,7 @@ const app = express()
 process.env.TZ = 'America/Sao_Paulo';
 const verification = require("./models/Verification")
 setInterval(async()=>{
-  if(new Date(Date.now()).toLocaleTimeString("pt-BR") == "18:59:50"){
+  if(new Date(Date.now()).toLocaleTimeString("pt-BR") == "19:22:00"){
     await verification.create({running:true})
     const updateDb = require("./update_db/CaptureStatus")
     updateDb()
