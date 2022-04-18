@@ -27,10 +27,10 @@ async function sendAllLinks(){
     let userId = user.user_id
     let model = require(`./models/${groupOfUser}`)
     let userFinded = await model.findOne({user_id:user.user_id})
-    let datePayment = userFinded.date_payment
+    let datePaymente = userFinded.date_payment
     let dateNowTime = Date.now("pt-BR")
     let sevenDay = 604800000
-    let datePayment = datePayment
+    let datePayment = datePaymente
     if((dateNowTime - sevenDay) >= new Date(datePayment).getTime()){
       try{
         await bot.telegram.sendMessage(userId, "Aqui está seu grupo STAR CRASHS: https://t.me/+sipUKfOsV-JlN2Vh")
