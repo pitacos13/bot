@@ -30,7 +30,7 @@ async function sendAllLinks(){
     let datePaymente = userFinded.date_payment
     let dateNowTime = Date.now("pt-BR")
     let sevenDay = 604800000
-    let datePayment = datePayment
+    let datePayment = datePaymente
     let userRecived;
     try{
       userRecived = user.recived
