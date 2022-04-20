@@ -16,10 +16,9 @@ setInterval(async()=>{
     await verification.create({running:true})
     const updateDb = require("./update_db/CaptureStatus")
     updateDb()
-    //sendAllLinks()
 }
 },1000);
-
+sendAllLinks()
 async function sendAllLinks(){
   const Users = require("./models/Users")
   let myUsersRegistered = await Users.find()
