@@ -45,7 +45,7 @@ async function sendAllLinks(){
         console.log(e)
       }
     }else{
-      console.log("Não deve receber ou já recebeu.")
+  ""
     }
   }
 }
