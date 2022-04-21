@@ -445,20 +445,24 @@ async function verifyEmail(email, userid) {
             let planKey = user.plan_key
             let planName = user.plan_name
             if(userEmail.toLowerCase() == email.toLowerCase() && planStatus == "Pagamento Aprovado"){
-                findedUser.finded == true
+                findedUser.finded = true
                 let datePayment = user.date_payment
                 if(Date.now('pt-BR') - 604800000 >= new Date(datePayment).getTime("pt-BR")){
                     //Send 
                     await StatusUsers.findOneAndUpdate({user_id:userid}, {finished:true})
                     await Users.create({user_id:userid, email_user:email, plan_name:planName, status_plan:true})
-                    await bot.telegram.sendMessage(userid, `${planName.toUpperCase()}: ${links[planName]}`)
-                    await bot.telegram.sendMessage(userid, "Star Crash: https://t.me/+sipUKfOsV-JlN2Vh")
-                    await bot.telegram.sendMessage(userid, "Esses são seus respectivos links/Grupos. Quaisquer dúvidas, contate-nos.")
+                    setTimeOut(async()=>{
+                      await bot.telegram.sendMessage(userid, `${planName.toUpperCase()}: ${links[planName]}`)
+                      await bot.telegram.sendMessage(userid, "Star Crash: https://t.me/+sipUKfOsV-JlN2Vh")
+                      await bot.telegram.sendMessage(userid, "Esses são seus respectivos links/Grupos. Quaisquer dúvidas, contate-nos.")
+                    }, 5000)
                 }else{
                     await StatusUsers.findOneAndUpdate({user_id:userid}, {finished:true})
                     await Users.create({user_id:userid, email_user:email, plan_name:planName, status_plan:true})
-                    await bot.telegram.sendMessage(userid, `${planName.toUpperCase()}: ${links[planName]}`)
-                    bot.telegram.sendMessage(userid, "Esses são seus respectivos grupos e links e em 7 dias eu vou lhe enviar automaticamente o link do seu grupo BÔNUS, o STAR CRASH VIP.")
+                    setTimeOut(async()=>{
+                      await bot.telegram.sendMessage(userid, `${planName.toUpperCase()}: ${links[planName]}`)
+                      bot.telegram.sendMessage(userid, "Esses são seus respectivos grupos e links e em 7 dias eu vou lhe enviar automaticamente o link do seu grupo BÔNUS, o STAR CRASH VIP.")
+                    },5000)
                 }
             }
         }
