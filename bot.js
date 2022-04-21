@@ -440,6 +440,7 @@ async function verifyEmail(email, userid) {
             let planStatus = user.plan_status
             let planKey = user.plan_key
             let planName = user.plan_name
+            const links = {MillionBlazeR:"https://t.me/+o5-YgmuIYuQwZjRh", BlazeRoyale:"https://t.me/+3oPIfRRG8tgzN2Jh",BlazeRoyaleR:"https://t.me/+3oPIfRRG8tgzN2Jh", MillionBlazeVip:"https://t.me/+o5-YgmuIYuQwZjRh", StarCrash:"https://t.me/+sipUKfOsV-JlN2Vh"}
             if(userEmail.toLowerCase() == email.toLowerCase() && planStatus == "Pagamento Aprovado"){
                 findedUser.finded = true
                 let datePayment = user.date_payment
