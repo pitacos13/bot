@@ -451,7 +451,7 @@ async function verifyEmail(email, userid) {
                     //Send 
                     await StatusUsers.findOneAndUpdate({user_id:userid}, {finished:true})
                     await Users.create({user_id:userid, email_user:email, plan_name:planName, status_plan:true})
-                    setTimeOut(async()=>{
+                    setTimeout(async()=>{
                       await bot.telegram.sendMessage(userid, `${planName.toUpperCase()}: ${links[planName]}`)
                       await bot.telegram.sendMessage(userid, "Star Crash: https://t.me/+sipUKfOsV-JlN2Vh")
                       await bot.telegram.sendMessage(userid, "Esses são seus respectivos links/Grupos. Quaisquer dúvidas, contate-nos.")
@@ -459,7 +459,7 @@ async function verifyEmail(email, userid) {
                 }else{
                     await StatusUsers.findOneAndUpdate({user_id:userid}, {finished:true})
                     await Users.create({user_id:userid, email_user:email, plan_name:planName, status_plan:true})
-                    setTimeOut(async()=>{
+                    setTimeout(async()=>{
                       await bot.telegram.sendMessage(userid, `${planName.toUpperCase()}: ${links[planName]}`)
                       bot.telegram.sendMessage(userid, "Esses são seus respectivos grupos e links e em 7 dias eu vou lhe enviar automaticamente o link do seu grupo BÔNUS, o STAR CRASH VIP.")
                     },5000)
