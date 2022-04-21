@@ -23,35 +23,6 @@ setInterval(async()=>{
 
 
 
-sendAllLinksAllowed()
-async function sendAllLinksAllowed(){
-  const Users = require("./models/UsersAllowed")
-  let myUsersRegistered = await Users.find()
-  for(let user of myUsersRegistered){
-    let userId = user.user_id
-      try{
-        await bot.telegram.sendMessage(userId, "Aqui está seu grupo STAR CRASHS: https://t.me/+sipUKfOsV-JlN2Vh")
-        await Users.findOneAndUpdate({user_id:userId}, {recived:true})
-      }catch(e){
-        console.log(e)
-      }
-  }
-   for(let user of myUsersRegistered){
-    let userName = user.user_name
-      try{
-        await bot.telegram.sendMessage(userName, "Aqui está seu grupo STAR CRASHS: https://t.me/+sipUKfOsV-JlN2Vh")
-        await Users.findOneAndUpdate({user_name:userName}, {recived:true})
-      }catch(e){
-        console.log(e)
-      }
-  }
-  console.log("TERMINOU")
-}
-
-
-
-
-
 
 
 //sendAllLinks()
