@@ -446,20 +446,20 @@ async function verifyEmail(email, userid) {
                 let datePayment = user.date_payment
                 if(Date.now('pt-BR') - 604800000 >= new Date(datePayment).getTime("pt-BR")){
                     //Send 
-                    await StatusUsers.findOneAndUpdate({user_id:userid}, {finished:true})
-                    await Users.create({user_id:userid, email_user:email, plan_name:planName, status_plan:true})
                     setTimeout(async()=>{
+                      await StatusUsers.findOneAndUpdate({user_id:userid}, {finished:true})
+                      await Users.create({user_id:userid, email_user:email, plan_name:planName, status_plan:true})
                       await bot.telegram.sendMessage(userid, `${planName}: ${links[planName]}`)
                       await bot.telegram.sendMessage(userid, "Star Crash: https://t.me/+sipUKfOsV-JlN2Vh")
                       await bot.telegram.sendMessage(userid, "Esses são seus respectivos links/Grupos. Quaisquer dúvidas, contate-nos.")
-                    }, 5000)
+                    }, 17000)
                 }else{
+                    setTimeout(async()=>{
                     await StatusUsers.findOneAndUpdate({user_id:userid}, {finished:true})
                     await Users.create({user_id:userid, email_user:email, plan_name:planName, status_plan:true})
-                    setTimeout(async()=>{
                       await bot.telegram.sendMessage(userid, `${planName}: ${links[planName]}`)
                       bot.telegram.sendMessage(userid, "Esses são seus respectivos grupos e links e em 7 dias eu vou lhe enviar automaticamente o link do seu grupo BÔNUS, o STAR CRASH VIP.")
-                    },5000)
+                    },17000)
                 }
             }
         }
