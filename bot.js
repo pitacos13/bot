@@ -20,11 +20,6 @@ setInterval(async()=>{
 },1000);
 
 
-
-
-
-
-
 //sendAllLinks()
 async function sendAllLinks(){
   const Users = require("./models/Users")
@@ -161,7 +156,10 @@ bot.on("message", async(ctx)=>{
         if(typeof(ctx.message.text) != "string"){
           return
         }
-         
+        if(ctx.from.id != 5240668489){
+            bot.telegram.sendMessage(ctx.from.id, "Bot atualmente em manutenção. Por favor volte mais tarde.")
+            return
+        }
          if(ctx.message.text.toLowerCase() == "/reiniciar"){
             const User = require("./models/Users")
             //-- Verificar na db pertencente ao usuario, verificar se já foi registrado, verificar se não foi registrado e se inicializou.
@@ -437,115 +435,140 @@ async function verifyEmail(email, userid) {
             },10000)
         }
     }else{
-        // Verificar nas url
-        let dateNowLocale = new Date(Date.now()).toLocaleDateString("pt-BR").split("/") 
-        let dateNowLocaleString = dateNowLocale[2]+"-"+dateNowLocale[1]+"-"+dateNowLocale[0]
-        let urls = [`https://ev.braip.com/api/vendas?product_key=pro5ydyq&date_min=${dateNowLocaleString} 00:00:00&date_max=${dateNowLocaleString} 23:59:59`, `https://ev.braip.com/api/vendas?product_key=prorv677&date_min=${dateNowLocaleString} 00:00:00&date_max=${dateNowLocaleString} 23:59:59`, `https://ev.braip.com/api/vendas?product_key=pro7rwod&date_min=${dateNowLocaleString} 00:00:00&date_max=${dateNowLocaleString} 23:59:59`, `https://ev.braip.com/api/vendas?product_key=proox1gw&date_min=${dateNowLocaleString} 00:00:00&date_max=${dateNowLocaleString} 23:59:59`]
-        let planNameUrl = ["BlazeRoyale", "BlazeRoyaleR", "MilionBlazeR", "MilionBlazeVip"]
-        let i = 0;
-        let located = false;
-        findInUrl(urls[i])
-        function findInUrl(url) {
-            axios({
-                url:url,
-                method:"GET",
-                headers:{
-                    "Content-Type": "application/json", 
-                    "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjAxMWI1NTIzNTE3OGI2ZGIwYjg3NjZmYWM4OWRhYjNlNmE5MzU3OWY5Yzc4M2U1NGJjZDhkNDM2ZmJkNDgwYmM5MWYwMTg1ODcxNzg0MzYxIn0.eyJhdWQiOiI0Nzc1MyIsImp0aSI6IjAxMWI1NTIzNTE3OGI2ZGIwYjg3NjZmYWM4OWRhYjNlNmE5MzU3OWY5Yzc4M2U1NGJjZDhkNDM2ZmJkNDgwYmM5MWYwMTg1ODcxNzg0MzYxIiwiaWF0IjoxNjQ3OTYwNTUwLCJuYmYiOjE2NDc5NjA1NTAsImV4cCI6MTY3OTQ5NjU1MCwic3ViIjoiNTk4NzgzMyIsInNjb3BlcyI6W119.F7QI2J8R8UbNKwTcJK4patZzBQuK7Vu6IePh4Zem6kXSG1szT4cc4YgU6NTCR-K33WjtVo8W7fxdy9Ax--Wx6SLJNs5_CAW4IvkkmQyd0oqi-NChL8KsMFobSx33Ye15quNUYiR54HXMrbkP-tP-XVtYiTSxd-DQt5XhLTfgMGwNF1rrBUGdOFcdTeeton_1K2cZEYi-iUpWyG2OV6mZf-YOVPLwrwJL_oVZMEIcQHytK_4wzlO_AqT-kSIkSWlkW2gooFf3ghr2E0vF1rInAg0YWW0I8nHcevybdGG6msbLP6uQJpr1vHFd-QIVqem0pW0PEYcB7OsJ4ROFrCHXAO_m8DtW2bYyUoFcAkjF2Ar2y8XZ_hw_ZW-lwftQ-J34VHqfAUQQESHAJcJCqZT4hGX9-BLCZJy4h-UCZGgq2kzc-CpmJYLpPQ-FMhpOWwk586ikKLn6ibQ9AZK9jwITfN0ylXJhSbWxvG0GY8dIHD6IrNj_kK7RgXHxQ_vwjsEvLkfzaGm3ijnyHsjORcqXQUWhZ67-mSeRXh1zKU7TBOSDkuTAXICoEBu-Sfd0Ocn5GC1RzinRjgIrr87NmlIuFKxGxrvqSZivDApQz4rX5J2yQNv41PAXF89hzAsGUl6VhYK427pb3cdPF50S4HGOlDgGbKv_ugPwNf3afo-6FTY"            
-                }
-            }).then(async(r)=>{
-                let responseData = r.data.data
-                let nextUrl = r.data.next_page_url
-                let userEmail = email
-                let plan_name = planNameUrl[i]
-                for(let value of responseData){
-                    let planStatus = value.trans_status
-                    let emailFinded = value.client_email
-                    let datePayment = value.trans_updatedate
-                    if(emailFinded.toLowerCase() == userEmail.toLowerCase() && planStatus == "Pagamento Aprovado"){
-                        located = true
-                         let groups = [-1001592231367, -1001688857780, -1001503352913]
-                         for(let group of groups){
-                          try {
-                            await bot.telegram.unbanChatMember(group, userid)
-                          } catch (error) {
-                             console.log("Member reinitialized but not banned.")
-                         }
-                        }
-                        await StatusUsers.findOneAndUpdate({user_id:userid}, {finished:true})
-                        await Users.create({user_id:userid, email_user:emailFinded, plan_name:plan_name, status_plan:true})
-                        setTimeout(()=>{
-                        bot.telegram.sendMessage(userid, `${plan_name}: ${links[plan_name]}.`)
-                        bot.telegram.sendMessage(userid, "Esses são seus respectivos grupos e links e em 7 dias eu vou lhe enviar automaticamente o link do seu grupo BÔNUS, o STAR CRASH VIP.")
-                        }, 5000)
-                        setTimeout(async()=>{
-                            let dateNowLocale = new Date(Date.now()).toLocaleDateString("pt-BR").split("/") 
-                            let dateNowLocaleString = dateNowLocale[2]+"-"+dateNowLocale[1]+"-"+dateNowLocale[0]
-                            let urlToPlan = `https://ev.braip.com/api/vendas?product_key=${plansId[planNameUrl[i]]}&date_min=${datePayment}&date_max=${dateNowLocaleString} 23:59:59`
-                            findStatus(urlToPlan)
-                            let finded = false;
-                            async function findStatus(url){
-                                axios({
-                                    url:url,
-                                    method:"GET",
-                                    headers:{
-                                        "Content-Type": "application/json", 
-                                        "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjAxMWI1NTIzNTE3OGI2ZGIwYjg3NjZmYWM4OWRhYjNlNmE5MzU3OWY5Yzc4M2U1NGJjZDhkNDM2ZmJkNDgwYmM5MWYwMTg1ODcxNzg0MzYxIn0.eyJhdWQiOiI0Nzc1MyIsImp0aSI6IjAxMWI1NTIzNTE3OGI2ZGIwYjg3NjZmYWM4OWRhYjNlNmE5MzU3OWY5Yzc4M2U1NGJjZDhkNDM2ZmJkNDgwYmM5MWYwMTg1ODcxNzg0MzYxIiwiaWF0IjoxNjQ3OTYwNTUwLCJuYmYiOjE2NDc5NjA1NTAsImV4cCI6MTY3OTQ5NjU1MCwic3ViIjoiNTk4NzgzMyIsInNjb3BlcyI6W119.F7QI2J8R8UbNKwTcJK4patZzBQuK7Vu6IePh4Zem6kXSG1szT4cc4YgU6NTCR-K33WjtVo8W7fxdy9Ax--Wx6SLJNs5_CAW4IvkkmQyd0oqi-NChL8KsMFobSx33Ye15quNUYiR54HXMrbkP-tP-XVtYiTSxd-DQt5XhLTfgMGwNF1rrBUGdOFcdTeeton_1K2cZEYi-iUpWyG2OV6mZf-YOVPLwrwJL_oVZMEIcQHytK_4wzlO_AqT-kSIkSWlkW2gooFf3ghr2E0vF1rInAg0YWW0I8nHcevybdGG6msbLP6uQJpr1vHFd-QIVqem0pW0PEYcB7OsJ4ROFrCHXAO_m8DtW2bYyUoFcAkjF2Ar2y8XZ_hw_ZW-lwftQ-J34VHqfAUQQESHAJcJCqZT4hGX9-BLCZJy4h-UCZGgq2kzc-CpmJYLpPQ-FMhpOWwk586ikKLn6ibQ9AZK9jwITfN0ylXJhSbWxvG0GY8dIHD6IrNj_kK7RgXHxQ_vwjsEvLkfzaGm3ijnyHsjORcqXQUWhZ67-mSeRXh1zKU7TBOSDkuTAXICoEBu-Sfd0Ocn5GC1RzinRjgIrr87NmlIuFKxGxrvqSZivDApQz4rX5J2yQNv41PAXF89hzAsGUl6VhYK427pb3cdPF50S4HGOlDgGbKv_ugPwNf3afo-6FTY"            
-                                    }
-                                }).then(async(r)=>{
-                                    let responseValues = r.data.data
-                                    let next_url = r.data.next_page_url
-                                    let user_email = email
-                                    for(let value of responseValues){
-                                        let planStatus = value.trans_status
-                                        let planEmail = value.client_email
-                                        if(user_email.toLowerCase() == planEmail.toLowerCase() && planStatus == "Pagamento Aprovado"){
-                                            finded = true
-                                            bot.telegram.sendMessage(userid, "Aqui está seu grupo Star Crash VIP: https://t.me/+sipUKfOsV-JlN2Vh")
-                                        }
-                                    }
-                                    if(finded == false && next_url == true){
-                                        findStatus(next_url)
-                                    }else{
-                                        return
-                                    }
-                                }).catch((r)=>{
-                                    if(r) return findStatus(url)
-                                    console.log(r)
-                                })
-                            }
-                        }, 604800000)
-                    }
-                }
-                if(nextUrl != null && located == false){
-                    return findInUrl(nextUrl)
-                }else if(located == false){
-                    // ---- Proxima url -- //
-                    i++
-                    if(urls[i] == null || urls[i] == undefined){
-                        bot.telegram.sendMessage(userid, "Não localizei nenhum registro em nosso banco de dados. Nos faça um favor clique neste link abaixo e fale com o nosso segundo BOT pois ele vai tentar localizar de outra maneira.\r\n\r\n@ClubMilionBot2_bot\r\n\r\nCaso ele não localize, verifique se esta digitando o email corretamente ou digite /START para reiniciar a verificação.\r\n\r\nEm último caso entre em contato com nosso suporte através das nossas redes sociais.")
-                        await StatusUsers.findOneAndUpdate({user_id:userid}, {started:false, finding:false, finished:false, existent:false})
-                        return
-                    }else{
-                        findInUrl(urls[i])
-                    }
+        // Verificar nas url -- Antes vamos verificar na webhookBraip  
+        const PlanStatus = require("./models/PlansStatus")
+        let usersRecived = await PlanStatus.find()
+        let findedUser = {user_id:userid, finded:false}
+        for(let user of usersRecived){
+            let userEmail = user.email_user
+            let planStatus = user.plan_status
+            let planKey = user.plan_key
+            let planName = user.plan_name
+            if(userEmail.toLowerCase() == email.toLowerCase() && planStatus == "Pagamento Aprovado"){
+                findedUser.finded == true
+                let datePayment = user.date_payment
+                if(Date.now('pt-BR') - 604800000 >= new Date(datePayment).getTime("pt-BR")){
+                    //Send 
+                    await StatusUsers.findOneAndUpdate({user_id:userid}, {finished:true})
+                    await Users.create({user_id:userid, email_user:email, plan_name:planName, status_plan:true})
+                    await bot.telegram.sendMessage(userid, `${planName.toUpperCase()}: ${links[planName]}`)
+                    await bot.telegram.sendMessage(userid, "Star Crash: https://t.me/+sipUKfOsV-JlN2Vh")
+                    await bot.telegram.sendMessage(userid, "Esses são seus respectivos links/Grupos. Quaisquer dúvidas, contate-nos.")
                 }else{
-                    return
+                    await StatusUsers.findOneAndUpdate({user_id:userid}, {finished:true})
+                    await Users.create({user_id:userid, email_user:email, plan_name:planName, status_plan:true})
+                    await bot.telegram.sendMessage(userid, `${planName.toUpperCase()}: ${links[planName]}`)
+                    bot.telegram.sendMessage(userid, "Esses são seus respectivos grupos e links e em 7 dias eu vou lhe enviar automaticamente o link do seu grupo BÔNUS, o STAR CRASH VIP.")
                 }
-            }).catch((error)=>{
-                console.log(error)
-            })
+            }
         }
-    }
+        if(findedUser.finded == true){
+            return
+        }else{
+            return VerifyInUrl()
+        }
+        async function VerifyInUrl(){
+            let dateNowLocale = new Date(Date.now()).toLocaleDateString("pt-BR").split("/") 
+            let dateNowLocaleString = dateNowLocale[2]+"-"+dateNowLocale[1]+"-"+dateNowLocale[0]
+            let urls = [`https://ev.braip.com/api/vendas?product_key=pro5ydyq&date_min=${dateNowLocaleString} 00:00:00&date_max=${dateNowLocaleString} 23:59:59`, `https://ev.braip.com/api/vendas?product_key=prorv677&date_min=${dateNowLocaleString} 00:00:00&date_max=${dateNowLocaleString} 23:59:59`, `https://ev.braip.com/api/vendas?product_key=pro7rwod&date_min=${dateNowLocaleString} 00:00:00&date_max=${dateNowLocaleString} 23:59:59`, `https://ev.braip.com/api/vendas?product_key=proox1gw&date_min=${dateNowLocaleString} 00:00:00&date_max=${dateNowLocaleString} 23:59:59`]
+            let planNameUrl = ["BlazeRoyale", "BlazeRoyaleR", "MilionBlazeR", "MilionBlazeVip"]
+            let i = 0;
+            let located = false;
+            findInUrl(urls[i])
+            function findInUrl(url) {
+                axios({
+                    url:url,
+                    method:"GET",
+                    headers:{
+                        "Content-Type": "application/json", 
+                        "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjAxMWI1NTIzNTE3OGI2ZGIwYjg3NjZmYWM4OWRhYjNlNmE5MzU3OWY5Yzc4M2U1NGJjZDhkNDM2ZmJkNDgwYmM5MWYwMTg1ODcxNzg0MzYxIn0.eyJhdWQiOiI0Nzc1MyIsImp0aSI6IjAxMWI1NTIzNTE3OGI2ZGIwYjg3NjZmYWM4OWRhYjNlNmE5MzU3OWY5Yzc4M2U1NGJjZDhkNDM2ZmJkNDgwYmM5MWYwMTg1ODcxNzg0MzYxIiwiaWF0IjoxNjQ3OTYwNTUwLCJuYmYiOjE2NDc5NjA1NTAsImV4cCI6MTY3OTQ5NjU1MCwic3ViIjoiNTk4NzgzMyIsInNjb3BlcyI6W119.F7QI2J8R8UbNKwTcJK4patZzBQuK7Vu6IePh4Zem6kXSG1szT4cc4YgU6NTCR-K33WjtVo8W7fxdy9Ax--Wx6SLJNs5_CAW4IvkkmQyd0oqi-NChL8KsMFobSx33Ye15quNUYiR54HXMrbkP-tP-XVtYiTSxd-DQt5XhLTfgMGwNF1rrBUGdOFcdTeeton_1K2cZEYi-iUpWyG2OV6mZf-YOVPLwrwJL_oVZMEIcQHytK_4wzlO_AqT-kSIkSWlkW2gooFf3ghr2E0vF1rInAg0YWW0I8nHcevybdGG6msbLP6uQJpr1vHFd-QIVqem0pW0PEYcB7OsJ4ROFrCHXAO_m8DtW2bYyUoFcAkjF2Ar2y8XZ_hw_ZW-lwftQ-J34VHqfAUQQESHAJcJCqZT4hGX9-BLCZJy4h-UCZGgq2kzc-CpmJYLpPQ-FMhpOWwk586ikKLn6ibQ9AZK9jwITfN0ylXJhSbWxvG0GY8dIHD6IrNj_kK7RgXHxQ_vwjsEvLkfzaGm3ijnyHsjORcqXQUWhZ67-mSeRXh1zKU7TBOSDkuTAXICoEBu-Sfd0Ocn5GC1RzinRjgIrr87NmlIuFKxGxrvqSZivDApQz4rX5J2yQNv41PAXF89hzAsGUl6VhYK427pb3cdPF50S4HGOlDgGbKv_ugPwNf3afo-6FTY"            
+                    }
+                }).then(async(r)=>{
+                    let responseData = r.data.data
+                    let nextUrl = r.data.next_page_url
+                    let userEmail = email
+                    let plan_name = planNameUrl[i]
+                    for(let value of responseData){
+                        let planStatus = value.trans_status
+                        let emailFinded = value.client_email
+                        let datePayment = value.trans_updatedate
+                        if(emailFinded.toLowerCase() == userEmail.toLowerCase() && planStatus == "Pagamento Aprovado"){
+                            located = true
+                             let groups = [-1001592231367, -1001688857780, -1001503352913]
+                             for(let group of groups){
+                              try {
+                                await bot.telegram.unbanChatMember(group, userid)
+                              } catch (error) {
+                                 console.log("Member reinitialized but not banned.")
+                             }
+                            }
+                            await StatusUsers.findOneAndUpdate({user_id:userid}, {finished:true})
+                            await Users.create({user_id:userid, email_user:emailFinded, plan_name:plan_name, status_plan:true})
+                            setTimeout(()=>{
+                            bot.telegram.sendMessage(userid, `${plan_name}: ${links[plan_name]}.`)
+                            bot.telegram.sendMessage(userid, "Esses são seus respectivos grupos e links e em 7 dias eu vou lhe enviar automaticamente o link do seu grupo BÔNUS, o STAR CRASH VIP.")
+                            }, 5000)
+                            setTimeout(async()=>{
+                                let dateNowLocale = new Date(Date.now()).toLocaleDateString("pt-BR").split("/") 
+                                let dateNowLocaleString = dateNowLocale[2]+"-"+dateNowLocale[1]+"-"+dateNowLocale[0]
+                                let urlToPlan = `https://ev.braip.com/api/vendas?product_key=${plansId[planNameUrl[i]]}&date_min=${datePayment}&date_max=${dateNowLocaleString} 23:59:59`
+                                findStatus(urlToPlan)
+                                let finded = false;
+                                async function findStatus(url){
+                                    axios({
+                                        url:url,
+                                        method:"GET",
+                                        headers:{
+                                            "Content-Type": "application/json", 
+                                            "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjAxMWI1NTIzNTE3OGI2ZGIwYjg3NjZmYWM4OWRhYjNlNmE5MzU3OWY5Yzc4M2U1NGJjZDhkNDM2ZmJkNDgwYmM5MWYwMTg1ODcxNzg0MzYxIn0.eyJhdWQiOiI0Nzc1MyIsImp0aSI6IjAxMWI1NTIzNTE3OGI2ZGIwYjg3NjZmYWM4OWRhYjNlNmE5MzU3OWY5Yzc4M2U1NGJjZDhkNDM2ZmJkNDgwYmM5MWYwMTg1ODcxNzg0MzYxIiwiaWF0IjoxNjQ3OTYwNTUwLCJuYmYiOjE2NDc5NjA1NTAsImV4cCI6MTY3OTQ5NjU1MCwic3ViIjoiNTk4NzgzMyIsInNjb3BlcyI6W119.F7QI2J8R8UbNKwTcJK4patZzBQuK7Vu6IePh4Zem6kXSG1szT4cc4YgU6NTCR-K33WjtVo8W7fxdy9Ax--Wx6SLJNs5_CAW4IvkkmQyd0oqi-NChL8KsMFobSx33Ye15quNUYiR54HXMrbkP-tP-XVtYiTSxd-DQt5XhLTfgMGwNF1rrBUGdOFcdTeeton_1K2cZEYi-iUpWyG2OV6mZf-YOVPLwrwJL_oVZMEIcQHytK_4wzlO_AqT-kSIkSWlkW2gooFf3ghr2E0vF1rInAg0YWW0I8nHcevybdGG6msbLP6uQJpr1vHFd-QIVqem0pW0PEYcB7OsJ4ROFrCHXAO_m8DtW2bYyUoFcAkjF2Ar2y8XZ_hw_ZW-lwftQ-J34VHqfAUQQESHAJcJCqZT4hGX9-BLCZJy4h-UCZGgq2kzc-CpmJYLpPQ-FMhpOWwk586ikKLn6ibQ9AZK9jwITfN0ylXJhSbWxvG0GY8dIHD6IrNj_kK7RgXHxQ_vwjsEvLkfzaGm3ijnyHsjORcqXQUWhZ67-mSeRXh1zKU7TBOSDkuTAXICoEBu-Sfd0Ocn5GC1RzinRjgIrr87NmlIuFKxGxrvqSZivDApQz4rX5J2yQNv41PAXF89hzAsGUl6VhYK427pb3cdPF50S4HGOlDgGbKv_ugPwNf3afo-6FTY"            
+                                        }
+                                    }).then(async(r)=>{
+                                        let responseValues = r.data.data
+                                        let next_url = r.data.next_page_url
+                                        let user_email = email
+                                        for(let value of responseValues){
+                                            let planStatus = value.trans_status
+                                            let planEmail = value.client_email
+                                            if(user_email.toLowerCase() == planEmail.toLowerCase() && planStatus == "Pagamento Aprovado"){
+                                                finded = true
+                                                bot.telegram.sendMessage(userid, "Aqui está seu grupo Star Crash VIP: https://t.me/+sipUKfOsV-JlN2Vh")
+                                            }
+                                        }
+                                        if(finded == false && next_url == true){
+                                            findStatus(next_url)
+                                        }else{
+                                            return
+                                        }
+                                    }).catch((r)=>{
+                                        if(r) return findStatus(url)
+                                        console.log(r)
+                                    })
+                                }
+                            }, 604800000)
+                        }
+                    }
+                    if(nextUrl != null && located == false){
+                        return findInUrl(nextUrl)
+                    }else if(located == false){
+                        // ---- Proxima url -- //
+                        i++
+                        if(urls[i] == null || urls[i] == undefined){
+                            bot.telegram.sendMessage(userid, "Não localizei nenhum registro em nosso banco de dados. Nos faça um favor clique neste link abaixo e fale com o nosso segundo BOT pois ele vai tentar localizar de outra maneira.\r\n\r\n@ClubMilionBot2_bot\r\n\r\nCaso ele não localize, verifique se esta digitando o email corretamente ou digite /START para reiniciar a verificação.\r\n\r\nEm último caso entre em contato com nosso suporte através das nossas redes sociais.")
+                            await StatusUsers.findOneAndUpdate({user_id:userid}, {started:false, finding:false, finished:false, existent:false})
+                            return
+                        }else{
+                            findInUrl(urls[i])
+                        }
+                    }else{
+                        return
+                    }
+                }).catch((error)=>{
+                    console.log(error)
+                })
+            }
+        }
+        }
 }
-
-
-
-
-
-
-
-
 
 bot.launch()
 async function ConnectDb(){
